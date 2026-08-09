@@ -200,6 +200,21 @@ of the lists actually filed in September, re-run the clustering check, drop any 
 ballot, and publish a dated changelog with a corrections form. Until then this build says **preview** on
 every screen, and it should keep saying it.
 
-Nothing a respondent answers leaves their browser. Progress is saved to `localStorage` so a session can be
-resumed; demographics are stored under a separate key, joined to the answer vector only by a random
-response id.
+## Where answers go
+
+Nowhere. There is no server, no database and no analytics; the source contains no `fetch`, no
+`sendBeacon` and no cookies. Answers live in two `localStorage` keys on the respondent's own device —
+`israquiz.session.v3` and `israquiz.demographics.v3` — kept apart deliberately (§6.5.1) and joined only by
+a random response id, so the export hands over two tables rather than one fingerprint. The only route out
+is the JSON blob a respondent copies from the results page.
+
+That is enough for the §4.7 validation round, where a handful of known voters email their results back. It
+is not enough for anything in §6: without collection there is no aggregate, and no way to compute the vote
+recall crosstab §6.4 calls the most publishable output here. Adding collection means a backend GitHub
+Pages cannot provide, an opt-in rather than silent submission, and rewriting the intro screen's promise
+that nothing leaves your browser.
+
+**Bump the key version** in `src/lib/storage.ts` whenever a change makes an in-flight session
+unresumable — a new item, a reordering, anything that alters what a stored `seed` produces. Superseded
+keys are deleted on first load, so stale special-category data is not stranded in a browser with no way to
+clear it from inside the app.
