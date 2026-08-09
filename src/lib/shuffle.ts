@@ -2,7 +2,7 @@
    Item ordering — spec §8.9
    Randomise within each block, never across blocks. Within-block
    randomisation controls for order effects; shuffling topics
-   together raises abandonment sharply on a 46-item instrument.
+   together raises abandonment sharply on an instrument this long.
 
    The order is seeded and the seed is persisted, so going back,
    closing the tab and resuming all show the same sequence.

@@ -3,7 +3,8 @@ import {
   agreementPoints, COVERAGE_FLOOR, DEFAULT_WEIGHTS, flatOpposition,
   partyAxesFor, score, userAxes, type Answers, type Weights,
 } from "./scoring";
-import { A5_ROWS, BLOCK_IDS, ITEMS, ITEMS_BY_BLOCK, type Position } from "../data/items";
+import { A5_ROWS, BLOCK_IDS, ITEMS, ITEMS_BY_BLOCK, JL_MERGE_FLAGS, type Position } from "../data/items";
+import { axisCollapses, identicalColumns, itemDiagnostics } from "./diagnostics";
 import { MATRIX_ORDER, PARTIES, type PartyCode } from "../data/parties";
 
 /** Answer every item exactly as a party would, at full intensity. */
@@ -18,9 +19,9 @@ function answerAs(code: PartyCode): Answers {
 }
 
 describe("bank integrity (§3, §5)", () => {
-  it("holds 46 scored items across five blocks", () => {
-    expect(ITEMS).toHaveLength(46);
-    expect(BLOCK_IDS.map((b) => ITEMS_BY_BLOCK[b].length)).toEqual([12, 10, 10, 6, 8]);
+  it("holds 48 scored items across five blocks", () => {
+    expect(ITEMS).toHaveLength(48);
+    expect(BLOCK_IDS.map((b) => ITEMS_BY_BLOCK[b].length)).toEqual([13, 10, 10, 7, 8]);
   });
 
   it("gives every party a coding cell for every item", () => {
@@ -99,7 +100,7 @@ describe("party match (§4.2)", () => {
     a.A1 = null;
     const r = score(a).all.LIK;
     expect(Math.round(r.weighted)).toBe(100);
-    expect(r.scoredItems).toBe(45);
+    expect(r.scoredItems).toBe(47);
   });
 
   it("reproduces the unweighted result when every topic keeps its default allocation", () => {
@@ -186,10 +187,10 @@ describe("expected clustering smoke test (§4.6)", () => {
     expect(Math.abs(ax("YSH").B)).toBeLessThan(Math.abs(ax("YB").B));
   });
 
-  it("places The Democrats lower-left and the Joint List no further right", () => {
+  it("places The Democrats lower-left and the Joint List further left still", () => {
     expect(ax("DEM").A).toBeLessThan(-50);
     expect(ax("DEM").B).toBeLessThan(0);
-    expect(ax("JL").A).toBeLessThanOrEqual(ax("DEM").A);
+    expect(ax("JL").A).toBeLessThan(ax("DEM").A);
     expect(ax("JL").B).toBeLessThan(ax("SHS").B);
   });
 
@@ -199,20 +200,44 @@ describe("expected clustering smoke test (§4.6)", () => {
   });
 
   /**
-   * §4.6 expects the Joint List "far left" and The Democrats merely "lower-left",
-   * i.e. separated on X. They are not: the security block codes DEM, JL, HTA, BAL
-   * and Ra'am identically on all twelve items, so all five sit exactly on the dove
-   * pole and the axis carries no information about the difference between them.
-   *
-   * This is the §4.6 failure mode — an item set that cannot discriminate — and the
-   * spec's instruction is to fix it by adding items, not by nudging coordinates.
-   * The test pins the current behaviour so the fix is visible when it lands.
+   * The first run of this check found DEM, RAM and JL identical on both grid axes,
+   * because the bank had no item separating a Zionist dove from a non-Zionist one.
+   * A13 and D7 were added for exactly this. Neither grid axis may pile up again.
    */
-  it("documents the dove-pole pile-up the security block cannot resolve", () => {
-    const piled = (["DEM", "JL", "HTA", "BAL", "RAM"] as PartyCode[]).filter(
-      (c) => ax(c).A === -100,
-    );
-    expect(piled).toEqual(["DEM", "JL", "HTA", "BAL", "RAM"]);
+  it("leaves no three-way pile-up on either grid axis", () => {
+    const piles = axisCollapses().filter((c) => c.parties.length > 2);
+    expect(piles.filter((c) => c.block === "A" || c.block === "B")).toEqual([]);
+  });
+
+  it("fully separates The Democrats, Ra'am and the Joint List on identity", () => {
+    const coords = (["DEM", "RAM", "JL"] as PartyCode[]).map((c) => ax(c).D);
+    expect(new Set(coords).size).toBe(3);
+  });
+
+  /**
+   * On security the added item lifts the Joint List clear of the other two but
+   * leaves The Democrats and Ra'am together: they hold genuinely identical
+   * operative positions on all thirteen items. That pair does not collide on
+   * the grid, because they are 167 points apart on the vertical axis.
+   */
+  it("lifts the Joint List clear of The Democrats and Ra'am on security", () => {
+    expect(ax("JL").A).toBeLessThan(ax("DEM").A);
+    expect(ax("DEM").A).toBe(ax("RAM").A);
+    expect(Math.abs(ax("DEM").B - ax("RAM").B)).toBeGreaterThan(100);
+  });
+
+  /**
+   * Institutions is where three-way coincidence survives, and it looks real
+   * rather than artefactual: those parties hold identical positions on judicial
+   * review, the Attorney General, the 7 October commission and police
+   * independence. Both are reported bars, not grid axes, so the cost is lower.
+   */
+  it("pins the remaining three-way pile-ups to the institutions bar", () => {
+    const piles = axisCollapses().filter((c) => c.parties.length > 2);
+    expect(piles.map((c) => `${c.block}:${[...c.parties].sort().join(",")}`).sort()).toEqual([
+      "C:DEM,JL,RAM",
+      "C:LIK,OTZ,RZ",
+    ]);
   });
 
   it("separates the two grid axes — no party sits at the exact origin", () => {
@@ -273,7 +298,7 @@ describe("empty and degenerate inputs", () => {
     const a: Answers = {};
     for (const it of ITEMS) a[it.id] = null;
     const r = score(a);
-    expect(r.skippedCount).toBe(46);
+    expect(r.skippedCount).toBe(48);
     expect(r.ranked.every((x) => x.weighted === 0)).toBe(true);
   });
 
@@ -306,12 +331,50 @@ describe("Joint List merge rule (§3.7)", () => {
     }
   });
 
-  it("confines every merge compromise to religion-and-state and economics", () => {
+  /**
+   * The spec reports that the components are identical on security, institutions
+   * and national identity, and that every merge compromise therefore falls in
+   * religion-and-state or economics. A13 breaks that: it is the first security
+   * item to divide them, which means the unity was partly an artefact of what the
+   * bank had not asked. Pinned exactly so any further drift is visible.
+   */
+  it("pins where the merge compromises fall", () => {
+    const compromised = ITEMS.filter((it) => {
+      const h = hta(it.id);
+      const b = bal(it.id);
+      return h !== b && !(h === "-" && b === "-");
+    });
+    expect(compromised.map((i) => i.id).sort()).toEqual(
+      ["A13", "B2", "B3", "B4", "B5", "B6", "B7", "B8", "B9", "B10", "E3", "E8"].sort(),
+    );
+    expect([...new Set(compromised.map((i) => i.block))].sort()).toEqual(["A", "B", "E"]);
+  });
+
+  it("flags every compromised cell in the published matrix", () => {
     for (const it of ITEMS) {
       const h = hta(it.id);
       const b = bal(it.id);
       const compromised = h !== b && !(h === "-" && b === "-");
-      if (compromised) expect(["B", "E"], it.id).toContain(it.block);
+      expect(!!JL_MERGE_FLAGS[it.id], `${it.id} flag`).toBe(compromised);
     }
+  });
+});
+
+describe("item validation metrics (§4.7)", () => {
+  it("credits the added items with the axis collapses they prevent", () => {
+    const byId = Object.fromEntries(itemDiagnostics().map((d) => [d.id, d]));
+    expect(byId.A13.collapsesPrevented).toBeGreaterThan(0);
+    expect(byId.D7.collapsesPrevented).toBeGreaterThan(0);
+  });
+
+  it("shows that raw discrimination alone would have cut the item that fixed the axis", () => {
+    const items = itemDiagnostics();
+    const weakest = [...items].sort((a, b) => a.discrimination - b.discrimination)[0];
+    expect(weakest.id).toBe("A13");
+    expect(weakest.collapsesPrevented).toBeGreaterThan(0);
+  });
+
+  it("finds no two ballot parties with identical coding vectors", () => {
+    expect(identicalColumns()).toEqual([]);
   });
 });

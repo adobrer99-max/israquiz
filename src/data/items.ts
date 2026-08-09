@@ -1,6 +1,6 @@
 /* ============================================================
    Item bank — spec §3
-   46 scored statements across five blocks, plus two diagnostic
+   48 scored statements across five blocks, plus two diagnostic
    items that never touch the axes or the match percentage.
 
    Coding key: A = agree · N = neutral or deliberately ambiguous
@@ -91,6 +91,10 @@ const RAW: Row[] = [
   ["A10", "A", -1, "Israel should be willing to negotiate indirectly with Hamas to reach long-term arrangements.", "DDNNNDDDADAAA"],
   ["A11", "A", -1, "Israel should allow humanitarian aid into Gaza without limiting its volume.", "DNNNNDDNANAAA"],
   ["A12", "A", 1, "The death penalty should be available for convicted terrorists.", "ADDNNAAADDDDD"],
+  // A13 added after §4.7 validation: nothing else in the bank separated The
+  // Democrats, Ra'am and the Joint List, all three of which were coded
+  // identically on the other twelve security items.
+  ["A13", "A", 1, "Armed attacks on Israeli soldiers in the West Bank should be condemned without qualification.", "AAAAAAAAAAAND"],
 
   ["B1", "B", -1, "Haredi yeshiva students should be subject to the military draft on the same terms as other citizens.", "DAADDNNAAA---"],
   ["B2", "B", -1, "Public transport should operate on Shabbat in municipalities that want it.", "DANDDDDAAN-A-"],
@@ -120,6 +124,10 @@ const RAW: Row[] = [
   ["D4", "D", 1, "Government investment in Arab towns should be substantially increased and insulated from coalition politics.", "NAANNDDNAAAAA"],
   ["D5", "D", -1, "Parties and candidates who reject Israel's definition as a Jewish and democratic state should be barred from running.", "AAAANAAADADDD"],
   ["D6", "D", -1, "The Law of Return's “grandchild clause” should be narrowed.", "NDDAAAADDD---"],
+  // D7 added after §4.7 validation. Zionism belongs on the identity axis, not
+  // the security one: The Democrats are dovish and Zionist, and an item that
+  // scored those together as hawkishness would wreck the horizontal axis.
+  ["D7", "D", -1, "Zionism is a legitimate expression of Jewish national self-determination.", "AAAANAAAAANDD"],
 
   ["E1", "E", 1, "The state should substantially increase spending on health and welfare, even if this requires higher taxes.", "DNNAAANDANAAA"],
   ["E2", "E", 1, "Child allowances and stipends for full-time yeshiva students should be increased.", "NDDAAAADNDAAA"],
@@ -133,10 +141,10 @@ const RAW: Row[] = [
 
 /* --- §3.7 The Joint List: merged ballot column (Hadash + Ta'al + Balad) --- */
 const JL_POS: Record<string, Position> = {
-  A1: "A", A2: "D", A3: "D", A4: "D", A5: A5_JL[A5_VARIANT], A6: "A", A7: "D", A8: "A", A9: "D", A10: "A", A11: "A", A12: "D",
+  A1: "A", A2: "D", A3: "D", A4: "D", A5: A5_JL[A5_VARIANT], A6: "A", A7: "D", A8: "A", A9: "D", A10: "A", A11: "A", A12: "D", A13: "N",
   B1: "-", B2: "A", B3: "A", B4: "N", B5: "D", B6: "N", B7: "D", B8: "A", B9: "D", B10: "N",
   C1: "A", C2: "D", C3: "D", C4: "A", C5: "A", C6: "A", C7: "D", C8: "D", C9: "A", C10: "D",
-  D1: "D", D2: "A", D3: "A", D4: "A", D5: "D", D6: "-",
+  D1: "D", D2: "A", D3: "A", D4: "A", D5: "D", D6: "-", D7: "D",
   E1: "A", E2: "A", E3: "N", E4: "A", E5: "D", E6: "A", E7: "D", E8: "N",
 };
 
@@ -148,6 +156,10 @@ const JL_POS: Record<string, Position> = {
 export const JL_MERGE_FLAGS: Record<string, "component" | "divergent"> = {
   B2: "component", B3: "component", B5: "component", B6: "component",
   B7: "component", B8: "component", B9: "component",
+  // A13 is the first divergence outside religion-and-state and economics.
+  // The spec's claim that the three components are identical on security held
+  // only because the bank had not asked the question that divides them.
+  A13: "divergent",
   B4: "divergent", B10: "divergent", E3: "divergent", E8: "divergent",
 };
 
@@ -156,7 +168,7 @@ const ERD_POS: Record<string, Position> = {
   A1: "D", A2: "A", A6: "D", A7: "N", A9: "N", A10: "D",
   B1: "A", B3: "A", B7: "D",
   C4: "N", C6: "N",
-  D1: "A", D2: "D", D5: "A",
+  D1: "A", D2: "D", D5: "A", D7: "A",
   E2: "D", E3: "A", E5: "A",
 };
 

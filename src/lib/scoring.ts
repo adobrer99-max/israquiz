@@ -43,7 +43,7 @@ export interface PartyResult {
   note?: string;
   weighted: number;
   unweighted: number;
-  /** share of the 46 scored items on which the party has a coded position */
+  /** share of the scored items on which the party has a coded position */
   coverage: number;
   /** items actually used: coded AND answered */
   scoredItems: number;

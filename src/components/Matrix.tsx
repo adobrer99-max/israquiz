@@ -115,9 +115,11 @@ export function Matrix() {
       <p className="small muted" style={{ marginTop: 12 }}>
         <span className="muted">*</span> one Joint List component coded, the other silent — a component
         position, not a list position. <span className="muted">†</span> components diverged; resolved to the
-        less committal value rather than inventing a consensus. Every flagged cell falls in religion-and-state
-        or economics, which is the actual shape of that alliance: unified on the questions that define it, a
-        coalition of conveniences elsewhere.
+        less committal value rather than inventing a consensus. Almost every flagged cell falls in
+        religion-and-state or economics, which is the shape of that alliance: unified on the questions that
+        define it, a coalition of conveniences elsewhere. The exception is A13, added after validation — it
+        is the first security item to divide the components, and the unity the merge appeared to show on
+        security was partly an artefact of what the bank had not yet asked.
       </p>
     </div>
   );

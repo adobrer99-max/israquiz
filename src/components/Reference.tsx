@@ -85,22 +85,31 @@ export function Diagnostics() {
 
       <h3 style={{ margin: "18px 0 6px" }}>Weakest discriminators</h3>
       <p className="small muted">
-        The share of party pairs a statement separates. Anything near zero is costing a question slot and
-        inflating every match percentage uniformly. Nothing in this bank is near zero.
+        Two numbers per statement. <strong>Split</strong> is the share of party pairs it separates — low
+        means most parties answer it the same way. <strong>Holds</strong> is the number of party pairs that
+        would land on an identical axis coordinate if the statement were dropped. A low split with a
+        non-zero hold is not a dead item: it is the only thing keeping two parties apart, and cutting it for
+        low variance would undo exactly that.
       </p>
       {items.slice(0, 6).map((d) => (
-        <div className="row" key={d.id}>
-          <span>
-            <span className="mono muted">{d.id}</span> {d.text.slice(0, 58)}…
+        <div className="row" key={d.id} style={{ alignItems: "flex-start" }}>
+          <span style={{ flex: 1, textAlign: "left", whiteSpace: "normal" }}>
+            <span className="mono muted">{d.id}</span> {d.text}
           </span>
-          <span className="mono">{d.discrimination.toFixed(2)}</span>
+          <span className="mono" style={{ flex: "none", whiteSpace: "nowrap" }}>
+            {d.discrimination.toFixed(2)}
+            <span style={{ color: d.collapsesPrevented > 0 ? "var(--good)" : "var(--muted)" }}>
+              {" "}
+              · holds {d.collapsesPrevented}
+            </span>
+          </span>
         </div>
       ))}
 
       <h3 style={{ margin: "22px 0 6px" }}>Axis pile-ups</h3>
       <p className="small muted">
         Three or more ballot parties landing on an identical coordinate. Each one is a difference the axis
-        cannot express.
+        cannot express. Both grid axes are now clear of these; what remains sits on the reported bars.
       </p>
       {collapses.map((c, i) => (
         <div className="row" key={i}>
@@ -114,7 +123,7 @@ export function Diagnostics() {
 
       <h3 style={{ margin: "22px 0 6px" }}>Coverage</h3>
       <p className="small muted">
-        Share of the 46 statements on which each party has a coded position. Below 70% a party is suppressed
+        Share of the 48 statements on which each party has a coded position. Below 70% a party is suppressed
         from the ranking and shown separately.
       </p>
       {coverage.map((r) => (

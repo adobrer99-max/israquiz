@@ -86,21 +86,45 @@ export const CODING_NOTES: Note[] = [
  */
 export const INSTRUMENT_NOTES: Note[] = [
   {
-    items: "Security block · dove pole",
+    items: "A13, D7 — items added after validation",
+    issue: "The first run of the §4.6 check found the security axis coding The Democrats, Ra'am and the Joint List identically on all twelve items, so all three sat at exactly the same point and the axis carried no information about the largest difference between them. Two statements were added rather than the coordinates adjusted. A13, on whether attacks on soldiers should be condemned without qualification, separates them on security. D7, on the legitimacy of Zionism, does the same on national identity — and belongs there rather than on the security axis, since The Democrats are both Zionist and dovish and an item that scored those together as hawkishness would wreck the horizontal axis. Both collapses are now resolved.",
+  },
+  {
+    items: "A13 · low discrimination, high value",
+    issue: "A13 is the most lopsided statement in the bank: eleven of the thirteen ballot entities agree with it. Read by variance alone it looks like a dead item. It is not — it is one of only two things preventing an axis collapse, which is why the diagnostics report both numbers. An item almost everyone agrees with can still be the only thing holding two parties apart, and cutting it for low variance would undo exactly that. Among respondents, rather than parties, it should divide sharply.",
+  },
+  {
+    items: "A13 · the Joint List merge",
     severe: true,
-    issue: "The Democrats, Ra'am and the Joint List are coded identically on all twelve security items and therefore sit at exactly the same point on the horizontal axis. The spec expects the Joint List further left than The Democrats; the bank cannot express that difference at all. The fix is a discriminating item — most plausibly on Zionism itself, or on the legitimacy of armed resistance — not a nudge to the coordinates.",
+    issue: "A13 is the first item to divide the Joint List outside religion-and-state and economics. Hadash–Ta'al is coded N and Balad D, so the merged column resolves to N. The spec's observation that the three components are 'genuinely identical' on security, institutions and national identity held only because the bank had not yet asked the question that divides them. That is worth saying plainly: the unity the merge appeared to show was partly an artefact of the item set.",
+  },
+  {
+    items: "D7 · United Torah Judaism",
+    issue: "Coded N, not A. Agudat Yisrael was historically anti-Zionist and Degel HaTorah non-Zionist; United Torah Judaism participates fully in the state without affirming Zionism as an ideology. The single item that separates it from the rest of the Netanyahu bloc is therefore not a security question but Zionism itself. Defensible either way, and the most interesting cell added in this revision.",
+  },
+  {
+    items: "D7 · Ra'am",
+    issue: "Coded N. Ra'am is a non-Zionist party that has deliberately avoided fighting this question, in contrast to Balad, which campaigns on it. N is what this bank means by deliberately ambiguous, but it is a low-confidence cell and the first one to re-examine against the filed list.",
   },
   {
     items: "Religion block · Yashar",
-    issue: "Yashar plots at −60 on the religion axis, well clear of the origin the spec expects, because its five coded religion-and-state cells all lean secular and the other five are N. If those N codings are really 'unstated' rather than 'centrist', they should be no-position, which would raise the coordinate's error bars rather than move it.",
+    issue: "Yashar plots at −60 on the religion axis rather than near the origin. This is not obviously an artefact to correct. Eisenkot's party has published no platform, and its five coded religion-and-state cells all lean secular while the other five are genuinely unstated — a party that has said little, and has leaned one way in the little it has said. The compass reports the stated positions and nothing else. Whether the silence is strategy or an absence of settled policy is a question about the party, not about the instrument.",
   },
   {
     items: "Religion block · Ra'am",
     issue: "Ra'am is coded on three of ten religion-and-state items, which places it at +67 — far above the 'slightly above the secular half' the spec anticipates. The marker is drawn as low-confidence for this reason.",
   },
   {
+    items: "Security block · The Democrats and Ra'am",
+    issue: "A13 lifts the Joint List clear of the other two dovish parties, but The Democrats and Ra'am remain on the same point: they are coded identically on all thirteen security items, which is a fair reading of two parties whose operative positions on Gaza, Iran and the West Bank genuinely coincide. They are 167 points apart on the vertical axis, so the markers do not collide on the grid.",
+  },
+  {
+    items: "Institutions block · remaining collapses",
+    issue: "Two three-way coincidences survive, both on institutions and rule of law: Likud with Otzma Yehudit and Religious Zionism at one pole, The Democrats with Ra'am and the Joint List at the other. Unlike the security collapse these look real rather than artefactual — each trio takes identical positions on judicial review, the Attorney General, the 7 October commission and police independence. Institutions is a reported bar rather than a grid axis, so the cost is lower, but it should be re-checked if any of the six moves.",
+  },
+  {
     items: "Item discrimination",
-    issue: "No statement in the bank is unanimous and none is close to it: the weakest discriminator still separates roughly half of all party pairs. There are no dead items to cut before launch. Response variance and item–axis correlation can only be computed once there are live responses.",
+    issue: "No statement in the bank is unanimous. Response variance and item–axis correlation can only be computed once there are live responses, which is the post-launch half of §4.7 and the point at which items should actually be cut.",
   },
 ];
 
