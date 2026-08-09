@@ -2,7 +2,7 @@
 
 An English-language election compass for the 26th Knesset, 27 October 2026.
 
-47 statements across five topics, a topic-weighting step, three unscored cross-cutting questions, a
+48 statements across five topics, a topic-weighting step, three unscored cross-cutting questions, a
 two-axis grid with the parties plotted, a ranked match percentage, and the full coding matrix published
 alongside it.
 
@@ -57,7 +57,7 @@ is the screen to hand to the fifteen-to-twenty known voters before launch.
 | Path | What lives there |
 |---|---|
 | `src/data/parties.ts` | Party registry — names, blocs, colours, ballot status |
-| `src/data/items.ts` | The 47-item bank and the 13-column coding matrix, plus the JL merge and ERD overlays |
+| `src/data/items.ts` | The 48-item bank and the 13-column coding matrix, plus the JL merge and ERD overlays |
 | `src/data/glossary.ts` | Glossary terms and the inline-annotation matcher (§5) |
 | `src/data/editorial.ts` | Version stamp, coding uncertainties, instrument limits (§7) |
 | `src/data/demographics.ts` | The optional post-result block (§6) |

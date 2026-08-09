@@ -40,6 +40,7 @@ export interface PartyResult {
   bloc: Bloc;
   ballot: boolean;
   belowThreshold: boolean;
+  thresholdNote?: string;
   note?: string;
   weighted: number;
   unweighted: number;
@@ -166,6 +167,7 @@ export function score(answers: Answers, weights: Weights = DEFAULT_WEIGHTS): Sco
       bloc: p.bloc,
       ballot: p.ballot,
       belowThreshold: !!p.belowThreshold,
+      thresholdNote: p.thresholdNote,
       note: p.note,
       ...m,
     };

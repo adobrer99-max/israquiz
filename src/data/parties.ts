@@ -8,6 +8,7 @@
 export type PartyCode =
   | "LIK" | "TOG" | "YSH" | "SHS" | "UTJ" | "OTZ" | "RZ"
   | "YB"  | "DEM" | "BW"  | "RAM" | "JL"  | "ERD"
+  | "NOAM"
   | "HTA" | "BAL";
 
 /** §4.5 bloc readout. `unaligned` parties are reported in no bloc average. */
@@ -22,6 +23,8 @@ export interface Party {
   ballot: boolean;
   /** §4.8.1 — threshold context shown next to the match */
   belowThreshold?: boolean;
+  /** how to phrase that context; polling and never-run-alone are different claims */
+  thresholdNote?: string;
   /** shown in the coding matrix and editorial notes */
   note?: string;
 }
@@ -64,7 +67,15 @@ export const PARTIES: Record<PartyCode, Party> = {
   BW: {
     name: "Blue & White", lead: "Gantz", color: "#7E8B99", bloc: "anti", ballot: true,
     belowThreshold: true,
+    thresholdNote: "polling below the 3.25% threshold",
     note: "Currently polling below the 3.25% electoral threshold.",
+  },
+  NOAM: {
+    name: "Noam For Israel", lead: "Maoz", color: "#4A1D6B", bloc: "pro", ballot: true,
+    belowThreshold: true,
+    // Not a polling claim — it has never contested an election on its own.
+    thresholdNote: "has never run alone; at threshold risk",
+    note: "Running separately for the first time in 2026. Its single seat in 2021 and 2022 came inside the Religious Zionism list. Coded from a narrow platform: complete on religion-and-state and national identity, thin on security, and silent on economics, which is an accurate description of the party rather than a gap in the research.",
   },
   RAM: {
     name: "Ra'am", lead: "Abbas", color: "#2E7D32", bloc: "non", ballot: true,
@@ -77,7 +88,7 @@ export const PARTIES: Record<PartyCode, Party> = {
   ERD: {
     name: "Erdan–Edelstein list (unnamed)", lead: "Erdan (Edelstein #2)", color: "#A0522D",
     bloc: "unaligned", ballot: true,
-    note: "Launched 6 August 2026. Only 16 of 47 items codeable and a third of those inferred. Suppressed from the headline ranking and from the grid by the coverage rule.",
+    note: "Launched 6 August 2026. Only 16 of 48 items codeable and a third of those inferred. Suppressed from the headline ranking and from the grid by the coverage rule.",
   },
   HTA: {
     name: "Hadash–Ta'al", lead: "Jabareen", color: "#B03A2E", bloc: "non", ballot: false,

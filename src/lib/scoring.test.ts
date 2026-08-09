@@ -23,9 +23,9 @@ function answerAs(code: PartyCode): Answers {
 }
 
 describe("bank integrity (§3, §5)", () => {
-  it("holds 47 scored items across five blocks", () => {
-    expect(ITEMS).toHaveLength(47);
-    expect(BLOCK_IDS.map((b) => ITEMS_BY_BLOCK[b].length)).toEqual([13, 14, 6, 6, 8]);
+  it("holds 48 scored items across five blocks", () => {
+    expect(ITEMS).toHaveLength(48);
+    expect(BLOCK_IDS.map((b) => ITEMS_BY_BLOCK[b].length)).toEqual([13, 14, 6, 7, 8]);
   });
 
   it("gives every party a coding cell for every item", () => {
@@ -213,8 +213,12 @@ describe("retired items (§4.7 — publish what you cut and why)", () => {
    * once Ra'am's column is re-coded. Pinned so the exception stays deliberate.
    */
   it("leaves exactly one duplicate row, and it is the deliberate one", () => {
+    // Every column, not just the 13-character matrix: parties held in an
+    // overlay (JL, ERD, Noam) are ballot entities too, and a check blind to
+    // them would call two items identical when a real party tells them apart.
+    const all = Object.keys(PARTIES) as PartyCode[];
     const canon = (it: { pos: Record<string, string> }) => {
-      const raw = MATRIX_ORDER.map((c) => it.pos[c]).join("");
+      const raw = all.map((c) => it.pos[c]).join("");
       const inv = [...raw].map((c) => (c === "A" ? "D" : c === "D" ? "A" : c)).join("");
       return raw < inv ? raw : inv;
     };
@@ -307,6 +311,77 @@ describe("items revised after tester feedback", () => {
   });
 });
 
+describe("Noam For Israel", () => {
+  const item = (id: string) => ITEMS.find((i) => i.id === id)!;
+
+  it("is a ranked ballot entity carrying its own threshold caveat", () => {
+    expect(PARTIES.NOAM.ballot).toBe(true);
+    expect(PARTIES.NOAM.belowThreshold).toBe(true);
+    // not a polling claim — it has never contested an election on its own
+    expect(PARTIES.NOAM.thresholdNote).not.toMatch(/polling/);
+    expect(score({}).ranked.map((r) => r.code)).toContain("NOAM");
+  });
+
+  it("is coded complete on its own turf and silent on economics", () => {
+    const coded = (b: string) =>
+      ITEMS.filter((i) => i.block === b && i.pos.NOAM !== "-").length;
+    expect(coded("B"), "religion-and-state").toBe(ITEMS_BY_BLOCK.B.length);
+    expect(coded("D"), "national identity").toBe(ITEMS_BY_BLOCK.D.length);
+    expect(coded("E"), "economics").toBe(0);
+    const cov = score({}).all.NOAM.coverage;
+    expect(cov).toBeGreaterThanOrEqual(COVERAGE_FLOOR);
+    expect(cov).toBeLessThan(0.8);
+  });
+
+  it("recovers itself for a respondent who answers as it does", () => {
+    expect(score(answerAs("NOAM")).ranked[0].code).toBe("NOAM");
+  });
+
+  /**
+   * Noam is the political arm of the Har Hamor stream, whose rabbinic authority
+   * forbids ascending the Temple Mount — so it parts company with the rest of
+   * the religious right on A14. That cell is the flagged one; if it is wrong,
+   * very little else distinguishes the column.
+   */
+  it("is not a copy of Otzma Yehudit or Religious Zionism", () => {
+    for (const other of ["OTZ", "RZ"] as PartyCode[]) {
+      const diff = ITEMS.filter(
+        (it) => it.pos.NOAM !== "-" && it.pos[other] !== "-" && it.pos.NOAM !== it.pos[other],
+      );
+      expect(diff.length, `NOAM vs ${other}`).toBeGreaterThan(0);
+      expect(diff.map((d) => d.id), `NOAM vs ${other}`).toContain("A14");
+    }
+    expect(item("A14").pos.NOAM).toBe("D");
+    expect(item("A14").pos.OTZ).toBe("A");
+  });
+});
+
+describe("D8 — state programmes against Jewish–Arab relationships", () => {
+  const d8 = () => ITEMS.find((i) => i.id === "D8")!;
+
+  it("sits on the identity axis, ethnonational-positive", () => {
+    expect(d8().block).toBe("D");
+    expect(d8().sign).toBe(-1);
+  });
+
+  it("asks about state policy rather than about anyone's private choices", () => {
+    expect(d8().text).toMatch(/^The state should fund programmes/);
+    expect(d8().text.toLowerCase()).not.toMatch(/miscegenation|forbid|ban/);
+  });
+
+  /**
+   * Shas, UTJ and Noam all agree, by different routes: the haredi parties on
+   * halachic grounds, which single out no ethnicity, and Noam on ethnic grounds.
+   * The matrix records positions, not reasons, and cannot show the difference.
+   */
+  it("collects the halachic and the ethnic objection in one cell", () => {
+    for (const c of ["SHS", "UTJ", "NOAM", "OTZ", "RZ"] as PartyCode[]) {
+      expect(d8().pos[c], c).toBe("A");
+    }
+    expect(d8().pos.DEM).toBe("D");
+  });
+});
+
 describe("chametz item (B12)", () => {
   const b12 = () => ITEMS.find((i) => i.id === "B12")!;
 
@@ -365,7 +440,7 @@ describe("party match (§4.2)", () => {
     a.A1 = null;
     const r = score(a).all.LIK;
     expect(Math.round(r.weighted)).toBe(100);
-    expect(r.scoredItems).toBe(46);
+    expect(r.scoredItems).toBe(47);
   });
 
   it("reproduces the unweighted result when every topic keeps its default allocation", () => {
@@ -501,7 +576,7 @@ describe("expected clustering smoke test (§4.6)", () => {
     const piles = axisCollapses().filter((c) => c.parties.length > 2);
     expect(piles.map((c) => `${c.block}:${[...c.parties].sort().join(",")}`).sort()).toEqual([
       "C:DEM,JL,RAM",
-      "C:LIK,OTZ,RZ",
+      "C:LIK,NOAM,OTZ,RZ",
     ]);
   });
 
@@ -563,7 +638,7 @@ describe("empty and degenerate inputs", () => {
     const a: Answers = {};
     for (const it of ITEMS) a[it.id] = null;
     const r = score(a);
-    expect(r.skippedCount).toBe(47);
+    expect(r.skippedCount).toBe(48);
     expect(r.ranked.every((x) => x.weighted === 0)).toBe(true);
   });
 

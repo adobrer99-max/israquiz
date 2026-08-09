@@ -86,7 +86,7 @@ export function drawShareCard(
 
     ctx.fillStyle = MUTED;
     ctx.font = "400 16px Archivo, system-ui, sans-serif";
-    ctx.fillText(r.belowThreshold ? `${r.lead} · polling below the 3.25% threshold` : r.lead, 118, y + 64);
+    ctx.fillText(r.belowThreshold ? `${r.lead} · ${r.thresholdNote ?? "below the 3.25% threshold"}` : r.lead, 118, y + 64);
 
     ctx.fillStyle = INK;
     ctx.font = "700 32px 'IBM Plex Mono', monospace";
