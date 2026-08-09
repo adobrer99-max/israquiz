@@ -9,12 +9,14 @@
       name="description"
       content="An English-language election compass for the 26th Knesset, 27 October 2026. 46 statements, five topics, a published coding matrix."
     />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Mono:wght@400;600;700&display=swap"
-      rel="stylesheet"
-    />
+    <!--
+      Type is served from this origin. A stylesheet fetched from a third party
+      would send every visitor's IP to that third party before the quiz loads,
+      which would make the promise on the intro screen — that nothing leaves
+      your browser — false. See public/fonts/README.md.
+    -->
+    <link rel="stylesheet" href="/fonts.css" />
+    <link rel="preload" href="/fonts/source-serif-var-latin.woff2" as="font" type="font/woff2" crossorigin />
   </head>
   <body>
     <div id="root"></div>

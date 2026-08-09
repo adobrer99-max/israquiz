@@ -16,6 +16,38 @@ npm test           # scoring engine + bank integrity + the §4.6 clustering smok
 npm run build      # static site into dist/
 ```
 
+## Deploying
+
+A pure static site: no server, no database, no environment variables, no
+secrets. `npm run build` writes `dist/`, which any static host will serve.
+
+`vite.config.ts` sets `base: "./"`, so assets resolve relatively and the same
+artifact works from an apex domain, a subdirectory, or a GitHub Pages project
+path without reconfiguration.
+
+**GitHub Pages** is wired up in `.github/workflows/deploy.yml`. Enable it once
+under Settings → Pages → Source: **GitHub Actions**; after that every push to
+`main` typechecks, runs the tests, builds, and publishes. Feature branches never
+publish. The workflow fails the build if a third-party asset reference ever
+reappears in the output.
+
+**Cloudflare Pages** is the better choice if you want a custom domain: connect
+the repo, build command `npm run build`, output directory `dist`. Free
+certificates, and analytics without cookies — which matters for a page that
+asks about religion and political opinion.
+
+Type is **self-hosted** (`public/fonts/`), so the app makes no third-party
+request at runtime and the intro screen's promise that nothing leaves your
+browser is literally true. That was not the case while the fonts came from
+Google, whose stylesheet sends every visitor's IP address to Google before the
+quiz renders — a live GDPR question anywhere, and a sharper one here, since
+§6.5.6 flags this instrument as collecting special-category data. Regenerate
+with `node scripts/fetch-fonts.mjs`; see `public/fonts/README.md`.
+
+Before publishing anything for real, `VERSION` in `src/data/editorial.ts` reads
+`v0.2 — preview` and shows on every screen. §8.7 says v1 waits for the filed
+lists in September.
+
 Add `?validate=1` to the URL for validation mode (§4.7): the quiz asks for your intended vote up front and
 then reports whether it recovered it, along with every statement where you flatly oppose that party. That
 is the screen to hand to the fifteen-to-twenty known voters before launch.
