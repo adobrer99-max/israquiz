@@ -86,12 +86,15 @@ const RAW: Row[] = [
   A5_ROWS[A5_VARIANT],
   ["A6", "A", -1, "The Palestinian Authority should be given a governing role in post-war Gaza.", "DDNDNDDDADAAA"],
   ["A7", "A", 1, "Settlement construction in the West Bank should continue to expand.", "ANDNNAANDNDDD"],
-  // "vigorously" removed after tester feedback: an intensifier makes the
-  // disagreeing side sound like it is endorsing lawlessness, which §5's
-  // both-sides test forbids. The codings are unchanged — the parties coded D
-  // favour retroactive legalisation of outposts, not merely lighter
-  // enforcement, so they still decline the plain statement.
-  ["A8", "A", -1, "The state should enforce the law against illegal outposts and settler violence.", "DAANNDDAAAAAA"],
+  // Was "the state should vigorously enforce the law against...". The
+  // intensifier made the disagreeing side sound like it was endorsing
+  // lawlessness, which fails §5's both-sides test; but simply deleting it left
+  // a statement nobody could refuse. Naming the two concrete acts restores a
+  // real disagreement — the parties coded D favour retroactive legalisation
+  // rather than demolition, and have called for pardons rather than
+  // prosecutions. Codings unchanged; the row was never about enforcement in
+  // the abstract.
+  ["A8", "A", -1, "Illegal outposts should be removed and settler violence prosecuted.", "DAANNDDAAAAAA"],
   ["A9", "A", 1, "Israel should be prepared to take major military action against Iran without American approval.", "AANNNAAADNDDD"],
   ["A10", "A", -1, "Israel should be willing to negotiate indirectly with Hamas to reach long-term arrangements.", "DDNNNDDDADAAA"],
   ["A12", "A", 1, "The death penalty should be available for convicted terrorists.", "ADDNNAAADDDDD"],

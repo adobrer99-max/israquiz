@@ -274,11 +274,15 @@ describe("presentation order (§8.9, extended)", () => {
 describe("items revised after tester feedback", () => {
   const item = (id: string) => ITEMS.find((i) => i.id === id)!;
 
-  it("drops the intensifier from the settler-violence item", () => {
+  it("states the settler-violence item as two concrete acts, with no intensifier", () => {
     expect(item("A8").text).not.toMatch(/vigorous/i);
     expect(item("A8").text).toBe(
-      "The state should enforce the law against illegal outposts and settler violence.",
+      "Illegal outposts should be removed and settler violence prosecuted.",
     );
+    // The point of naming the acts is that refusing them stays a real position.
+    expect(item("A8").pos.LIK).toBe("D");
+    expect(item("A8").pos.OTZ).toBe("D");
+    expect(item("A8").pos.DEM).toBe("A");
   });
 
   it("asks marriage and adoption separately, and they are not the same question", () => {

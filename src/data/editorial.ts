@@ -143,8 +143,8 @@ export const INSTRUMENT_NOTES: Note[] = [
     issue: "It concerns how far rabbinic authority reaches into military policy, and nothing about it is hawkish or dovish. Scored on the security axis it would have pulled Religious Zionism — sitting on the hawk pole — toward the doves for holding a religious view, in the same way the Temple Mount item would have pulled the haredi parties toward the secular pole. Same trap, opposite direction.",
   },
   {
-    items: "A8 · intensifier removed",
-    issue: "The statement read 'should vigorously enforce'. An intensifier makes the disagreeing side sound like it is endorsing lawlessness, which fails §5's test that a supporter and an opponent both accept the statement as a fair description of their position. Codings are unchanged: the parties coded D favour retroactive legalisation of outposts rather than lighter enforcement, so they still decline the plain statement. Worth watching in testing — if it starts reading as a motherhood statement, the concrete replacement is 'Illegal outposts should be removed and settler violence prosecuted.'",
+    items: "A8 · rewritten as two concrete acts",
+    issue: "The statement read 'the state should vigorously enforce the law against illegal outposts and settler violence'. An intensifier makes the disagreeing side sound like it is endorsing lawlessness, which fails §5's test that a supporter and an opponent both accept the statement as a fair description of their position. Deleting the intensifier alone would have left a statement nobody could refuse, and an item nobody opposes carries no information. Naming the two acts — removal and prosecution — restores a real disagreement: the parties coded D favour retroactive legalisation rather than demolition, and have called for pardons rather than prosecutions. Codings are unchanged, because the row was never about enforcement in the abstract.",
   },
   {
     items: "B10, B13 · marriage and adoption split",
