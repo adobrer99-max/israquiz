@@ -132,6 +132,18 @@ export const GLOSSARY: Term[] = [
     match: ["halakha"],
   },
   {
+    key: "chametz",
+    title: "Chametz",
+    body: "Leavened food, forbidden to Jews during the week of Passover. A 1986 law already restricts its public display; a 2023 law went further and let hospital directors bar patients and visitors from bringing it onto the premises, which in practice means bag searches at the door of a public hospital. It is the smallest and most concrete religion-and-state fight in Israeli politics, and the one where the abstractions in this block get tested against a ward.",
+    match: ["Chametz", "chametz"],
+  },
+  {
+    key: "passover",
+    title: "Passover",
+    body: "The week-long spring festival marking the Exodus, during which leavened food is forbidden. Observance is near-universal among religious Jews and widespread among secular ones, which is why the question is not whether people keep it but whether the state enforces it.",
+    match: ["Passover"],
+  },
+  {
     key: "shabbat",
     title: "Shabbat",
     body: "The Jewish sabbath, from Friday sunset to Saturday nightfall. Public transport largely stops nationally and most commerce closes, under arrangements inherited from the 1947 'status quo' agreement rather than from any single statute.",

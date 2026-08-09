@@ -1,6 +1,6 @@
 /* ============================================================
    Item bank — spec §3
-   50 scored statements across five blocks, plus diagnostic and
+   45 scored statements across five blocks, plus diagnostic and
    cross-cutting items that never touch the axes or the match.
 
    Coding key: A = agree · N = neutral or deliberately ambiguous
@@ -89,7 +89,6 @@ const RAW: Row[] = [
   ["A8", "A", -1, "The state should vigorously enforce the law against illegal outposts and settler violence.", "DAANNDDAAAAAA"],
   ["A9", "A", 1, "Israel should be prepared to take major military action against Iran without American approval.", "AANNNAAADNDDD"],
   ["A10", "A", -1, "Israel should be willing to negotiate indirectly with Hamas to reach long-term arrangements.", "DDNNNDDDADAAA"],
-  ["A11", "A", -1, "Israel should allow humanitarian aid into Gaza without limiting its volume.", "DNNNNDDNANAAA"],
   ["A12", "A", 1, "The death penalty should be available for convicted terrorists.", "ADDNNAAADDDDD"],
   // A13 added after §4.7 validation: nothing else in the bank separated The
   // Democrats, Ra'am and the Joint List, all three of which were coded
@@ -118,23 +117,22 @@ const RAW: Row[] = [
   // never repudiated — the §7 rule of coding the stated position and
   // documenting the choice.
   ["B11", "B", -1, "The Western Wall egalitarian plaza agreement should be implemented.", "NANDDDDAAA-N-"],
+  // B12 is deliberately concrete. The abstractions in this block — halakha's
+  // precedence, the Rabbinate's authority — invite people to answer on
+  // principle; a hospital ward is where the principle is actually enforced.
+  ["B12", "B", -1, "Chametz should be permitted in public hospitals during Passover.", "DANDDDDAAA-A-"],
 
   ["C1", "C", 1, "The Supreme Court should have the power to strike down Basic Laws.", "DNNDDDDNANAAA"],
-  ["C2", "C", -1, "Elected politicians should hold a decisive majority on the Judicial Selection Committee.", "ADDAAAANDDDDD"],
   ["C3", "C", -1, "A Knesset majority should be able to override Supreme Court rulings.", "ADDAAAANDDDDD"],
-  ["C4", "C", 1, "A prime minister under criminal indictment should be required to step down.", "DAADDDDAAAAAA"],
   ["C5", "C", 1, "The Attorney General's legal opinions should be binding on the government.", "DNADDDDNAAAAA"],
   ["C6", "C", 1, "A state commission of inquiry into the failures of 7 October, with a judicially appointed chair, should be established.", "DAADDDDAAAAAA"],
-  ["C7", "C", -1, "The government should have greater control over public broadcasting and media regulation.", "ADDNNAADDDDDD"],
   ["C8", "C", -1, "Ministers should be able to appoint and dismiss their own ministry legal advisers.", "ADDANAANDDDDD"],
   ["C9", "C", 1, "Operational policing decisions should be insulated from ministerial direction.", "DAANNDDAAAAAA"],
-  ["C10", "C", -1, "Foreign-government funding of Israeli civil-society organisations should be heavily taxed or restricted.", "ADDNNAANDDDDD"],
 
   ["D1", "D", -1, "Israel should be defined first and foremost as a Jewish state, even where this limits full equality for non-Jewish citizens.", "ANDANAANDNDDD"],
   ["D2", "D", 1, "Arab parties should be legitimate partners in a governing coalition.", "DNNDDDDDADAAA"],
   ["D3", "D", 1, "The Nation-State Basic Law should be amended to add a clause guaranteeing equality.", "DNNDDDDDANAAA"],
   ["D4", "D", 1, "Government investment in Arab towns should be substantially increased and insulated from coalition politics.", "NAANNDDNAAAAA"],
-  ["D5", "D", -1, "Parties and candidates who reject Israel's definition as a Jewish and democratic state should be barred from running.", "AAAANAAADADDD"],
   ["D6", "D", -1, "The Law of Return's “grandchild clause” should be narrowed.", "NDDAAAADDD---"],
   // D7 added after §4.7 validation. Zionism belongs on the identity axis, not
   // the security one: The Democrats are dovish and Zionist, and an item that
@@ -154,7 +152,7 @@ const RAW: Row[] = [
 /* --- §3.7 The Joint List: merged ballot column (Hadash + Ta'al + Balad) --- */
 const JL_POS: Record<string, Position> = {
   A1: "A", A2: "D", A3: "D", A4: "D", A5: A5_JL[A5_VARIANT], A6: "A", A7: "D", A8: "A", A9: "D", A10: "A", A11: "A", A12: "D", A13: "N", A14: "D",
-  B1: "-", B2: "A", B3: "A", B4: "N", B5: "D", B6: "N", B7: "D", B8: "A", B9: "D", B10: "N", B11: "N",
+  B1: "-", B2: "A", B3: "A", B4: "N", B5: "D", B6: "N", B7: "D", B8: "A", B9: "D", B10: "N", B11: "N", B12: "A",
   C1: "A", C2: "D", C3: "D", C4: "A", C5: "A", C6: "A", C7: "D", C8: "D", C9: "A", C10: "D",
   D1: "D", D2: "A", D3: "A", D4: "A", D5: "D", D6: "-", D7: "D",
   E1: "A", E2: "A", E3: "N", E4: "A", E5: "D", E6: "A", E7: "D", E8: "N",
@@ -167,7 +165,7 @@ const JL_POS: Record<string, Position> = {
  */
 export const JL_MERGE_FLAGS: Record<string, "component" | "divergent"> = {
   B2: "component", B3: "component", B5: "component", B6: "component",
-  B7: "component", B8: "component", B9: "component", B11: "component",
+  B7: "component", B8: "component", B9: "component", B11: "component", B12: "component",
   // A13 is the first divergence outside religion-and-state and economics.
   // The spec's claim that the three components are identical on security held
   // only because the bank had not asked the question that divides them.
@@ -203,6 +201,64 @@ export const ITEMS: Item[] = RAW.map(([id, block, sign, text, codings]) => {
 export const ITEMS_BY_ID: Record<string, Item> = Object.fromEntries(
   ITEMS.map((it) => [it.id, it]),
 );
+
+/* ============================================================
+   Retired items — spec §4.7, "publish what you cut and why"
+   Each of these carried a coding row identical to another item's,
+   so no pair of parties was separated by one and not the other.
+   They are kept here, and shown in the app, rather than deleted:
+   a cut is an editorial act and should be auditable.
+   ============================================================ */
+
+export interface RetiredItem extends Item {
+  /** the item kept in its place */
+  duplicateOf: string;
+  reason: string;
+}
+
+const RETIRED_ROWS: (readonly [Row, string, string])[] = [
+  [
+    ["A11", "A", -1, "Israel should allow humanitarian aid into Gaza without limiting its volume.", "DNNNNDDNANAAA"],
+    "A5",
+    "Identical contribution to the security axis as A5. A5 was kept because it has a succession plan — §5's durable replacement is drafted and one line swaps it in — where this item had none. The closest of the six calls, and the easiest to reverse.",
+  ],
+  [
+    ["C2", "C", -1, "Elected politicians should hold a decisive majority on the Judicial Selection Committee.", "ADDAAAANDDDDD"],
+    "C3",
+    "Identical contribution to the institutions axis as C3. C3 was kept because it states the underlying principle where this states a mechanism for reaching it, and §5 prefers the principle to the proposal.",
+  ],
+  [
+    ["C4", "C", 1, "A prime minister under criminal indictment should be required to step down.", "DAADDDDAAAAAA"],
+    "C6",
+    "Identical contribution to the institutions axis as C6. C6 was kept because §3.6 turns on the distinction it draws — a state commission with a judicially appointed chair against a 'national' probe — and because this item ran close to being a second Netanyahu question, which F1 already asks and deliberately keeps out of the scoring.",
+  ],
+  [
+    ["C7", "C", -1, "The government should have greater control over public broadcasting and media regulation.", "ADDNNAADDDDDD"],
+    "C9",
+    "Identical contribution to the institutions axis as C9. C9 was kept because §3.8 added it deliberately, for a party fielding a former police commander for the national security portfolio, and because it is the cell most likely to stop being a duplicate once Ra'am's column is re-coded.",
+  ],
+  [
+    ["C10", "C", -1, "Foreign-government funding of Israeli civil-society organisations should be heavily taxed or restricted.", "ADDNNAANDDDDD"],
+    "A3",
+    "Carried the same coding row as A3 across all thirteen columns. A3 was kept as the more consequential question; this one cost a slot without separating any party A3 does not.",
+  ],
+  [
+    ["D5", "D", -1, "Parties and candidates who reject Israel's definition as a Jewish and democratic state should be barred from running.", "AAAANAAADADDD"],
+    "A2",
+    "Carried the same coding row as A2 across all thirteen columns. A2 was kept as the more consequential question, and D2 and D3 already cover the legitimacy of Arab parties from two other angles.",
+  ],
+];
+
+export const RETIRED: RetiredItem[] = RETIRED_ROWS.map(([row, duplicateOf, reason]) => {
+  const [id, block, sign, text, codings] = row;
+  const pos = EMPTY_POS();
+  MATRIX_ORDER.forEach((code, i) => {
+    pos[code] = codings[i] as Position;
+  });
+  pos.JL = JL_POS[id] ?? "-";
+  pos.ERD = ERD_POS[id] ?? "-";
+  return { id, block, sign, text, pos, duplicateOf, reason };
+});
 
 export const ITEMS_BY_BLOCK: Record<BlockId, Item[]> = BLOCK_IDS.reduce(
   (acc, b) => {

@@ -2,7 +2,7 @@ import { CODING_NOTES, INSTRUMENT_NOTES, LIMITS, VERSION, VERSION_DATE } from ".
 import { GLOSSARY } from "../data/glossary";
 import { PARTIES, type PartyCode } from "../data/parties";
 import { axisCollapses, coverageTable, itemDiagnostics } from "../lib/diagnostics";
-import { BLOCKS } from "../data/items";
+import { BLOCKS, RETIRED } from "../data/items";
 
 export function GlossaryPage({ focus }: { focus?: string }) {
   return (
@@ -121,9 +121,33 @@ export function Diagnostics() {
         </div>
       ))}
 
+      <h3 style={{ margin: "22px 0 6px" }}>Cut, and why</h3>
+      <p className="small muted">
+        Six statements were removed after this check. Each carried a coding row identical to another item's,
+        so no pair of parties was separated by one and not the other — they cost a question slot and told the
+        scoring nothing it did not already know. Three of the six were in institutions and rule of law, which
+        is itself a finding: the judicial overhaul was a pure bloc fight, and every party's position on every
+        judicial question was fixed by which side of the coalition it sat on.
+      </p>
+      {RETIRED.map((r) => (
+        <div className="row" key={r.id} style={{ display: "block" }}>
+          <div className="mono tiny" style={{ color: "var(--envelope)", marginBottom: 3 }}>
+            {r.id} · kept {r.duplicateOf} instead
+          </div>
+          <div className="small" style={{ marginBottom: 4 }}>
+            {r.text}
+          </div>
+          <div className="small muted">{r.reason}</div>
+        </div>
+      ))}
+      <p className="small muted" style={{ marginTop: 10 }}>
+        One duplicate pair was kept on purpose: A8 and C9 carry the same row but sit in different blocks, and
+        §3.8 added C9 for a reason that is likely to make it diverge once Ra'am's column is re-coded.
+      </p>
+
       <h3 style={{ margin: "22px 0 6px" }}>Coverage</h3>
       <p className="small muted">
-        Share of the 50 statements on which each party has a coded position. Below 70% a party is suppressed
+        Share of the 45 statements on which each party has a coded position. Below 70% a party is suppressed
         from the ranking and shown separately.
       </p>
       {coverage.map((r) => (

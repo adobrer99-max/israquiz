@@ -77,7 +77,7 @@ export const PARTIES: Record<PartyCode, Party> = {
   ERD: {
     name: "Erdan–Edelstein list (unnamed)", lead: "Erdan (Edelstein #2)", color: "#A0522D",
     bloc: "unaligned", ballot: true,
-    note: "Launched 6 August 2026. Only 18 of 50 items codeable and a third of those inferred. Suppressed from the headline ranking and from the grid by the coverage rule.",
+    note: "Launched 6 August 2026. Only 16 of 45 items codeable and a third of those inferred. Suppressed from the headline ranking and from the grid by the coverage rule.",
   },
   HTA: {
     name: "Hadash–Ta'al", lead: "Jabareen", color: "#B03A2E", bloc: "non", ballot: false,

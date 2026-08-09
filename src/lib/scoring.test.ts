@@ -4,7 +4,7 @@ import {
   partyAxesFor, score, spansBlocs, unlikelyBedfellows, userAxes, type Answers, type Weights,
 } from "./scoring";
 import {
-  A5_ROWS, BLOCK_IDS, CROSS_CUTTING, F1, F2, G1, G2, G3, ITEMS, ITEMS_BY_BLOCK, JL_MERGE_FLAGS,
+  A5_ROWS, BLOCK_IDS, CROSS_CUTTING, F1, F2, G1, G2, G3, ITEMS, ITEMS_BY_BLOCK, JL_MERGE_FLAGS, RETIRED,
   type Position,
 } from "../data/items";
 import { axisCollapses, identicalColumns, itemDiagnostics } from "./diagnostics";
@@ -22,9 +22,9 @@ function answerAs(code: PartyCode): Answers {
 }
 
 describe("bank integrity (§3, §5)", () => {
-  it("holds 50 scored items across five blocks", () => {
-    expect(ITEMS).toHaveLength(50);
-    expect(BLOCK_IDS.map((b) => ITEMS_BY_BLOCK[b].length)).toEqual([14, 11, 10, 7, 8]);
+  it("holds 45 scored items across five blocks", () => {
+    expect(ITEMS).toHaveLength(45);
+    expect(BLOCK_IDS.map((b) => ITEMS_BY_BLOCK[b].length)).toEqual([13, 12, 6, 6, 8]);
   });
 
   it("gives every party a coding cell for every item", () => {
@@ -170,6 +170,83 @@ describe("cross-cutting block G", () => {
   });
 });
 
+describe("retired items (§4.7 — publish what you cut and why)", () => {
+  /** Signed contribution of an item to its own block, per party. */
+  const contribution = (it: { sign: number; pos: Record<string, string> }) =>
+    MATRIX_ORDER.map((c) => {
+      const p = it.pos[c];
+      return p === "-" ? "x" : String(it.sign * (p === "A" ? 1 : p === "D" ? -1 : 0));
+    }).join(",");
+
+  it("keeps six retired statements out of the scored bank", () => {
+    expect(RETIRED).toHaveLength(6);
+    for (const r of RETIRED) expect(ITEMS.some((i) => i.id === r.id), r.id).toBe(false);
+  });
+
+  it("names a surviving item for each one cut, carrying the same information", () => {
+    for (const r of RETIRED) {
+      const kept = ITEMS.find((i) => i.id === r.duplicateOf);
+      expect(kept, `${r.id} -> ${r.duplicateOf}`).toBeDefined();
+      const same = MATRIX_ORDER.every((c) => r.pos[c] === kept!.pos[c]);
+      const inverted = MATRIX_ORDER.every(
+        (c) => r.pos[c] === (kept!.pos[c] === "A" ? "D" : kept!.pos[c] === "D" ? "A" : kept!.pos[c]),
+      );
+      expect(same || inverted, `${r.id} does not duplicate ${r.duplicateOf}`).toBe(true);
+      expect(r.reason.length, r.id).toBeGreaterThan(40);
+    }
+  });
+
+  it("leaves no two items in a block contributing identically to its axis", () => {
+    const seen = new Map<string, string[]>();
+    for (const it of ITEMS) {
+      const key = `${it.block}|${contribution(it)}`;
+      seen.set(key, [...(seen.get(key) ?? []), it.id]);
+    }
+    const dupes = [...seen.values()].filter((g) => g.length > 1);
+    expect(dupes).toEqual([]);
+  });
+
+  /**
+   * A8 and C9 still share a coding row. They sit in different blocks, so neither
+   * axis is redundant, and §3.8 added C9 for a reason that should make it diverge
+   * once Ra'am's column is re-coded. Pinned so the exception stays deliberate.
+   */
+  it("leaves exactly one duplicate row, and it is the deliberate one", () => {
+    const canon = (it: { pos: Record<string, string> }) => {
+      const raw = MATRIX_ORDER.map((c) => it.pos[c]).join("");
+      const inv = [...raw].map((c) => (c === "A" ? "D" : c === "D" ? "A" : c)).join("");
+      return raw < inv ? raw : inv;
+    };
+    const seen = new Map<string, string[]>();
+    for (const it of ITEMS) seen.set(canon(it), [...(seen.get(canon(it)) ?? []), it.id]);
+    const dupes = [...seen.values()].filter((g) => g.length > 1).map((g) => g.sort().join(","));
+    expect(dupes).toEqual(["A8,C9"]);
+  });
+});
+
+describe("chametz item (B12)", () => {
+  const b12 = () => ITEMS.find((i) => i.id === "B12")!;
+
+  it("sits in religion-and-state on the secular side of agreement", () => {
+    expect(b12().block).toBe("B");
+    expect(b12().sign).toBe(-1);
+  });
+
+  it("splits Likud from the parties it governs with on enforcement", () => {
+    expect(b12().pos.LIK).toBe("D");
+    expect(b12().pos.YB).toBe("A");
+    expect(b12().pos.DEM).toBe("A");
+  });
+
+  it("is not a restatement of the Shabbat items", () => {
+    for (const other of ["B2", "B8"]) {
+      const o = ITEMS.find((i) => i.id === other)!;
+      const identical = MATRIX_ORDER.every((c) => o.pos[c] === b12().pos[c]);
+      expect(identical, `B12 duplicates ${other}`).toBe(false);
+    }
+  });
+});
+
 describe("item agreement (§4.1)", () => {
   it("scores direction only, discarding intensity", () => {
     expect(agreementPoints(2, "A")).toBe(2);
@@ -205,7 +282,7 @@ describe("party match (§4.2)", () => {
     a.A1 = null;
     const r = score(a).all.LIK;
     expect(Math.round(r.weighted)).toBe(100);
-    expect(r.scoredItems).toBe(49);
+    expect(r.scoredItems).toBe(44);
   });
 
   it("reproduces the unweighted result when every topic keeps its default allocation", () => {
@@ -403,7 +480,7 @@ describe("empty and degenerate inputs", () => {
     const a: Answers = {};
     for (const it of ITEMS) a[it.id] = null;
     const r = score(a);
-    expect(r.skippedCount).toBe(50);
+    expect(r.skippedCount).toBe(45);
     expect(r.ranked.every((x) => x.weighted === 0)).toBe(true);
   });
 
@@ -450,7 +527,7 @@ describe("Joint List merge rule (§3.7)", () => {
       return h !== b && !(h === "-" && b === "-");
     });
     expect(compromised.map((i) => i.id).sort()).toEqual(
-      ["A13", "B2", "B3", "B4", "B5", "B6", "B7", "B8", "B9", "B10", "B11", "E3", "E8"].sort(),
+      ["A13", "B2", "B3", "B4", "B5", "B6", "B7", "B8", "B9", "B10", "B11", "B12", "E3", "E8"].sort(),
     );
     expect([...new Set(compromised.map((i) => i.block))].sort()).toEqual(["A", "B", "E"]);
   });

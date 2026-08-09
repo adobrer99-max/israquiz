@@ -56,7 +56,7 @@ export const CODING_NOTES: Note[] = [
   },
   {
     items: "The Joint List merge",
-    issue: "The technical-bloc structure means the merged column overstates unity on religion-and-state and economics. Every flagged and divergent cell falls in exactly those two blocks; on security, institutions and national identity the three components are genuinely identical. Re-examine once the joint slate is published — the ordering of the list itself will show which component's positions carry weight.",
+    issue: "The technical-bloc structure means the merged column overstates unity on religion-and-state and economics, where all but one of the flagged and divergent cells fall. The exception is A13, added after validation, which is the first security item to divide the components — so the spec's claim that the three are genuinely identical outside those two blocks held partly because the bank had not asked the question. Re-examine once the joint slate is published; the ordering of the list itself will show which component's positions carry weight.",
   },
   {
     items: "Economy block (Otzma Yehudit, Religious Zionism)",
@@ -65,11 +65,11 @@ export const CODING_NOTES: Note[] = [
   {
     items: "All Erdan–Edelstein rows",
     severe: true,
-    issue: "The party is days old and unnamed; 63% of items are unstated and a third of the coded ones are inferred rather than stated. To be re-coded entirely once a platform exists. Also verify the list still exists at filing — Likud breakaways have a mixed survival record.",
+    issue: "The party is days old and unnamed; 64% of items are unstated and a third of the coded ones are inferred rather than stated. To be re-coded entirely once a platform exists. Also verify the list still exists at filing — Likud breakaways have a mixed survival record.",
   },
   {
-    items: "Ra'am (D1, D5, C9)",
-    issue: "Yoav Segalovitz's reported move to Ra'am's list comes with a stated precondition that the party recognise Israel as a Jewish state. If adopted, D1 flips and D5 follows — the most consequential single recoding in the bank. Not pre-empted here. The larger effect is on other parties' D2, which asks whether Arab parties are legitimate coalition partners: if bloc leaders follow the polling, several columns change on one item.",
+    items: "Ra'am (D1, D7, C9)",
+    issue: "Yoav Segalovitz's reported move to Ra'am's list comes with a stated precondition that the party recognise Israel as a Jewish state. If adopted, D1 flips and D7 moves with it — the most consequential single recoding in the bank. Not pre-empted here. The larger effect is on other parties' D2, which asks whether Arab parties are legitimate coalition partners: if bloc leaders follow the polling, several columns change on one item.",
   },
   {
     items: "D2 (all columns)",
@@ -129,6 +129,18 @@ export const INSTRUMENT_NOTES: Note[] = [
   {
     items: "G3 · no party disagrees",
     issue: "Not one column is coded D. §5 requires a scored statement to draw both agreement and disagreement, and an item nobody opposes inflates every match percentage uniformly — which is the concrete reason block G exists rather than a sixth weighted topic. As an unscored readout the item still works: the agree-versus-neutral split is the Shas-against-United Torah Judaism communal cut, which nothing else in the bank produces. If a sharper version is wanted later, the contested form is affirmative action in senior public appointments rather than historical acknowledgment.",
+  },
+  {
+    items: "B12 · chametz in hospitals",
+    issue: "The rest of the religion-and-state block asks about principles — halakha's precedence, the Rabbinate's authority, recognition of non-Orthodox streams — and principles invite people to answer as they would like to think of themselves. A hospital ward during Passover is where the principle is actually enforced, on patients and visitors having their bags searched at the door. It is the smallest question in the block and probably the one that predicts best.",
+  },
+  {
+    items: "Six statements cut after validation",
+    issue: "A11, C2, C4, C7, C10 and D5 each carried a coding row identical to another item's, so no pair of parties was separated by one and not the other. They are retired rather than deleted, with the item kept in each one's place and the reason recorded, and they remain visible under Diagnostics. Three of the six were in institutions and rule of law, which is a finding rather than an accident: the judicial overhaul was a pure bloc fight, and every party's position on every judicial question was fixed by which side of the coalition it sat on. The institutions block is correspondingly the one where a compass learns least.",
+  },
+  {
+    items: "A8 and C9 · a duplicate kept on purpose",
+    issue: "These two still carry the same coding row. They were kept because they sit in different blocks, so neither axis is made redundant, and because §3.8 added C9 for a specific reason — a party fielding a former police commander for the national security portfolio — that should make it diverge once Ra'am's column is re-coded from the filed list. If it has not diverged by then, cut it.",
   },
   {
     items: "Security block · The Democrats and Ra'am",

@@ -2,7 +2,7 @@
 
 An English-language election compass for the 26th Knesset, 27 October 2026.
 
-50 statements across five topics, a topic-weighting step, three unscored cross-cutting questions, a
+45 statements across five topics, a topic-weighting step, three unscored cross-cutting questions, a
 two-axis grid with the parties plotted, a ranked match percentage, and the full coding matrix published
 alongside it.
 
@@ -25,7 +25,7 @@ is the screen to hand to the fifteen-to-twenty known voters before launch.
 | Path | What lives there |
 |---|---|
 | `src/data/parties.ts` | Party registry — names, blocs, colours, ballot status |
-| `src/data/items.ts` | The 50-item bank and the 13-column coding matrix, plus the JL merge and ERD overlays |
+| `src/data/items.ts` | The 45-item bank and the 13-column coding matrix, plus the JL merge and ERD overlays |
 | `src/data/glossary.ts` | Glossary terms and the inline-annotation matcher (§5) |
 | `src/data/editorial.ts` | Version stamp, coding uncertainties, instrument limits (§7) |
 | `src/data/demographics.ts` | The optional post-result block (§6) |
@@ -118,6 +118,22 @@ correctly as hawkish, and a test pins the placement.
 **B11, the Western Wall egalitarian plaza, codes Likud `N` rather than `D`.** The agreement was signed in
 2016 and frozen in 2017 under coalition pressure, but the platform never repudiated it — §7's rule of
 coding the stated position and documenting the choice.
+
+## Six statements cut, and why
+
+`A11`, `C2`, `C4`, `C7`, `C10` and `D5` each carried a coding row identical to another item's: no pair of
+parties was separated by one and not the other, so they cost a question slot and told the scoring nothing
+it did not already know. They are **retired rather than deleted** — kept in `RETIRED` with the item held in
+each one's place and the reason recorded, and shown in the app under Diagnostics. §4.7 asks you to publish
+what you cut and why; a cut is an editorial act and should be auditable.
+
+Three of the six were in institutions and rule of law, which is a finding rather than an accident: the
+judicial overhaul was a pure bloc fight, and every party's position on every judicial question was fixed by
+which side of the coalition it sat on. That block is where a compass learns least.
+
+`A8` and `C9` still duplicate each other and were kept on purpose — different blocks, so neither axis is
+redundant, and §3.8 added C9 for a reason that should make it diverge once Ra'am's column is re-coded. A
+test pins that as the only surviving duplicate.
 
 ## What the instrument still cannot do
 
