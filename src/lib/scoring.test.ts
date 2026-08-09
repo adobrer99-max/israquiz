@@ -8,6 +8,7 @@ import {
   type Position,
 } from "../data/items";
 import { axisCollapses, identicalColumns, itemDiagnostics } from "./diagnostics";
+import { orderedBlocks, orderedItems } from "./shuffle";
 import { MATRIX_ORDER, PARTIES, type PartyCode } from "../data/parties";
 
 /** Answer every item exactly as a party would, at full intensity. */
@@ -22,9 +23,9 @@ function answerAs(code: PartyCode): Answers {
 }
 
 describe("bank integrity (§3, §5)", () => {
-  it("holds 45 scored items across five blocks", () => {
-    expect(ITEMS).toHaveLength(45);
-    expect(BLOCK_IDS.map((b) => ITEMS_BY_BLOCK[b].length)).toEqual([13, 12, 6, 6, 8]);
+  it("holds 47 scored items across five blocks", () => {
+    expect(ITEMS).toHaveLength(47);
+    expect(BLOCK_IDS.map((b) => ITEMS_BY_BLOCK[b].length)).toEqual([13, 14, 6, 6, 8]);
   });
 
   it("gives every party a coding cell for every item", () => {
@@ -224,6 +225,88 @@ describe("retired items (§4.7 — publish what you cut and why)", () => {
   });
 });
 
+describe("presentation order (§8.9, extended)", () => {
+  it("keeps every item, exactly once", () => {
+    const ids = orderedItems(42).map((i) => i.id);
+    expect(ids).toHaveLength(ITEMS.length);
+    expect(new Set(ids).size).toBe(ITEMS.length);
+  });
+
+  it("never interleaves topics — each block appears as one unbroken run", () => {
+    for (const seed of [0, 1, 2, 7, 99, 12345]) {
+      const runs = orderedItems(seed)
+        .map((i) => i.block)
+        .join("")
+        .replace(/(.)\1*/g, "$1");
+      expect(runs.length, `seed ${seed}`).toBe(BLOCK_IDS.length);
+    }
+  });
+
+  /**
+   * The fixed block order meant every respondent met the twelve security items
+   * first, putting a primacy effect on one of the two axes the grid is built
+   * from. Blocks are now shuffled as units.
+   */
+  it("does not always open on the same topic", () => {
+    const first = new Set(Array.from({ length: 200 }, (_, s) => orderedBlocks(s)[0]));
+    expect(first.size).toBe(BLOCK_IDS.length);
+  });
+
+  it("opens on each topic about equally often", () => {
+    const counts: Record<string, number> = {};
+    const N = 4000;
+    for (let s = 0; s < N; s++) {
+      const b = orderedBlocks(s)[0];
+      counts[b] = (counts[b] ?? 0) + 1;
+    }
+    for (const b of BLOCK_IDS) {
+      expect(counts[b] / N, b).toBeGreaterThan(0.13);
+      expect(counts[b] / N, b).toBeLessThan(0.27);
+    }
+  });
+
+  it("is stable for a given seed, so going back and resuming do not reshuffle", () => {
+    expect(orderedItems(31).map((i) => i.id)).toEqual(orderedItems(31).map((i) => i.id));
+    expect(orderedBlocks(31)).toEqual(orderedItems(31).map((i) => i.block).filter((b, i, a) => b !== a[i - 1]));
+  });
+});
+
+describe("items revised after tester feedback", () => {
+  const item = (id: string) => ITEMS.find((i) => i.id === id)!;
+
+  it("states the settler-violence item as two concrete acts, with no intensifier", () => {
+    expect(item("A8").text).not.toMatch(/vigorous/i);
+    expect(item("A8").text).toBe(
+      "Illegal outposts should be removed and settler violence prosecuted.",
+    );
+    // The point of naming the acts is that refusing them stays a real position.
+    expect(item("A8").pos.LIK).toBe("D");
+    expect(item("A8").pos.OTZ).toBe("D");
+    expect(item("A8").pos.DEM).toBe("A");
+  });
+
+  it("asks marriage and adoption separately, and they are not the same question", () => {
+    expect(item("B10").text).toMatch(/marry/);
+    expect(item("B13").text).toMatch(/adoption/);
+    expect(item("B10").text).not.toMatch(/adoption/);
+    const identical = MATRIX_ORDER.every((c) => item("B10").pos[c] === item("B13").pos[c]);
+    expect(identical, "the split produced two copies of one item").toBe(false);
+  });
+
+  it("separates Otzma Yehudit from Religious Zionism via women in combat roles", () => {
+    expect(item("B14").pos.RZ).toBe("D");
+    expect(item("B14").pos.OTZ).toBe("N");
+    expect(partyAxesFor("OTZ").value.B).not.toBe(partyAxesFor("RZ").value.B);
+  });
+
+  it("puts women in combat on the religion axis, not the security one", () => {
+    expect(item("B14").block).toBe("B");
+    // Religious Zionism holds a religious view here; on axis A it would have
+    // been scored as dovishness and dragged it off the hawk pole.
+    expect(partyAxesFor("RZ").value.A).toBe(100);
+  });
+});
+
 describe("chametz item (B12)", () => {
   const b12 = () => ITEMS.find((i) => i.id === "B12")!;
 
@@ -282,7 +365,7 @@ describe("party match (§4.2)", () => {
     a.A1 = null;
     const r = score(a).all.LIK;
     expect(Math.round(r.weighted)).toBe(100);
-    expect(r.scoredItems).toBe(44);
+    expect(r.scoredItems).toBe(46);
   });
 
   it("reproduces the unweighted result when every topic keeps its default allocation", () => {
@@ -480,7 +563,7 @@ describe("empty and degenerate inputs", () => {
     const a: Answers = {};
     for (const it of ITEMS) a[it.id] = null;
     const r = score(a);
-    expect(r.skippedCount).toBe(45);
+    expect(r.skippedCount).toBe(47);
     expect(r.ranked.every((x) => x.weighted === 0)).toBe(true);
   });
 
@@ -527,7 +610,8 @@ describe("Joint List merge rule (§3.7)", () => {
       return h !== b && !(h === "-" && b === "-");
     });
     expect(compromised.map((i) => i.id).sort()).toEqual(
-      ["A13", "B2", "B3", "B4", "B5", "B6", "B7", "B8", "B9", "B10", "B11", "B12", "E3", "E8"].sort(),
+      ["A13", "B2", "B3", "B4", "B5", "B6", "B7", "B8", "B9", "B10", "B11", "B12", "B13", "B14",
+       "E3", "E8"].sort(),
     );
     expect([...new Set(compromised.map((i) => i.block))].sort()).toEqual(["A", "B", "E"]);
   });

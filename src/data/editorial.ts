@@ -131,6 +131,26 @@ export const INSTRUMENT_NOTES: Note[] = [
     issue: "Not one column is coded D. §5 requires a scored statement to draw both agreement and disagreement, and an item nobody opposes inflates every match percentage uniformly — which is the concrete reason block G exists rather than a sixth weighted topic. As an unscored readout the item still works: the agree-versus-neutral split is the Shas-against-United Torah Judaism communal cut, which nothing else in the bank produces. If a sharper version is wanted later, the contested form is affirmative action in senior public appointments rather than historical acknowledgment.",
   },
   {
+    items: "Presentation order · blocks now shuffled",
+    issue: "§8.9 says to randomise items within each block and never across blocks, because interleaving topics raises abandonment. That left a gap it did not anticipate: the blocks themselves ran in a fixed order, so every respondent met twelve security statements before anything else, and the resulting primacy effect landed on one of the two axes the grid is built from. Blocks are now shuffled as whole units and items shuffled within them. Topic coherence — the thing §8.9 was protecting — is untouched.",
+  },
+  {
+    items: "B14 · women in combat roles, and Otzma Yehudit's N",
+    issue: "The item exists to separate Religious Zionism from Otzma Yehudit, which nothing else in the bank did. Religious Zionism and its rabbis have campaigned directly and repeatedly against expanding women's combat service; Otzma Yehudit, whose politics runs through policing and deterrence rather than rabbinic authority, has not made it a cause. Otzma is therefore coded N. That is the cell doing all the discriminating work here, which makes it the one to check hardest against the filed list — if it should read D, the item stops separating them and should be reconsidered.",
+  },
+  {
+    items: "B14 · why it is not a security item",
+    issue: "It concerns how far rabbinic authority reaches into military policy, and nothing about it is hawkish or dovish. Scored on the security axis it would have pulled Religious Zionism — sitting on the hawk pole — toward the doves for holding a religious view, in the same way the Temple Mount item would have pulled the haredi parties toward the secular pole. Same trap, opposite direction.",
+  },
+  {
+    items: "A8 · rewritten as two concrete acts",
+    issue: "The statement read 'the state should vigorously enforce the law against illegal outposts and settler violence'. An intensifier makes the disagreeing side sound like it is endorsing lawlessness, which fails §5's test that a supporter and an opponent both accept the statement as a fair description of their position. Deleting the intensifier alone would have left a statement nobody could refuse, and an item nobody opposes carries no information. Naming the two acts — removal and prosecution — restores a real disagreement: the parties coded D favour retroactive legalisation rather than demolition, and have called for pardons rather than prosecutions. Codings are unchanged, because the row was never about enforcement in the abstract.",
+  },
+  {
+    items: "B10, B13 · marriage and adoption split",
+    issue: "These were one item and they are not one question in Israel. There is no civil marriage for anyone, so same-sex marriage is entangled with the Rabbinate's monopoly and asks something close to B4; adoption was opened through the courts and draws a softer opposition. Likud is the cell that moves — coded D on marriage and N on adoption, which is the honest reading of a party that has made gestures on gay rights while blocking the surrogacy expansion under coalition pressure.",
+  },
+  {
     items: "B12 · chametz in hospitals",
     issue: "The rest of the religion-and-state block asks about principles — halakha's precedence, the Rabbinate's authority, recognition of non-Orthodox streams — and principles invite people to answer as they would like to think of themselves. A hospital ward during Passover is where the principle is actually enforced, on patients and visitors having their bags searched at the door. It is the smallest question in the block and probably the one that predicts best.",
   },

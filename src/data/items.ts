@@ -1,6 +1,6 @@
 /* ============================================================
    Item bank — spec §3
-   45 scored statements across five blocks, plus diagnostic and
+   47 scored statements across five blocks, plus diagnostic and
    cross-cutting items that never touch the axes or the match.
 
    Coding key: A = agree · N = neutral or deliberately ambiguous
@@ -86,7 +86,15 @@ const RAW: Row[] = [
   A5_ROWS[A5_VARIANT],
   ["A6", "A", -1, "The Palestinian Authority should be given a governing role in post-war Gaza.", "DDNDNDDDADAAA"],
   ["A7", "A", 1, "Settlement construction in the West Bank should continue to expand.", "ANDNNAANDNDDD"],
-  ["A8", "A", -1, "The state should vigorously enforce the law against illegal outposts and settler violence.", "DAANNDDAAAAAA"],
+  // Was "the state should vigorously enforce the law against...". The
+  // intensifier made the disagreeing side sound like it was endorsing
+  // lawlessness, which fails §5's both-sides test; but simply deleting it left
+  // a statement nobody could refuse. Naming the two concrete acts restores a
+  // real disagreement — the parties coded D favour retroactive legalisation
+  // rather than demolition, and have called for pardons rather than
+  // prosecutions. Codings unchanged; the row was never about enforcement in
+  // the abstract.
+  ["A8", "A", -1, "Illegal outposts should be removed and settler violence prosecuted.", "DAANNDDAAAAAA"],
   ["A9", "A", 1, "Israel should be prepared to take major military action against Iran without American approval.", "AANNNAAADNDDD"],
   ["A10", "A", -1, "Israel should be willing to negotiate indirectly with Hamas to reach long-term arrangements.", "DDNNNDDDADAAA"],
   ["A12", "A", 1, "The death penalty should be available for convicted terrorists.", "ADDNNAAADDDDD"],
@@ -111,7 +119,12 @@ const RAW: Row[] = [
   ["B7", "B", 1, "Where Israeli law conflicts with halakha, halakha should take precedence.", "DDDAAAADDD-D-"],
   ["B8", "B", -1, "Businesses should be free to open on Shabbat.", "NANDDDDAAN-A-"],
   ["B9", "B", 1, "Gender separation should be permitted at publicly funded events and in public spaces.", "NDDAAAADDDND-"],
-  ["B10", "B", -1, "Same-sex couples should have full marriage and adoption rights.", "DANDDDDAAADAN"],
+  // Split after tester feedback: marriage and adoption were one item, and they
+  // are not one question in Israel. There is no civil marriage for anyone, so
+  // same-sex marriage is entangled with the Rabbinate's monopoly, while
+  // adoption was opened by the courts and draws a softer opposition.
+  ["B10", "B", -1, "Same-sex couples should be able to marry in Israel.", "DANDDDDAAADAN"],
+  ["B13", "B", -1, "Same-sex couples should have full adoption rights.", "NANDDDDAAADAN"],
   // B11: signed 2016, frozen 2017, never enacted. Likud is coded N rather than
   // D because the freeze was an act of coalition management that the platform
   // never repudiated — the §7 rule of coding the stated position and
@@ -121,6 +134,13 @@ const RAW: Row[] = [
   // precedence, the Rabbinate's authority — invite people to answer on
   // principle; a hospital ward is where the principle is actually enforced.
   ["B12", "B", -1, "Chametz should be permitted in public hospitals during Passover.", "DANDDDDAAA-A-"],
+  // B14 is on the religion axis, not security: it is a question about how far
+  // rabbinic authority reaches into military policy, and nothing about it is
+  // hawkish or dovish. Placed on A it would have pulled Religious Zionism —
+  // sitting at the hawk pole — toward the doves for holding a religious view.
+  // It is the one item that separates Religious Zionism from Otzma Yehudit,
+  // which have campaigned very differently on it.
+  ["B14", "B", -1, "Women should be eligible to serve in every military combat role.", "NAADDNDAAA-N-"],
 
   ["C1", "C", 1, "The Supreme Court should have the power to strike down Basic Laws.", "DNNDDDDNANAAA"],
   ["C3", "C", -1, "A Knesset majority should be able to override Supreme Court rulings.", "ADDAAAANDDDDD"],
@@ -152,7 +172,7 @@ const RAW: Row[] = [
 /* --- §3.7 The Joint List: merged ballot column (Hadash + Ta'al + Balad) --- */
 const JL_POS: Record<string, Position> = {
   A1: "A", A2: "D", A3: "D", A4: "D", A5: A5_JL[A5_VARIANT], A6: "A", A7: "D", A8: "A", A9: "D", A10: "A", A11: "A", A12: "D", A13: "N", A14: "D",
-  B1: "-", B2: "A", B3: "A", B4: "N", B5: "D", B6: "N", B7: "D", B8: "A", B9: "D", B10: "N", B11: "N", B12: "A",
+  B1: "-", B2: "A", B3: "A", B4: "N", B5: "D", B6: "N", B7: "D", B8: "A", B9: "D", B10: "N", B11: "N", B12: "A", B13: "N", B14: "N",
   C1: "A", C2: "D", C3: "D", C4: "A", C5: "A", C6: "A", C7: "D", C8: "D", C9: "A", C10: "D",
   D1: "D", D2: "A", D3: "A", D4: "A", D5: "D", D6: "-", D7: "D",
   E1: "A", E2: "A", E3: "N", E4: "A", E5: "D", E6: "A", E7: "D", E8: "N",
@@ -166,11 +186,12 @@ const JL_POS: Record<string, Position> = {
 export const JL_MERGE_FLAGS: Record<string, "component" | "divergent"> = {
   B2: "component", B3: "component", B5: "component", B6: "component",
   B7: "component", B8: "component", B9: "component", B11: "component", B12: "component",
+  B14: "component",
   // A13 is the first divergence outside religion-and-state and economics.
   // The spec's claim that the three components are identical on security held
   // only because the bank had not asked the question that divides them.
   A13: "divergent",
-  B4: "divergent", B10: "divergent", E3: "divergent", E8: "divergent",
+  B4: "divergent", B10: "divergent", B13: "divergent", E3: "divergent", E8: "divergent",
 };
 
 /* --- §3.6 ERD: 17 codeable items, the rest "-" --- */
