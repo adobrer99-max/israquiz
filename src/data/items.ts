@@ -230,12 +230,18 @@ const ERD_POS: Record<string, Position> = {
  * assuming the far right is uniform.
  */
 const NOAM_POS: Record<string, Position> = {
-  A1: "D", A2: "A", A3: "A", A6: "D", A7: "A", A8: "D", A10: "D", A13: "A", A14: "D",
+  A1: "D", A2: "A", A3: "A", A4: "N", A6: "D", A7: "A", A8: "D", A10: "D", A13: "A", A14: "D",
   B1: "N", B2: "D", B3: "N", B4: "D", B5: "A", B6: "D", B7: "A", B8: "D", B9: "A",
   B10: "D", B11: "D", B12: "D", B13: "D", B14: "D",
   C1: "D", C3: "A", C5: "D", C6: "D", C8: "A", C9: "D",
   D1: "A", D2: "D", D3: "D", D4: "N", D6: "A", D7: "A", D8: "A",
-  // A4, A5, A9, A12 and the whole economy block: no position on record.
+  // A4 is N rather than A. Noam is Kookist and would not oppose settlement in
+ // principle, but Otzma Yehudit and Religious Zionism campaigned actively for
+ // Gaza resettlement and Noam did not — the Har Hamor stream is
+ // characteristically quietist about territorial activism, which is the same
+ // trait that produces its D on A14. Read Noam as simply another
+ // religious-Zionist list and this becomes A; that is the alternative to check.
+  // A5, A9, A12 and the whole economy block: no position on record.
 };
 
 const EMPTY_POS = (): Record<PartyCode, Position> =>

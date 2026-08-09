@@ -137,7 +137,11 @@ export const INSTRUMENT_NOTES: Note[] = [
   {
     items: "Noam · A14, the cell to check hardest",
     severe: true,
-    issue: "Coded D on Jewish prayer on the Temple Mount, where Otzma Yehudit and Religious Zionism are A. The basis is that Noam is the political arm of the Har Hamor stream, whose rabbinic authority forbids ascending the compound at all. If that holds it is the sharpest single thing separating Noam from the rest of the religious right, and it is exactly the sort of cell that is easy to get wrong by assuming the far right is uniform. Verify against the filed list before launch. Along with B3, B14 and D4, it is one of only four cells distinguishing Noam from Otzma Yehudit.",
+    issue: "Coded D on Jewish prayer on the Temple Mount, where Otzma Yehudit and Religious Zionism are A. The basis is that Noam is the political arm of the Har Hamor stream, whose rabbinic authority forbids ascending the compound at all. If that holds it is the sharpest single thing separating Noam from the rest of the religious right, and it is exactly the sort of cell that is easy to get wrong by assuming the far right is uniform. Verify against the filed list before launch.",
+  },
+  {
+    items: "Noam · A4, the same trait in a second place",
+    issue: "Coded N on resuming Jewish settlement in Gaza, where Otzma Yehudit and Religious Zionism are A. Noam is Kookist and would not oppose settlement in principle, but its rivals campaigned actively for Gaza resettlement and it did not — the Har Hamor stream is characteristically quietist about territorial activism, which is the same trait producing its D on the Temple Mount. Read Noam as simply another religious-Zionist list and this cell becomes A. Together with A14, B3, B14 and D4 it is one of five cells separating Noam from Otzma Yehudit; two of those five rest on the same reading of one rabbinic stream, so if that reading is wrong the column loses much of what makes it distinct.",
   },
   {
     items: "D8 · the matrix records positions, not reasons",

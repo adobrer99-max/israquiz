@@ -350,9 +350,13 @@ describe("Noam For Israel", () => {
       );
       expect(diff.length, `NOAM vs ${other}`).toBeGreaterThan(0);
       expect(diff.map((d) => d.id), `NOAM vs ${other}`).toContain("A14");
+      expect(diff.map((d) => d.id), `NOAM vs ${other}`).toContain("A4");
     }
-    expect(item("A14").pos.NOAM).toBe("D");
-    expect(item("A14").pos.OTZ).toBe("A");
+    // Both cells trace to the same reading of one rabbinic stream's quietism
+    // about territorial activism. If that reading is wrong, two of the five
+    // things distinguishing this column go with it.
+    expect([item("A14").pos.NOAM, item("A4").pos.NOAM]).toEqual(["D", "N"]);
+    expect([item("A14").pos.OTZ, item("A4").pos.OTZ]).toEqual(["A", "A"]);
   });
 });
 
