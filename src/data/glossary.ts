@@ -110,6 +110,12 @@ export const GLOSSARY: Term[] = [
     match: ["yeshiva students", "yeshivot", "yeshiva"],
   },
   {
+    key: "women-combat",
+    title: "Women in combat roles",
+    body: "Women have been conscripted since 1948 but were barred from most combat roles until a 1995 Supreme Court ruling; mixed-gender battalions and further openings followed. National-religious rabbis have campaigned against the expansion on grounds of modesty and unit cohesion, and it is one of the few fights that divides the religious right from itself rather than from the left.",
+    match: ["military combat role", "combat role"],
+  },
+  {
     key: "hesder",
     title: "Hesder",
     body: "A programme combining yeshiva study with shortened military service, associated with the national-religious rather than the haredi world. It is the standing counter-example to the claim that Torah study and conscription cannot be combined.",

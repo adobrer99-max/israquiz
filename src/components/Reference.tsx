@@ -147,7 +147,7 @@ export function Diagnostics() {
 
       <h3 style={{ margin: "22px 0 6px" }}>Coverage</h3>
       <p className="small muted">
-        Share of the 45 statements on which each party has a coded position. Below 70% a party is suppressed
+        Share of the 47 statements on which each party has a coded position. Below 70% a party is suppressed
         from the ranking and shown separately.
       </p>
       {coverage.map((r) => (

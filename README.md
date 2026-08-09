@@ -2,7 +2,7 @@
 
 An English-language election compass for the 26th Knesset, 27 October 2026.
 
-45 statements across five topics, a topic-weighting step, three unscored cross-cutting questions, a
+47 statements across five topics, a topic-weighting step, three unscored cross-cutting questions, a
 two-axis grid with the parties plotted, a ranked match percentage, and the full coding matrix published
 alongside it.
 
@@ -57,7 +57,7 @@ is the screen to hand to the fifteen-to-twenty known voters before launch.
 | Path | What lives there |
 |---|---|
 | `src/data/parties.ts` | Party registry — names, blocs, colours, ballot status |
-| `src/data/items.ts` | The 45-item bank and the 13-column coding matrix, plus the JL merge and ERD overlays |
+| `src/data/items.ts` | The 47-item bank and the 13-column coding matrix, plus the JL merge and ERD overlays |
 | `src/data/glossary.ts` | Glossary terms and the inline-annotation matcher (§5) |
 | `src/data/editorial.ts` | Version stamp, coding uncertainties, instrument limits (§7) |
 | `src/data/demographics.ts` | The optional post-result block (§6) |
@@ -166,6 +166,17 @@ which side of the coalition it sat on. That block is where a compass learns leas
 `A8` and `C9` still duplicate each other and were kept on purpose — different blocks, so neither axis is
 redundant, and §3.8 added C9 for a reason that should make it diverge once Ra'am's column is re-coded. A
 test pins that as the only surviving duplicate.
+
+## Presentation order
+
+§8.9 says to randomise items within each block and never across blocks, because
+interleaving topics raises abandonment. Testers found the gap it left: the
+blocks themselves ran in a fixed order, so everyone met twelve security
+statements first and the primacy effect landed on one of the two axes the grid
+is built from. Blocks are now shuffled as whole units, items shuffled within
+them, and never interleaved — topic coherence, the thing §8.9 was protecting, is
+untouched. Both shuffles come from one persisted seed, so going back and
+resuming never reshuffle.
 
 ## What the instrument still cannot do
 
