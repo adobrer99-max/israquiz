@@ -8,7 +8,7 @@ import { PARTIES, type PartyCode } from "../data/parties";
  * into the strongest credibility claim.
  */
 const COLUMNS: PartyCode[] = [
-  "LIK", "TOG", "YSH", "SHS", "UTJ", "OTZ", "RZ", "YB", "DEM", "BW",
+  "LIK", "TOG", "YSH", "SHS", "UTJ", "OTZ", "RZ", "NOAM", "YB", "DEM", "BW",
   "ERD", "RAM", "JL", "HTA", "BAL",
 ];
 

@@ -9,8 +9,27 @@
 import type { Answers, Weights } from "./scoring";
 import type { Demographics } from "../data/demographics";
 
-const SESSION_KEY = "israquiz.session.v2";
-const DEMO_KEY = "israquiz.demographics.v2";
+/**
+ * Bump these whenever a change makes an in-flight session unresumable. v3
+ * retires v2 because the block-order shuffle changed what a stored `seed`
+ * produces: answers are keyed by item id so none are lost, but the stored
+ * `index` points into a sequence that no longer exists, so a respondent
+ * mid-quiz would be shown a statement they had already answered and skip one
+ * they had not.
+ */
+const SESSION_KEY = "israquiz.session.v3";
+const DEMO_KEY = "israquiz.demographics.v3";
+
+/**
+ * Superseded keys, deleted on first load. Leaving them would strand answer and
+ * demographic vectors in the browser forever, unreachable by Start over and so
+ * undeletable from inside the app — poor practice for anything, and worse for
+ * a block that collects religion, ethnicity and political opinion (§6.5).
+ */
+const LEGACY_KEYS = [
+  "israquiz.session.v2",
+  "israquiz.demographics.v2",
+];
 
 export interface Session {
   responseId: string;
@@ -52,7 +71,19 @@ function write(key: string, value: unknown): void {
   }
 }
 
-export const loadSession = () => read<Session>(SESSION_KEY);
+/** Remove superseded keys. Idempotent, and safe where storage is unavailable. */
+export function purgeLegacy(): void {
+  try {
+    for (const key of LEGACY_KEYS) localStorage.removeItem(key);
+  } catch {
+    /* storage disabled — nothing to purge */
+  }
+}
+
+export const loadSession = () => {
+  purgeLegacy();
+  return read<Session>(SESSION_KEY);
+};
 export const saveSession = (s: Session) => write(SESSION_KEY, s);
 export const loadDemographics = () => read<Demographics>(DEMO_KEY);
 export const saveDemographics = (d: Demographics) => write(DEMO_KEY, d);
@@ -64,4 +95,5 @@ export function clearAll(): void {
   } catch {
     /* nothing to clear */
   }
+  purgeLegacy();
 }

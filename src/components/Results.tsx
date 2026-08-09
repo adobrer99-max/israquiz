@@ -79,7 +79,7 @@ function MatchRow({ r, i, value }: { r: PartyResult; i: number; value: number })
         <span style={{ fontSize: 15, fontWeight: 600, display: "block" }}>{r.name}</span>
         <span className="small muted">
           {r.lead}
-          {r.belowThreshold && ` · polling below the ${ELECTION.threshold}% threshold`}
+          {r.belowThreshold && ` · ${r.thresholdNote ?? `polling below the ${ELECTION.threshold}% threshold`}`}
           {r.coverage < 1 && ` · ${Math.round(r.coverage * 100)}% coded`}
         </span>
       </span>
@@ -210,9 +210,9 @@ export function Results({
       )}
       {top.belowThreshold && (
         <p className="small" style={{ marginTop: 8 }}>
-          Your closest match is currently polling below the {ELECTION.threshold}% electoral threshold. A
-          party that falls short takes no seats and its votes are discarded — worth knowing before the
-          percentage above becomes advice.
+          Your closest match is at risk of the {ELECTION.threshold}% electoral threshold
+          {top.thresholdNote ? ` — ${top.thresholdNote}` : ""}. A party that falls short takes no seats and
+          its votes are discarded, which is worth knowing before the percentage above becomes advice.
         </p>
       )}
       {disagree && (

@@ -1,6 +1,6 @@
 /* ============================================================
    Item bank — spec §3
-   47 scored statements across five blocks, plus diagnostic and
+   48 scored statements across five blocks, plus diagnostic and
    cross-cutting items that never touch the axes or the match.
 
    Coding key: A = agree · N = neutral or deliberately ambiguous
@@ -154,6 +154,17 @@ const RAW: Row[] = [
   ["D3", "D", 1, "The Nation-State Basic Law should be amended to add a clause guaranteeing equality.", "DNNDDDDDANAAA"],
   ["D4", "D", 1, "Government investment in Arab towns should be substantially increased and insulated from coalition politics.", "NAANNDDNAAAAA"],
   ["D6", "D", -1, "The Law of Return's “grandchild clause” should be narrowed.", "NDDAAAADDD---"],
+  // D8 asks about state policy, not about who anyone should marry — a compass
+  // measures what governments should do. The wording names the programmes
+  // themselves, because supporters call this preventing assimilation and would
+  // not accept a statement phrased as their opponents describe it (§5).
+  //
+  // Shas, UTJ and Noam are all coded A and arrive there by different routes:
+  // the haredi parties object on halachic grounds, which bar marriage to any
+  // non-Jew, while Noam objects on ethnic grounds and targets Arabs
+  // specifically. The bank records positions, not reasons, so the matrix
+  // cannot show that difference — see the editorial notes.
+  ["D8", "D", -1, "The state should fund programmes that discourage romantic relationships between Jewish and Arab citizens.", "NDDAAAADDDDDD"],
   // D7 added after §4.7 validation. Zionism belongs on the identity axis, not
   // the security one: The Democrats are dovish and Zionist, and an item that
   // scored those together as hawkishness would wreck the horizontal axis.
@@ -174,7 +185,7 @@ const JL_POS: Record<string, Position> = {
   A1: "A", A2: "D", A3: "D", A4: "D", A5: A5_JL[A5_VARIANT], A6: "A", A7: "D", A8: "A", A9: "D", A10: "A", A11: "A", A12: "D", A13: "N", A14: "D",
   B1: "-", B2: "A", B3: "A", B4: "N", B5: "D", B6: "N", B7: "D", B8: "A", B9: "D", B10: "N", B11: "N", B12: "A", B13: "N", B14: "N",
   C1: "A", C2: "D", C3: "D", C4: "A", C5: "A", C6: "A", C7: "D", C8: "D", C9: "A", C10: "D",
-  D1: "D", D2: "A", D3: "A", D4: "A", D5: "D", D6: "-", D7: "D",
+  D1: "D", D2: "A", D3: "A", D4: "A", D5: "D", D6: "-", D7: "D", D8: "D",
   E1: "A", E2: "A", E3: "N", E4: "A", E5: "D", E6: "A", E7: "D", E8: "N",
 };
 
@@ -203,6 +214,36 @@ const ERD_POS: Record<string, Position> = {
   E2: "D", E3: "A", E5: "A",
 };
 
+/* --- Noam For Israel: a narrow platform, coded as narrow -------------------
+ *
+ * Complete on religion-and-state and national identity, thin on security, and
+ * silent on economics. That is a description of the party, not a gap in the
+ * research: it is a single-purpose "Jewish identity" list whose security
+ * positions are inherited from the bloc and which has never published an
+ * economic platform. The coverage rule will report it accordingly.
+ *
+ * A14 is the cell to check hardest. Noam is the political arm of the Har
+ * Hamor stream, whose rabbinic authority forbids ascending the Temple Mount —
+ * so it is coded D where Otzma Yehudit and Religious Zionism are A. If that
+ * holds, it is the sharpest thing separating Noam from the rest of the
+ * religious right, and it is the sort of cell that is easy to get wrong by
+ * assuming the far right is uniform.
+ */
+const NOAM_POS: Record<string, Position> = {
+  A1: "D", A2: "A", A3: "A", A4: "N", A6: "D", A7: "A", A8: "D", A10: "D", A13: "A", A14: "D",
+  B1: "N", B2: "D", B3: "N", B4: "D", B5: "A", B6: "D", B7: "A", B8: "D", B9: "A",
+  B10: "D", B11: "D", B12: "D", B13: "D", B14: "D",
+  C1: "D", C3: "A", C5: "D", C6: "D", C8: "A", C9: "D",
+  D1: "A", D2: "D", D3: "D", D4: "N", D6: "A", D7: "A", D8: "A",
+  // A4 is N rather than A. Noam is Kookist and would not oppose settlement in
+ // principle, but Otzma Yehudit and Religious Zionism campaigned actively for
+ // Gaza resettlement and Noam did not — the Har Hamor stream is
+ // characteristically quietist about territorial activism, which is the same
+ // trait that produces its D on A14. Read Noam as simply another
+ // religious-Zionist list and this becomes A; that is the alternative to check.
+  // A5, A9, A12 and the whole economy block: no position on record.
+};
+
 const EMPTY_POS = (): Record<PartyCode, Position> =>
   ({} as Record<PartyCode, Position>);
 
@@ -216,6 +257,7 @@ export const ITEMS: Item[] = RAW.map(([id, block, sign, text, codings]) => {
   });
   pos.JL = JL_POS[id] ?? "-";
   pos.ERD = ERD_POS[id] ?? "-";
+  pos.NOAM = NOAM_POS[id] ?? "-";
   return { id, block, sign, text, pos };
 });
 
@@ -278,6 +320,7 @@ export const RETIRED: RetiredItem[] = RETIRED_ROWS.map(([row, duplicateOf, reaso
   });
   pos.JL = JL_POS[id] ?? "-";
   pos.ERD = ERD_POS[id] ?? "-";
+  pos.NOAM = NOAM_POS[id] ?? "-";
   return { id, block, sign, text, pos, duplicateOf, reason };
 });
 
@@ -297,13 +340,16 @@ export interface Diagnostic {
   pos?: Record<PartyCode, Position>;
 }
 
-function diagnosticPos(codings: string, jl: Position, erd: Position): Record<PartyCode, Position> {
+function diagnosticPos(
+  codings: string, jl: Position, erd: Position, noam: Position,
+): Record<PartyCode, Position> {
   const pos = EMPTY_POS();
   MATRIX_ORDER.forEach((c, i) => {
     pos[c] = codings[i] as Position;
   });
   pos.JL = jl;
   pos.ERD = erd;
+  pos.NOAM = noam;
   return pos;
 }
 
@@ -311,7 +357,7 @@ export const F1: Diagnostic = {
   id: "F1",
   text: "Benjamin Netanyahu should continue as prime minister.",
   // ERD explicitly declined to rule out sitting with Netanyahu.
-  pos: diagnosticPos("ADDAAAADDDDDD", "D", "N"),
+  pos: diagnosticPos("ADDAAAADDDDDD", "D", "N", "A"),
 };
 
 export const F2: Diagnostic = {
@@ -332,13 +378,13 @@ export const F2: Diagnostic = {
 export const G1: Diagnostic = {
   id: "G1",
   text: "An Arab party should be willing to join a coalition led by a Zionist party.",
-  pos: diagnosticPos("NNNNNDDNANADD", "D", "-"),
+  pos: diagnosticPos("NNNNNDDNANADD", "D", "-", "D"),
 };
 
 export const G2: Diagnostic = {
   id: "G2",
   text: "The electoral threshold should be raised above its current 3.25%.",
-  pos: diagnosticPos("AANDDDDADDDDD", "D", "-"),
+  pos: diagnosticPos("AANDDDDADDDDD", "D", "-", "D"),
 };
 
 /**
@@ -351,7 +397,7 @@ export const G2: Diagnostic = {
 export const G3: Diagnostic = {
   id: "G3",
   text: "The state should acknowledge and compensate for discrimination against Mizrahi immigrants in its early decades.",
-  pos: diagnosticPos("ANNANANNANNA-", "A", "-"),
+  pos: diagnosticPos("ANNANANNANNA-", "A", "-", "N"),
 };
 
 /** Cross-cutting items, asked after the topic weighting. */

@@ -131,6 +131,27 @@ export const INSTRUMENT_NOTES: Note[] = [
     issue: "Not one column is coded D. §5 requires a scored statement to draw both agreement and disagreement, and an item nobody opposes inflates every match percentage uniformly — which is the concrete reason block G exists rather than a sixth weighted topic. As an unscored readout the item still works: the agree-versus-neutral split is the Shas-against-United Torah Judaism communal cut, which nothing else in the bank produces. If a sharper version is wanted later, the contested form is affirmative action in senior public appointments rather than historical acknowledgment.",
   },
   {
+    items: "Noam For Israel · a narrow column, coded as narrow",
+    issue: "Running separately for the first time in 2026; its single seat in 2021 and 2022 came inside the Religious Zionism list. Coded complete on religion-and-state and national identity, thin on security, and silent on economics — a description of the party rather than a gap in the research, since it is a single-purpose Jewish-identity list whose security positions are inherited from the bloc and which has never published an economic platform. Coverage lands at 75%, just above the floor, so it is ranked; it will be the first column to fall below if any coding is tightened.",
+  },
+  {
+    items: "Noam · A14, the cell to check hardest",
+    severe: true,
+    issue: "Coded D on Jewish prayer on the Temple Mount, where Otzma Yehudit and Religious Zionism are A. The basis is that Noam is the political arm of the Har Hamor stream, whose rabbinic authority forbids ascending the compound at all. If that holds it is the sharpest single thing separating Noam from the rest of the religious right, and it is exactly the sort of cell that is easy to get wrong by assuming the far right is uniform. Verify against the filed list before launch.",
+  },
+  {
+    items: "Noam · A4, the same trait in a second place",
+    issue: "Coded N on resuming Jewish settlement in Gaza, where Otzma Yehudit and Religious Zionism are A. Noam is Kookist and would not oppose settlement in principle, but its rivals campaigned actively for Gaza resettlement and it did not — the Har Hamor stream is characteristically quietist about territorial activism, which is the same trait producing its D on the Temple Mount. Read Noam as simply another religious-Zionist list and this cell becomes A. Together with A14, B3, B14 and D4 it is one of five cells separating Noam from Otzma Yehudit; two of those five rest on the same reading of one rabbinic stream, so if that reading is wrong the column loses much of what makes it distinct.",
+  },
+  {
+    items: "D8 · the matrix records positions, not reasons",
+    issue: "Shas, United Torah Judaism and Noam are all coded A, and they arrive there by different routes. The haredi parties object to intermarriage on halachic grounds, which bar marriage to any non-Jew and single out no ethnicity; Noam objects on ethnic grounds and targets relationships with Arabs specifically. Those are different politics reaching the same cell, and the coding scheme has no way to show it — a limitation worth stating rather than smoothing over, because a reader who sees the haredi parties beside Noam here will otherwise assume a shared motive that does not exist.",
+  },
+  {
+    items: "D8 · wording, and who it asks about",
+    issue: "The statement asks about state policy rather than about whom anyone should marry, because a compass measures what governments should do. It names the programmes as their supporters would — preventing assimilation is a funded activity of Israeli municipal and national bodies — rather than as their opponents describe them, which is what §5's both-sides test requires. It should also be said plainly that this item asks Arab respondents about a policy aimed at them, and that no wording makes that comfortable.",
+  },
+  {
     items: "Presentation order · blocks now shuffled",
     issue: "§8.9 says to randomise items within each block and never across blocks, because interleaving topics raises abandonment. That left a gap it did not anticipate: the blocks themselves ran in a fixed order, so every respondent met twelve security statements before anything else, and the resulting primacy effect landed on one of the two axes the grid is built from. Blocks are now shuffled as whole units and items shuffled within them. Topic coherence — the thing §8.9 was protecting — is untouched.",
   },
