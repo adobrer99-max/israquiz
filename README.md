@@ -2,8 +2,9 @@
 
 An English-language election compass for the 26th Knesset, 27 October 2026.
 
-48 statements across five topics, a topic-weighting step, a two-axis grid with the parties plotted,
-a ranked match percentage, and the full coding matrix published alongside it.
+50 statements across five topics, a topic-weighting step, three unscored cross-cutting questions, a
+two-axis grid with the parties plotted, a ranked match percentage, and the full coding matrix published
+alongside it.
 
 Built to `israel-2026-compass-spec.md`. Section references throughout the source (`§4.2`, `§3.7`, and so
 on) point back at that document.
@@ -24,7 +25,7 @@ is the screen to hand to the fifteen-to-twenty known voters before launch.
 | Path | What lives there |
 |---|---|
 | `src/data/parties.ts` | Party registry — names, blocs, colours, ballot status |
-| `src/data/items.ts` | The 48-item bank and the 13-column coding matrix, plus the JL merge and ERD overlays |
+| `src/data/items.ts` | The 50-item bank and the 13-column coding matrix, plus the JL merge and ERD overlays |
 | `src/data/glossary.ts` | Glossary terms and the inline-annotation matcher (§5) |
 | `src/data/editorial.ts` | Version stamp, coding uncertainties, instrument limits (§7) |
 | `src/data/demographics.ts` | The optional post-result block (§6) |
@@ -85,6 +86,38 @@ split and holds nothing.
 **A13 is the first item to divide the Joint List outside religion-and-state and economics.** Hadash–Ta'al
 is `N`, Balad `D`, so the merged column resolves to `N`. The spec's observation that the three components
 are identical on security held only because the bank had not asked the question that divides them.
+
+## Block G — cross-cutting, coded, never scored
+
+Three statements load on none of the five axes, and each would corrupt whichever axis it was forced onto.
+They are asked after the topic weighting and reported as their own readout.
+
+- **G1** — *An Arab party should be willing to join a coalition led by a Zionist party.* Measures
+  coalitionability rather than ideology, and is the sharpest Ra'am / Joint List divide in the bank.
+- **G2** — *The electoral threshold should be raised above its current 3.25%.* Parties answer from
+  self-interest. It is the only configuration anywhere in the bank where Otzma Yehudit and Balad land on
+  the same side, and both sides of it span blocs.
+- **G3** — *The state should acknowledge and compensate for discrimination against Mizrahi immigrants in
+  its early decades.* Looks like a national-identity item, but that axis is about Arab citizens, so it
+  would load wrongly.
+
+G3 has no party coded `D`. §5 requires a scored statement to draw both agreement and disagreement, and one
+nobody opposes inflates every match percentage uniformly — which is the concrete reason block G exists
+rather than a sixth weighted topic. Unscored, the agree-versus-neutral split still does the work: it is
+the Shas-against-United Torah Judaism communal cut, which nothing else produces.
+
+## Two items on placement
+
+**A14, the Temple Mount, sits on the security axis rather than religion-and-state.** It makes a cut nothing
+else in the bank makes — Otzma Yehudit and Religious Zionism agree, Shas and United Torah Judaism disagree,
+Likud is neutral. But the haredi parties oppose Jewish prayer there *by holding the strictest rabbinic
+position*: their authorities forbid entering the compound at all. On the religion axis the item would have
+driven the two most religious parties toward the secular pole. As a sovereignty assertion, agree reads
+correctly as hawkish, and a test pins the placement.
+
+**B11, the Western Wall egalitarian plaza, codes Likud `N` rather than `D`.** The agreement was signed in
+2016 and frozen in 2017 under coalition pressure, but the platform never repudiated it — §7's rule of
+coding the stated position and documenting the choice.
 
 ## What the instrument still cannot do
 

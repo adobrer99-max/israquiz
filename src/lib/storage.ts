@@ -20,6 +20,8 @@ export interface Session {
   weights: Weights;
   f1: -1 | 0 | 1 | null;
   f2: -1 | 0 | 1 | null;
+  /** block G cross-cutting answers, keyed by item id */
+  g: Record<string, -1 | 0 | 1 | null>;
   stage: string;
   /** validation mode only (§4.7) */
   declared?: string;

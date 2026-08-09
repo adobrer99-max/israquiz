@@ -1,7 +1,7 @@
 /* ============================================================
    Item bank — spec §3
-   48 scored statements across five blocks, plus two diagnostic
-   items that never touch the axes or the match percentage.
+   50 scored statements across five blocks, plus diagnostic and
+   cross-cutting items that never touch the axes or the match.
 
    Coding key: A = agree · N = neutral or deliberately ambiguous
                D = disagree · "-" = no position on record
@@ -95,6 +95,13 @@ const RAW: Row[] = [
   // Democrats, Ra'am and the Joint List, all three of which were coded
   // identically on the other twelve security items.
   ["A13", "A", 1, "Armed attacks on Israeli soldiers in the West Bank should be condemned without qualification.", "AAAAAAAAAAAND"],
+  // A14 sits on the security axis, not religion-and-state, even though the cut
+  // it makes is a religious one. Shas and UTJ disagree *because* they hold the
+  // strictest rabbinic position — haredi authorities forbid ascending at all —
+  // so scoring it on the religion axis would drive the two most religious
+  // parties toward the secular pole. As a sovereignty assertion it reads
+  // correctly: agree is hawkish.
+  ["A14", "A", 1, "Jewish prayer should be permitted on the Temple Mount.", "NNNDDAANDDDDD"],
 
   ["B1", "B", -1, "Haredi yeshiva students should be subject to the military draft on the same terms as other citizens.", "DAADDNNAAA---"],
   ["B2", "B", -1, "Public transport should operate on Shabbat in municipalities that want it.", "DANDDDDAAN-A-"],
@@ -106,6 +113,11 @@ const RAW: Row[] = [
   ["B8", "B", -1, "Businesses should be free to open on Shabbat.", "NANDDDDAAN-A-"],
   ["B9", "B", 1, "Gender separation should be permitted at publicly funded events and in public spaces.", "NDDAAAADDDND-"],
   ["B10", "B", -1, "Same-sex couples should have full marriage and adoption rights.", "DANDDDDAAADAN"],
+  // B11: signed 2016, frozen 2017, never enacted. Likud is coded N rather than
+  // D because the freeze was an act of coalition management that the platform
+  // never repudiated — the §7 rule of coding the stated position and
+  // documenting the choice.
+  ["B11", "B", -1, "The Western Wall egalitarian plaza agreement should be implemented.", "NANDDDDAAA-N-"],
 
   ["C1", "C", 1, "The Supreme Court should have the power to strike down Basic Laws.", "DNNDDDDNANAAA"],
   ["C2", "C", -1, "Elected politicians should hold a decisive majority on the Judicial Selection Committee.", "ADDAAAANDDDDD"],
@@ -141,8 +153,8 @@ const RAW: Row[] = [
 
 /* --- §3.7 The Joint List: merged ballot column (Hadash + Ta'al + Balad) --- */
 const JL_POS: Record<string, Position> = {
-  A1: "A", A2: "D", A3: "D", A4: "D", A5: A5_JL[A5_VARIANT], A6: "A", A7: "D", A8: "A", A9: "D", A10: "A", A11: "A", A12: "D", A13: "N",
-  B1: "-", B2: "A", B3: "A", B4: "N", B5: "D", B6: "N", B7: "D", B8: "A", B9: "D", B10: "N",
+  A1: "A", A2: "D", A3: "D", A4: "D", A5: A5_JL[A5_VARIANT], A6: "A", A7: "D", A8: "A", A9: "D", A10: "A", A11: "A", A12: "D", A13: "N", A14: "D",
+  B1: "-", B2: "A", B3: "A", B4: "N", B5: "D", B6: "N", B7: "D", B8: "A", B9: "D", B10: "N", B11: "N",
   C1: "A", C2: "D", C3: "D", C4: "A", C5: "A", C6: "A", C7: "D", C8: "D", C9: "A", C10: "D",
   D1: "D", D2: "A", D3: "A", D4: "A", D5: "D", D6: "-", D7: "D",
   E1: "A", E2: "A", E3: "N", E4: "A", E5: "D", E6: "A", E7: "D", E8: "N",
@@ -155,7 +167,7 @@ const JL_POS: Record<string, Position> = {
  */
 export const JL_MERGE_FLAGS: Record<string, "component" | "divergent"> = {
   B2: "component", B3: "component", B5: "component", B6: "component",
-  B7: "component", B8: "component", B9: "component",
+  B7: "component", B8: "component", B9: "component", B11: "component",
   // A13 is the first divergence outside religion-and-state and economics.
   // The spec's claim that the three components are identical on security held
   // only because the bank had not asked the question that divides them.
@@ -208,25 +220,66 @@ export interface Diagnostic {
   pos?: Record<PartyCode, Position>;
 }
 
-const f1Pos = (() => {
-  const s = "ADDAAAADDDDDD";
+function diagnosticPos(codings: string, jl: Position, erd: Position): Record<PartyCode, Position> {
   const pos = EMPTY_POS();
   MATRIX_ORDER.forEach((c, i) => {
-    pos[c] = s[i] as Position;
+    pos[c] = codings[i] as Position;
   });
-  pos.JL = "D";
-  pos.ERD = "N"; // explicitly declined to rule out sitting with Netanyahu
+  pos.JL = jl;
+  pos.ERD = erd;
   return pos;
-})();
+}
 
 export const F1: Diagnostic = {
   id: "F1",
   text: "Benjamin Netanyahu should continue as prime minister.",
-  pos: f1Pos,
+  // ERD explicitly declined to rule out sitting with Netanyahu.
+  pos: diagnosticPos("ADDAAAADDDDDD", "D", "N"),
 };
 
 export const F2: Diagnostic = {
   id: "F2",
   text: "I would rather see a broad national-unity government than a narrow ideological one.",
 };
+
+/**
+ * Block G — cross-cutting. Coded, reported, never scored.
+ *
+ * These load on none of the five axes. Each one is discriminating, and each
+ * would corrupt whichever axis it was forced onto: G1 measures coalitionability
+ * rather than ideology, G2 measures party size, and G3 is intra-Jewish communal
+ * politics that would load wrongly on an identity axis about Arab citizens.
+ * They are reported as a separate readout, which is the honest place for an
+ * item that discriminates on something other than issue position.
+ */
+export const G1: Diagnostic = {
+  id: "G1",
+  text: "An Arab party should be willing to join a coalition led by a Zionist party.",
+  pos: diagnosticPos("NNNNNDDNANADD", "D", "-"),
+};
+
+export const G2: Diagnostic = {
+  id: "G2",
+  text: "The electoral threshold should be raised above its current 3.25%.",
+  pos: diagnosticPos("AANDDDDADDDDD", "D", "-"),
+};
+
+/**
+ * G3 has no party coded D. That is exactly why it cannot be scored: §5 requires
+ * a scored statement to draw both agreement and disagreement, and one that
+ * nobody opposes inflates every match percentage uniformly. As an unscored
+ * readout it still does real work — the A/N split is the Shas-versus-UTJ
+ * communal cut, which nothing else in the bank produces.
+ */
+export const G3: Diagnostic = {
+  id: "G3",
+  text: "The state should acknowledge and compensate for discrimination against Mizrahi immigrants in its early decades.",
+  pos: diagnosticPos("ANNANANNANNA-", "A", "-"),
+};
+
+/** Cross-cutting items, asked after the topic weighting. */
+export const CROSS_CUTTING: Diagnostic[] = [G1, G2, G3];
+
+/** Every unscored item, in the order asked (§3F). */
+export const DIAGNOSTICS: Diagnostic[] = [F1, F2, ...CROSS_CUTTING];
 

@@ -1,5 +1,11 @@
-import { BLOCKS, BLOCK_IDS, F1, F2 } from "../data/items";
+import { BLOCKS, BLOCK_IDS, CROSS_CUTTING, F1, F2 } from "../data/items";
 import { DEFAULT_WEIGHTS, type Weights as W } from "../lib/scoring";
+
+const CROSS_NOTES: Record<string, string> = {
+  G1: "Coalitionability, not ideology. A party can become dramatically more governable without moving a millimetre on the grid, and this is the only question here that measures that.",
+  G2: "Party self-interest, more or less undisguised. Watch which parties end up agreeing with each other.",
+  G3: "Communal politics that runs underneath the religious and security divides rather than along them. No party on the ballot disagrees with it, which is precisely why it cannot be scored.",
+};
 
 const CHOICES: { v: -1 | 0 | 1; l: string }[] = [
   { v: 1, l: "Agree" },
@@ -43,7 +49,7 @@ function Diagnostic({
   );
 }
 
-/** §4.4 topic weighting, plus the two diagnostic items from §3F. */
+/** §4.4 topic weighting, plus the three diagnostic items from §3F. */
 export function Weights({
   weights,
   setWeights,
@@ -51,6 +57,8 @@ export function Weights({
   setF1,
   f2,
   setF2,
+  g,
+  setG,
   onDone,
 }: {
   weights: W;
@@ -59,6 +67,8 @@ export function Weights({
   setF1: (v: -1 | 0 | 1) => void;
   f2: -1 | 0 | 1 | null;
   setF2: (v: -1 | 0 | 1) => void;
+  g: Record<string, -1 | 0 | 1 | null>;
+  setG: (id: string, v: -1 | 0 | 1) => void;
   onDone: () => void;
 }) {
   const total = BLOCK_IDS.reduce((s, b) => s + weights[b], 0);
@@ -129,6 +139,21 @@ export function Weights({
         onChange={setF2}
         note="Not scored at all. It only changes how your result is framed if your closest match sits across the bloc line from where you expected."
       />
+
+      <p className="small muted" style={{ margin: "22px 0 12px" }}>
+        Three more that are reported but never scored. Each one cuts across all five topics, which is why
+        none of them can sit on an axis — and why the parties line up on them in orders that will not match
+        the ranking you are about to see.
+      </p>
+      {CROSS_CUTTING.map((item) => (
+        <Diagnostic
+          key={item.id}
+          text={item.text}
+          value={g[item.id] ?? null}
+          onChange={(v) => setG(item.id, v)}
+          note={CROSS_NOTES[item.id]}
+        />
+      ))}
 
       <button className="btn" onClick={onDone}>
         See results

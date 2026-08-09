@@ -1,9 +1,12 @@
 import { describe, expect, it } from "vitest";
 import {
-  agreementPoints, COVERAGE_FLOOR, DEFAULT_WEIGHTS, flatOpposition,
-  partyAxesFor, score, userAxes, type Answers, type Weights,
+  agreementPoints, COVERAGE_FLOOR, DEFAULT_WEIGHTS, diagnosticSides, flatOpposition,
+  partyAxesFor, score, spansBlocs, unlikelyBedfellows, userAxes, type Answers, type Weights,
 } from "./scoring";
-import { A5_ROWS, BLOCK_IDS, ITEMS, ITEMS_BY_BLOCK, JL_MERGE_FLAGS, type Position } from "../data/items";
+import {
+  A5_ROWS, BLOCK_IDS, CROSS_CUTTING, F1, F2, G1, G2, G3, ITEMS, ITEMS_BY_BLOCK, JL_MERGE_FLAGS,
+  type Position,
+} from "../data/items";
 import { axisCollapses, identicalColumns, itemDiagnostics } from "./diagnostics";
 import { MATRIX_ORDER, PARTIES, type PartyCode } from "../data/parties";
 
@@ -19,9 +22,9 @@ function answerAs(code: PartyCode): Answers {
 }
 
 describe("bank integrity (§3, §5)", () => {
-  it("holds 48 scored items across five blocks", () => {
-    expect(ITEMS).toHaveLength(48);
-    expect(BLOCK_IDS.map((b) => ITEMS_BY_BLOCK[b].length)).toEqual([13, 10, 10, 7, 8]);
+  it("holds 50 scored items across five blocks", () => {
+    expect(ITEMS).toHaveLength(50);
+    expect(BLOCK_IDS.map((b) => ITEMS_BY_BLOCK[b].length)).toEqual([14, 11, 10, 7, 8]);
   });
 
   it("gives every party a coding cell for every item", () => {
@@ -65,6 +68,108 @@ describe("event-dependent items (§5)", () => {
   });
 });
 
+describe("Temple Mount placement (A14)", () => {
+  const pos = (c: PartyCode) => ITEMS.find((i) => i.id === "A14")!.pos[c];
+
+  it("cuts the religious right away from the haredi parties", () => {
+    expect([pos("OTZ"), pos("RZ")]).toEqual(["A", "A"]);
+    expect([pos("SHS"), pos("UTJ")]).toEqual(["D", "D"]);
+    expect(pos("LIK")).toBe("N");
+  });
+
+  it("makes that cut nowhere else in the bank", () => {
+    const others = ITEMS.filter(
+      (it) =>
+        it.id !== "A14" &&
+        it.pos.OTZ === "A" && it.pos.RZ === "A" &&
+        it.pos.SHS === "D" && it.pos.UTJ === "D",
+    );
+    expect(others.map((i) => i.id)).toEqual([]);
+  });
+
+  /**
+   * The item lives on the security axis rather than religion-and-state. Shas
+   * and UTJ disagree because they hold the strictest rabbinic position, so
+   * scoring it on the religion axis would drag the two most religious parties
+   * toward the secular pole. This pins the placement.
+   */
+  it("does not drag the haredi parties off the religious pole", () => {
+    expect(ITEMS.find((i) => i.id === "A14")!.block).toBe("A");
+    for (const c of ["SHS", "UTJ"] as PartyCode[]) {
+      expect(partyAxesFor(c).value.B, c).toBe(100);
+    }
+  });
+});
+
+describe("cross-cutting block G", () => {
+  it("keeps every G item out of the scored bank", () => {
+    for (const d of CROSS_CUTTING) {
+      expect(ITEMS.some((i) => i.id === d.id), d.id).toBe(false);
+    }
+  });
+
+  it("cannot leak into the match or the axes even if answered", () => {
+    const base = answerAs("LIK");
+    const withG: Answers = { ...base };
+    for (const d of [...CROSS_CUTTING, F1, F2]) withG[d.id] = -2;
+    const before = score(base);
+    const after = score(withG);
+    for (const code of Object.keys(PARTIES) as PartyCode[]) {
+      expect(after.all[code].weighted, code).toBe(before.all[code].weighted);
+      expect(after.all[code].scoredItems, code).toBe(before.all[code].scoredItems);
+    }
+    expect(after.user.value).toEqual(before.user.value);
+    expect(after.answeredCount).toBe(before.answeredCount);
+  });
+
+  it("separates Ra'am from the Joint List on coalitionability (G1)", () => {
+    expect(G1.pos!.RAM).toBe("A");
+    expect(G1.pos!.JL).toBe("D");
+  });
+
+  it("puts Otzma Yehudit and Balad on the same side of the threshold (G2)", () => {
+    expect(G2.pos!.OTZ).toBe(G2.pos!.BAL);
+    const sides = diagnosticSides(G2.pos!);
+    expect(sides.disagree).toContain("OTZ");
+    expect(sides.disagree).toContain("JL");
+    expect(spansBlocs(sides.disagree)).toBe(true);
+    expect(spansBlocs(sides.agree)).toBe(true);
+    // the remark-worthy case: Netanyahu-bloc and non-aligned parties together
+    expect(unlikelyBedfellows(sides.disagree)).toBe(true);
+    expect(unlikelyBedfellows(sides.agree)).toBe(false);
+  });
+
+  it("reserves the bedfellows remark for sides that actually earn it", () => {
+    const g1 = diagnosticSides(G1.pos!);
+    expect(unlikelyBedfellows(g1.disagree), "G1 disagree").toBe(true);
+    expect(unlikelyBedfellows(g1.agree), "G1 agree").toBe(false);
+    expect(unlikelyBedfellows(diagnosticSides(G3.pos!).agree), "G3 agree").toBe(true);
+  });
+
+  it("makes the Shas–UTJ communal cut nothing else makes (G3)", () => {
+    expect(G3.pos!.SHS).toBe("A");
+    expect(G3.pos!.UTJ).toBe("N");
+  });
+
+  /**
+   * G3 draws no disagreement from any party. §5 requires a scored statement to
+   * draw both, and one nobody opposes would inflate every match percentage
+   * uniformly — which is the concrete reason block G has to stay unscored.
+   */
+  it("keeps the unopposed item unscorable", () => {
+    expect(diagnosticSides(G3.pos!).disagree).toEqual([]);
+    expect(ITEMS.some((i) => i.id === "G3")).toBe(false);
+  });
+
+  it("gives every G item a coding for every party", () => {
+    for (const d of CROSS_CUTTING) {
+      for (const c of Object.keys(PARTIES) as PartyCode[]) {
+        expect(["A", "N", "D", "-"], `${d.id}/${c}`).toContain(d.pos![c]);
+      }
+    }
+  });
+});
+
 describe("item agreement (§4.1)", () => {
   it("scores direction only, discarding intensity", () => {
     expect(agreementPoints(2, "A")).toBe(2);
@@ -100,7 +205,7 @@ describe("party match (§4.2)", () => {
     a.A1 = null;
     const r = score(a).all.LIK;
     expect(Math.round(r.weighted)).toBe(100);
-    expect(r.scoredItems).toBe(47);
+    expect(r.scoredItems).toBe(49);
   });
 
   it("reproduces the unweighted result when every topic keeps its default allocation", () => {
@@ -298,7 +403,7 @@ describe("empty and degenerate inputs", () => {
     const a: Answers = {};
     for (const it of ITEMS) a[it.id] = null;
     const r = score(a);
-    expect(r.skippedCount).toBe(48);
+    expect(r.skippedCount).toBe(50);
     expect(r.ranked.every((x) => x.weighted === 0)).toBe(true);
   });
 
@@ -345,7 +450,7 @@ describe("Joint List merge rule (§3.7)", () => {
       return h !== b && !(h === "-" && b === "-");
     });
     expect(compromised.map((i) => i.id).sort()).toEqual(
-      ["A13", "B2", "B3", "B4", "B5", "B6", "B7", "B8", "B9", "B10", "E3", "E8"].sort(),
+      ["A13", "B2", "B3", "B4", "B5", "B6", "B7", "B8", "B9", "B10", "B11", "E3", "E8"].sort(),
     );
     expect([...new Set(compromised.map((i) => i.block))].sort()).toEqual(["A", "B", "E"]);
   });

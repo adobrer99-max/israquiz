@@ -23,7 +23,20 @@ export const GLOSSARY: Term[] = [
   {
     key: "threshold",
     title: "Electoral threshold",
-    body: "A party must win 3.25% of the national vote — roughly four seats — to enter the Knesset at all. Votes for lists that fall short are discarded, which is why small parties merge before filing.",
+    body: "A party must win 3.25% of the national vote — roughly four seats — to enter the Knesset at all. Votes for lists that fall short are discarded, which is why small parties merge before filing. The bar was raised from 2% in 2014 by a coalition whose smaller rivals saw the change as aimed at them, and where a party stands on raising it further tracks its own polling far more closely than its politics.",
+    match: ["electoral threshold"],
+  },
+  {
+    key: "temple-mount",
+    title: "Temple Mount",
+    body: "The compound in Jerusalem's Old City holding the Al-Aqsa Mosque and the Dome of the Rock, and the site of the two Jewish temples. Under the arrangement in place since 1967, Jews may visit but not pray there. The Chief Rabbinate and most haredi authorities forbid Jews from entering the compound at all on grounds of ritual purity — which is why the parties pressing hardest for Jewish prayer rights are on the religious right rather than among the haredim.",
+    match: ["Temple Mount"],
+  },
+  {
+    key: "kotel",
+    title: "Western Wall egalitarian plaza",
+    body: "A 2016 cabinet decision creating a permanent mixed-gender prayer section at the southern end of the Western Wall, with a role in its governance for the Reform and Conservative movements. It was frozen in 2017 under haredi coalition pressure and has never been enacted. It matters more to Jews outside Israel, most of whom are not Orthodox, than to Israelis — which makes it the sharpest test of whether a reader's intuitions about Israeli religious politics match the way those politics actually run.",
+    match: ["Western Wall egalitarian plaza agreement", "Western Wall egalitarian plaza", "Western Wall"],
   },
   {
     key: "basic-laws",

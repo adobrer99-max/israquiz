@@ -115,6 +115,22 @@ export const INSTRUMENT_NOTES: Note[] = [
     issue: "Ra'am is coded on three of ten religion-and-state items, which places it at +67 — far above the 'slightly above the secular half' the spec anticipates. The marker is drawn as low-confidence for this reason.",
   },
   {
+    items: "A14 · why the Temple Mount sits on the security axis",
+    issue: "Otzma Yehudit and Religious Zionism agree, Shas and United Torah Judaism disagree, Likud is neutral — a cut nothing else in the bank produces. It is nonetheless coded on security rather than religion-and-state, because the haredi parties oppose Jewish prayer there precisely by holding the strictest rabbinic position: the Chief Rabbinate and haredi authorities forbid entering the compound at all. On the religion axis the item would have driven the two most religious parties toward the secular pole. As a sovereignty assertion, agree reads correctly as hawkish.",
+  },
+  {
+    items: "B11 · the Western Wall agreement, and Likud's N",
+    issue: "Signed in 2016, frozen in 2017 under haredi coalition pressure, never enacted. Likud is coded N rather than D because the freeze was an act of coalition management that the platform never repudiated — the §7 rule of coding the stated position and documenting the choice. It is the item most likely to separate a reader's intuitions about Israeli religious politics from the way those politics actually run, since it matters more to Jews outside Israel, most of whom are not Orthodox, than to Israelis.",
+  },
+  {
+    items: "Block G · items that load on no axis",
+    issue: "Three statements are coded and reported but never scored. G1 measures whether an Arab party should be willing to join a Zionist-led coalition — coalitionability rather than ideology, and the sharpest Ra'am/Joint List divide there is. G2 asks whether the electoral threshold should be raised, which parties answer from self-interest: it is the only configuration in the bank where Otzma Yehudit and Balad land on the same side. G3 asks about acknowledging discrimination against Mizrahi immigrants, which looks like an identity-block item but would load wrongly on an axis about Arab citizens. Forcing any of them onto an axis would score something other than a political position.",
+  },
+  {
+    items: "G3 · no party disagrees",
+    issue: "Not one column is coded D. §5 requires a scored statement to draw both agreement and disagreement, and an item nobody opposes inflates every match percentage uniformly — which is the concrete reason block G exists rather than a sixth weighted topic. As an unscored readout the item still works: the agree-versus-neutral split is the Shas-against-United Torah Judaism communal cut, which nothing else in the bank produces. If a sharper version is wanted later, the contested form is affirmative action in senior public appointments rather than historical acknowledgment.",
+  },
+  {
     items: "Security block · The Democrats and Ra'am",
     issue: "A13 lifts the Joint List clear of the other two dovish parties, but The Democrats and Ra'am remain on the same point: they are coded identically on all thirteen security items, which is a fair reading of two parties whose operative positions on Gaza, Iran and the West Bank genuinely coincide. They are 167 points apart on the vertical axis, so the markers do not collide on the grid.",
   },

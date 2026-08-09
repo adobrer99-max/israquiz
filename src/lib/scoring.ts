@@ -245,6 +245,41 @@ export function quadrantLabel(a: number, b: number): string {
   return `${x}, ${y}`;
 }
 
+/**
+ * Which ballot parties sit on each side of a diagnostic item.
+ * Used to report the unscored items rather than fold them into anything.
+ */
+export function diagnosticSides(
+  pos: Record<PartyCode, Position>,
+): { agree: PartyCode[]; neutral: PartyCode[]; disagree: PartyCode[] } {
+  const agree: PartyCode[] = [];
+  const neutral: PartyCode[] = [];
+  const disagree: PartyCode[] = [];
+  for (const c of BALLOT_PARTIES) {
+    if (pos[c] === "A") agree.push(c);
+    else if (pos[c] === "N") neutral.push(c);
+    else if (pos[c] === "D") disagree.push(c);
+  }
+  return { agree, neutral, disagree };
+}
+
+/** True when a set of parties spans more than one of the three blocs. */
+export function spansBlocs(codes: PartyCode[]): boolean {
+  const blocs = new Set(codes.map((c) => PARTIES[c].bloc).filter((b) => b !== "unaligned"));
+  return blocs.size > 1;
+}
+
+/**
+ * The configuration actually worth remarking on: a Netanyahu-bloc party and a
+ * non-aligned one on the same side. Pro-with-anti happens often enough to be
+ * unremarkable, and saying "these parties agree on nothing else" about every
+ * side of every item would spend the observation until it means nothing.
+ */
+export function unlikelyBedfellows(codes: PartyCode[]): boolean {
+  const blocs = new Set(codes.map((c) => PARTIES[c].bloc));
+  return blocs.has("pro") && blocs.has("non");
+}
+
 /** §4.4 — the effective multiplier a topic allocation produces. */
 export function effectiveWeights(weights: Weights): Record<BlockId, number> {
   const out = {} as Record<BlockId, number>;

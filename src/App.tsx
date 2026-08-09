@@ -35,6 +35,7 @@ function freshSession(): Session {
     weights: { ...DEFAULT_WEIGHTS },
     f1: null,
     f2: null,
+    g: {},
     stage: "intro",
     savedAt: new Date().toISOString(),
   };
@@ -117,6 +118,7 @@ export default function App() {
             weights: session.weights,
             f1: session.f1,
             f2: session.f2,
+            g: session.g,
             axes: result.user.value,
             ranking: [...result.ranked]
               .sort((a, b) => b.weighted - a.weighted)
@@ -186,6 +188,8 @@ export default function App() {
             setF1={(v) => patch({ f1: v })}
             f2={session.f2}
             setF2={(v) => patch({ f2: v })}
+            g={session.g}
+            setG={(id, v) => patch({ g: { ...session.g, [id]: v } })}
             onDone={() => setStage("results")}
           />
         )}
@@ -197,6 +201,7 @@ export default function App() {
             weights={session.weights}
             f1={session.f1}
             f2={session.f2}
+            g={session.g}
             declared={session.declared ?? ""}
             validation={validation}
             onTerm={openTerm}

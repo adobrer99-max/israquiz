@@ -1,5 +1,5 @@
 import { Fragment } from "react";
-import { BLOCKS, BLOCK_IDS, F1, ITEMS_BY_BLOCK, JL_MERGE_FLAGS, type Position } from "../data/items";
+import { BLOCKS, BLOCK_IDS, DIAGNOSTICS, ITEMS_BY_BLOCK, JL_MERGE_FLAGS, type Position } from "../data/items";
 import { PARTIES, type PartyCode } from "../data/parties";
 
 /**
@@ -73,18 +73,20 @@ export function Matrix() {
             ))}
             <tr>
               <td colSpan={COLUMNS.length + 3} style={{ background: "var(--well)", fontWeight: 700, fontSize: 11 }}>
-                Diagnostic — never enters the axes or the match
+                Diagnostic and cross-cutting — never enters the axes or the match
               </td>
             </tr>
-            <tr>
-              <td className="mono">F1</td>
-              <td className="mono muted">·</td>
-              {COLUMNS.map((c) => (
-                <td key={c} className={`mono ${cls(F1.pos![c])}`}>
-                  {F1.pos![c] === "-" ? "–" : F1.pos![c]}
-                </td>
-              ))}
-            </tr>
+            {DIAGNOSTICS.filter((d) => d.pos).map((d) => (
+              <tr key={d.id}>
+                <td className="mono">{d.id}</td>
+                <td className="mono muted">·</td>
+                {COLUMNS.map((c) => (
+                  <td key={c} className={`mono ${cls(d.pos![c])}`}>
+                    {d.pos![c] === "-" ? "–" : d.pos![c]}
+                  </td>
+                ))}
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>
@@ -105,12 +107,17 @@ export function Matrix() {
           ))}
         </Fragment>
       ))}
-      <div className="row" style={{ alignItems: "flex-start", marginTop: 12 }}>
-        <span className="mono muted" style={{ minWidth: 34, flex: "none" }}>
-          F1
-        </span>
-        <span style={{ flex: 1, textAlign: "left", whiteSpace: "normal" }}>{F1.text}</span>
+      <div className="eyebrow" style={{ margin: "14px 0 6px" }}>
+        Diagnostic and cross-cutting — never scored
       </div>
+      {DIAGNOSTICS.map((d) => (
+        <div className="row" key={d.id} style={{ alignItems: "flex-start" }}>
+          <span className="mono muted" style={{ minWidth: 34, flex: "none" }}>
+            {d.id}
+          </span>
+          <span style={{ flex: 1, textAlign: "left", whiteSpace: "normal" }}>{d.text}</span>
+        </div>
+      ))}
 
       <p className="small muted" style={{ marginTop: 12 }}>
         <span className="muted">*</span> one Joint List component coded, the other silent — a component

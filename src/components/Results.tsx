@@ -1,9 +1,9 @@
 import { useMemo, useRef, useState } from "react";
-import { BLOCKS, BLOCK_IDS, ITEMS } from "../data/items";
+import { BLOCKS, BLOCK_IDS, CROSS_CUTTING, ITEMS } from "../data/items";
 import { ELECTION } from "../data/editorial";
 import { PARTIES, type PartyCode } from "../data/parties";
 import {
-  flatOpposition, NOISE_BAND, rankingsDisagree, reasonLine,
+  diagnosticSides, flatOpposition, NOISE_BAND, rankingsDisagree, reasonLine, unlikelyBedfellows,
   type Answers, type PartyResult, type ScoreResult, type Weights,
 } from "../lib/scoring";
 import { drawShareCard, downloadCanvas } from "../lib/shareCard";
@@ -16,6 +16,59 @@ const BLOC_ROWS: [keyof ScoreResult["blocs"], string][] = [
   ["anti", "Anti-Netanyahu Zionist bloc"],
   ["non", "Non-aligned"],
 ];
+
+const SIDE_LABEL = { agree: "Agree", neutral: "No clear position", disagree: "Disagree" } as const;
+
+/**
+ * Block G readout. These items are never scored, so the only honest thing to do
+ * with them is show who lines up where. When the parties on one side span more
+ * than one bloc, say so — that coincidence is the reason the item is in the bank.
+ */
+function CrossCutting({
+  answers,
+  onTerm,
+}: {
+  answers: Record<string, -1 | 0 | 1 | null>;
+  onTerm: (key: string) => void;
+}) {
+  const asked = CROSS_CUTTING.filter((d) => answers[d.id] != null);
+  if (!asked.length) return null;
+
+  return (
+    <>
+      <h3 style={{ margin: "28px 0 6px" }}>Cuts that follow no axis</h3>
+      <p className="small muted" style={{ marginBottom: 14 }}>
+        None of these entered your match or your position on the grid. They are here because they divide the
+        parties in orders the five topics cannot produce.
+      </p>
+      {asked.map((d) => {
+        const u = answers[d.id]!;
+        const sides = diagnosticSides(d.pos!);
+        const mine = u > 0 ? sides.agree : u < 0 ? sides.disagree : sides.neutral;
+        const key = u > 0 ? "agree" : u < 0 ? "disagree" : "neutral";
+        const odd = unlikelyBedfellows(mine);
+        return (
+          <div key={d.id} style={{ borderTop: "1px solid var(--rule)", padding: "12px 0" }}>
+            <p className="serif" style={{ fontSize: 16, lineHeight: 1.4, margin: "0 0 8px" }}>
+              <Statement text={d.text} onTerm={onTerm} />
+            </p>
+            <p className="small" style={{ margin: "0 0 6px" }}>
+              <span className="mono muted">{SIDE_LABEL[key]}</span> — with you:{" "}
+              {mine.length ? mine.map((c) => PARTIES[c].name).join(", ") : "no party on the ballot"}.
+            </p>
+            {odd && (
+              <p className="small" style={{ margin: 0 }}>
+                That side puts a party from the Netanyahu bloc alongside a non-aligned one — parties that
+                agree on almost nothing else, and that arrive here for opposite reasons. No axis in this
+                compass can produce that grouping, which is why the question is asked and not scored.
+              </p>
+            )}
+          </div>
+        );
+      })}
+    </>
+  );
+}
 
 function MatchRow({ r, i, value }: { r: PartyResult; i: number; value: number }) {
   return (
@@ -41,6 +94,7 @@ export function Results({
   weights,
   f1,
   f2,
+  g,
   declared,
   validation,
   onTerm,
@@ -53,6 +107,7 @@ export function Results({
   weights: Weights;
   f1: -1 | 0 | 1 | null;
   f2: -1 | 0 | 1 | null;
+  g: Record<string, -1 | 0 | 1 | null>;
   declared: string;
   validation: boolean;
   onTerm: (key: string) => void;
@@ -276,6 +331,8 @@ export function Results({
           {f2 !== null && f2 > 0 && " You also said you would prefer a broad unity government, which is one way that tension gets resolved in practice."}
         </p>
       )}
+
+      <CrossCutting answers={g} onTerm={onTerm} />
 
       {isKnownParty && opposition.length > 0 && (
         <>
