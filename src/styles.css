@@ -333,6 +333,26 @@ th { font-family: var(--mono); font-size: 10px; letter-spacing: 0.06em; text-tra
 }
 .opt[aria-pressed="true"] { background: var(--envelope); border-color: var(--envelope); color: #fff; }
 
+/* Consent (§6.5). Generous hit area and no pre-ticked state anywhere. */
+.consent {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  padding: 12px;
+  margin-top: 12px;
+  border: 1px solid var(--rule);
+  background: #fff;
+  cursor: pointer;
+}
+.consent input[type="checkbox"] {
+  flex: none;
+  width: 18px;
+  height: 18px;
+  margin: 1px 0 0;
+  accent-color: var(--envelope);
+  cursor: pointer;
+}
+
 @media (prefers-reduced-motion: reduce) {
   * { transition: none !important; animation: none !important; }
 }

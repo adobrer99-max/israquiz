@@ -8,6 +8,7 @@ import {
 } from "../lib/scoring";
 import { drawShareCard, downloadCanvas } from "../lib/shareCard";
 import { Bar } from "./Bar";
+import { Contribute, type ContributeProps } from "./Contribute";
 import { Grid, GridTextEquivalent } from "./Grid";
 import { Statement } from "./Statement";
 
@@ -101,6 +102,7 @@ export function Results({
   onDemographics,
   onRestart,
   payload,
+  contribute,
 }: {
   result: ScoreResult;
   answers: Answers;
@@ -114,6 +116,8 @@ export function Results({
   onDemographics: () => void;
   onRestart: () => void;
   payload: string;
+  /** absent when the build has no collection endpoint — then nothing can be sent at all */
+  contribute?: ContributeProps;
 }) {
   const [weighted, setWeighted] = useState(true);
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -378,12 +382,16 @@ export function Results({
       </p>
       <canvas ref={canvasRef} style={{ display: "none" }} aria-hidden="true" />
 
+      {contribute && <Contribute {...contribute} />}
+
       <details style={{ marginTop: 14 }} className="no-print">
         <summary>Your raw answers, as data</summary>
         <div style={{ marginTop: 10 }}>
           <p className="small muted">
-            Everything the scoring used. Nothing was sent anywhere — copy it out yourself if you want to keep
-            or share it.
+            Everything the scoring used
+            {contribute
+              ? ", including the background answers if you gave any. Copying it here sends it nowhere; that is what the section above is for."
+              : ". Nothing was sent anywhere — copy it out yourself if you want to keep or share it."}
           </p>
           <textarea readOnly value={payload} rows={10} onFocus={(e) => e.currentTarget.select()} />
           <button className="btn-ghost" style={{ marginTop: 8 }} onClick={() => navigator.clipboard?.writeText(payload)}>

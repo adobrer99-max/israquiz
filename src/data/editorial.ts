@@ -192,6 +192,14 @@ export const INSTRUMENT_NOTES: Note[] = [
     issue: "Two three-way coincidences survive, both on institutions and rule of law: Likud with Otzma Yehudit and Religious Zionism at one pole, The Democrats with Ra'am and the Joint List at the other. Unlike the security collapse these look real rather than artefactual — each trio takes identical positions on judicial review, the Attorney General, the 7 October commission and police independence. Institutions is a reported bar rather than a grid axis, so the cost is lower, but it should be re-checked if any of the six moves.",
   },
   {
+    items: "Collection · the one thing that leaves the device",
+    issue: "Until now nothing could be transmitted: the source contained no fetch, no beacon and no cookie, and the fonts were self-hosted so the page made no third-party request either. That is still true of a default build, and it is still true of every screen before the last one. Collection is a build-time option, off unless an endpoint is configured, and when it is on it changes nothing until a respondent ticks an unticked box and presses a button. Consent to the statement answers and consent to the background block are separate controls, because §6.5.1 treats them as two tables and it would be incoherent to bind them into one decision. What is sent is shown in full before it is sent rather than described. Withdrawal deletes both rows and needs no email, because the response id lives on the device that sent it — which is the rare case where holding an identifier improves the privacy position rather than worsening it.",
+  },
+  {
+    items: "Collection · what is stripped, and why the list is written out",
+    issue: "The payload names every field it carries instead of spreading the session object, so a field added to the session later cannot start transmitting itself by accident. Three things are dropped deliberately. The tester initials from validation mode are free text about a person drawn from a cohort of fifteen, which §6.5.4 forbids and which would be re-identifying at that cohort size. The random seed and the stored index describe the device's progress rather than the respondent's politics. The declared vote is kept, because it is a party code chosen from a fixed list and it is the single most useful field for the §4.7 recovery check. Presentation order is kept too: §8.9 changed it after testers found a primacy problem, and order effects cannot be measured after the fact unless the order is recorded.",
+  },
+  {
     items: "Item discrimination",
     issue: "No statement in the bank is unanimous. Response variance and item–axis correlation can only be computed once there are live responses, which is the post-launch half of §4.7 and the point at which items should actually be cut.",
   },
@@ -202,5 +210,17 @@ export const LIMITS: string[] = [
   "Party codings are a working draft. They will be re-verified against the platforms of the lists actually filed in September, and this build should be treated as a preview until then.",
   "Parties are coded at full intensity because a party either takes a position or it does not. Most people hedge. That is why the parties spread wider on the grid than you will.",
   "Differences of under about three points are noise given the coding uncertainty. The top result is a closest match, not your party.",
-  "Nothing you answer leaves your browser. Progress is saved to this device's local storage so you can close the tab and come back.",
 ];
+
+/**
+ * The last limit depends on how the build was configured, so it is kept out of
+ * LIMITS rather than asserted. A build with no collection endpoint genuinely
+ * cannot transmit anything; one with an endpoint can, on request, and should
+ * not claim otherwise.
+ */
+export const STORAGE_LIMIT = {
+  local:
+    "Nothing you answer leaves your browser. Progress is saved to this device's local storage so you can close the tab and come back.",
+  collected:
+    "Progress is saved to this device's local storage so you can close the tab and come back. Nothing is transmitted while you answer. Contributing your response to the research is a separate opt-in at the end, unticked by default, separable from the background questions, and withdrawable from this device at one click.",
+};

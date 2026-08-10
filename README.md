@@ -18,8 +18,10 @@ npm run build      # static site into dist/
 
 ## Deploying
 
-A pure static site: no server, no database, no environment variables, no
-secrets. `npm run build` writes `dist/`, which any static host will serve.
+A static site by default: no server, no database, no secrets. `npm run build`
+writes `dist/`, which any static host will serve. Research collection is
+optional and off unless `VITE_COLLECT_ENDPOINT` is set at build time — see
+**Where answers go** below and `server/README.md`.
 
 `vite.config.ts` sets `base: "./"`, so assets resolve relatively and the same
 artifact works from an apex domain, a subdirectory, or a GitHub Pages project
@@ -63,7 +65,9 @@ is the screen to hand to the fifteen-to-twenty known voters before launch.
 | `src/data/demographics.ts` | The optional post-result block (§6) |
 | `src/lib/scoring.ts` | The whole of §4. Pure functions, no React |
 | `src/lib/diagnostics.ts` | Pre-launch item validation (§4.7) |
+| `src/lib/collect.ts` | The optional research submission — the only code that can transmit anything |
 | `src/components/` | Screens |
+| `server/` | Reference collection backend: Cloudflare Worker, D1 schema, analysis queries |
 
 The engine is party-agnostic. Mergers, splits and threshold failures are absorbed by editing
 `parties.ts` and the coding strings in `items.ts`; no scoring code changes.
@@ -202,17 +206,52 @@ every screen, and it should keep saying it.
 
 ## Where answers go
 
-Nowhere. There is no server, no database and no analytics; the source contains no `fetch`, no
-`sendBeacon` and no cookies. Answers live in two `localStorage` keys on the respondent's own device —
+By default, nowhere. Answers live in two `localStorage` keys on the respondent's own device —
 `israquiz.session.v3` and `israquiz.demographics.v3` — kept apart deliberately (§6.5.1) and joined only by
-a random response id, so the export hands over two tables rather than one fingerprint. The only route out
-is the JSON blob a respondent copies from the results page.
+a random response id, so the export hands over two tables rather than one fingerprint. With no collection
+endpoint configured there is no analytics, no cookie and no reachable `fetch` in the bundle; the only route
+out is the JSON blob a respondent copies from the results page. The intro screen says so, and a CI check
+fails the build if any origin other than the configured endpoint appears in it.
 
 That is enough for the §4.7 validation round, where a handful of known voters email their results back. It
 is not enough for anything in §6: without collection there is no aggregate, and no way to compute the vote
-recall crosstab §6.4 calls the most publishable output here. Adding collection means a backend GitHub
-Pages cannot provide, an opt-in rather than silent submission, and rewriting the intro screen's promise
-that nothing leaves your browser.
+recall crosstab §6.4 calls the most publishable output here.
+
+### Optional research collection
+
+Set `VITE_COLLECT_ENDPOINT` at build time — in CI, a repository *variable* named `COLLECT_ENDPOINT` — and
+a contribute section appears at the bottom of the results page. `server/` holds a reference backend
+(Cloudflare Worker plus D1, one file) and `server/README.md` the deployment steps. Unset the variable and
+the feature is gone from the artifact rather than merely hidden, which is the point of making it a
+build-time value.
+
+This is research, not a product. Nothing is sold, nothing goes to a campaign or a party, and there is no
+advertising anywhere in it. What that obliges, and what the code does about it:
+
+- **Opt-in, once, at the end.** Two checkboxes, both unticked. Nothing is transmitted while anyone is
+  answering, and skipping changes nothing about the result.
+- **Consent to the answers and to the background block are separate controls.** §6.5.1 treats them as two
+  tables; binding them into one decision would be incoherent.
+- **Exactly what will be sent is shown before it is sent**, in full, rather than described.
+- **The payload names every field it carries** instead of spreading the session object, so a field added
+  later cannot start transmitting itself. Validation-mode tester initials are stripped — free text about a
+  person from a cohort of fifteen (§6.5.4). So are the seed, the index and the saved-at stamp.
+- **Withdrawal takes one click and no email.** The response id is a v4 UUID held only by the device that
+  sent it, so the person who submitted is the only one who can name the row. Both rows are deleted.
+- **No IP address, user agent, referer or cookie is stored.** There are no columns for them, Worker
+  observability is off, and the error path logs a message and never a body.
+- **Retention is 24 months, swept nightly by a cron trigger**, because a promise nothing enforces decays
+  into an intention.
+- **`server/queries.sql` compiles the disclosure rules into the SQL** — `HAVING COUNT(*) >= 30` on every
+  query that touches demographics, 50 for observance × district, no three-way crosstabs, and never a
+  published join of a full answer vector to a full demographic vector.
+- **It is not a poll and must never be called one.** Anyone who reaches the page can answer it.
+
+The instrument collects political opinion alongside religion, observance and ethnicity — special-category
+data under GDPR and UK GDPR, and there will be EU and UK respondents. §6.5.6 asks for the consent text to
+be reviewed by someone qualified before launch, and that is not a formality. The wording lives in
+`src/components/Contribute.tsx`; when it changes materially, bump `CONSENT_VERSION` in `src/lib/collect.ts`
+so stored rows stay attributable to what their respondents were actually shown.
 
 **Bump the key version** in `src/lib/storage.ts` whenever a change makes an in-flight session
 unresumable — a new item, a reordering, anything that alters what a stored `seed` produces. Superseded

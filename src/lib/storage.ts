@@ -46,6 +46,12 @@ export interface Session {
   declared?: string;
   tester?: string;
   savedAt: string;
+  /**
+   * ISO timestamp of an opt-in research submission, or absent/null if this
+   * response was never sent or has since been withdrawn. Held on the device
+   * so the results page can offer withdrawal instead of a second submission.
+   */
+  submittedAt?: string | null;
 }
 
 export function newResponseId(): string {
