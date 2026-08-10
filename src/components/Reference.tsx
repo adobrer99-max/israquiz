@@ -1,4 +1,5 @@
-import { CODING_NOTES, INSTRUMENT_NOTES, LIMITS, VERSION, VERSION_DATE } from "../data/editorial";
+import { CODING_NOTES, INSTRUMENT_NOTES, LIMITS, STORAGE_LIMIT, VERSION, VERSION_DATE } from "../data/editorial";
+import { collectionEnabled } from "../lib/collect";
 import { GLOSSARY } from "../data/glossary";
 import { PARTIES, type PartyCode } from "../data/parties";
 import { axisCollapses, coverageTable, itemDiagnostics } from "../lib/diagnostics";
@@ -39,7 +40,7 @@ export function EditorialNotes() {
       </p>
 
       <h3 style={{ margin: "20px 0 8px" }}>What a result does and does not mean</h3>
-      {LIMITS.map((l, i) => (
+      {[...LIMITS, collectionEnabled() ? STORAGE_LIMIT.collected : STORAGE_LIMIT.local].map((l, i) => (
         <p className="small" key={i}>
           {l}
         </p>

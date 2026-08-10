@@ -38,12 +38,36 @@ jobs:
       - run: npm run typecheck
       - run: npm test
 
+      # Research collection is off unless this repository variable is set, so a
+      # default build has no route out of the browser at all. It is a variable
+      # rather than a secret because it is a public URL, and build-time rather
+      # than runtime so that unsetting it removes the feature from the artifact.
       - run: npm run build
+        env:
+          VITE_COLLECT_ENDPOINT: ${{ vars.COLLECT_ENDPOINT }}
 
       - name: Check the build makes no third-party request
         run: |
           if grep -rIlE 'https?://(fonts\.(googleapis|gstatic)|cdn|unpkg|jsdelivr)' dist --include='*.html' --include='*.css'; then
             echo "::error::A third-party asset reference reached the build. See public/fonts/README.md."
+            exit 1
+          fi
+
+      # The collection endpoint is the only host the app may ever contact. The
+      # allowlist below is hosts that appear in the bundle as text and are
+      # never fetched: an XML namespace and React's error-message links.
+      - name: Check no unexpected origin reached the bundle
+        env:
+          ENDPOINT: ${{ vars.COLLECT_ENDPOINT }}
+        run: |
+          allow='w3\.org|schema\.org|reactjs\.org|react\.dev|localhost|127\.0\.0\.1'
+          host=$(printf '%s' "$ENDPOINT" | sed -E 's#^https?://##; s#/.*##; s#\.#\\.#g')
+          [ -n "$host" ] && allow="$allow|$host"
+          unexpected=$(grep -rhoIE 'https?://[a-zA-Z0-9._-]+' dist \
+            --include='*.js' --include='*.html' --include='*.css' \
+            | sort -u | grep -vE "^https?://(www\.)?($allow)" || true)
+          if [ -n "$unexpected" ]; then
+            echo "::error::Unexpected origins reached the build:"; printf '%s\n' "$unexpected"
             exit 1
           fi
 

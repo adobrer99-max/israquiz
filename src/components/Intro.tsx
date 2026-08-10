@@ -1,6 +1,7 @@
 import { ELECTION, VERSION, VERSION_DATE } from "../data/editorial";
 import { ITEMS } from "../data/items";
 import { BALLOT_PARTIES, PARTIES } from "../data/parties";
+import { collectionEnabled } from "../lib/collect";
 
 export function Intro({
   onStart,
@@ -94,7 +95,9 @@ export function Intro({
           September. The full matrix is published — you can check every cell the scoring uses.
         </p>
         <p className="small">
-          Nothing leaves your browser. Progress saves to this device so you can close the tab and come back.
+          {collectionEnabled()
+            ? "Progress saves to this device so you can close the tab and come back. Nothing is transmitted while you answer. At the end you will be asked — once, with the box unticked — whether you want to contribute your response to the research behind this compass. Saying no changes nothing about your result."
+            : "Nothing leaves your browser. Progress saves to this device so you can close the tab and come back."}
         </p>
       </div>
 

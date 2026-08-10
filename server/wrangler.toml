@@ -1,0 +1,35 @@
+name = "israquiz-collect"
+main = "worker.js"
+compatibility_date = "2026-08-01"
+
+# Deliberately no observability block. Cloudflare's request logs would record
+# the client IP alongside the request the consent text says carries none, and
+# nothing here needs them to work.
+[observability]
+enabled = false
+
+[vars]
+# Comma-separated exact origins allowed to POST. Anything else gets a 403 and
+# a null CORS header, so an embed on someone else's page cannot collect
+# through this endpoint. No wildcards — this is the whole access control.
+ALLOWED_ORIGINS = "https://adobrer99-max.github.io"
+RETENTION_MONTHS = "24"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "israquiz"
+database_id = "REPLACE_WITH_YOUR_D1_ID"
+
+# Retention sweep. The consent text promises deletion after RETENTION_MONTHS;
+# without this the promise decays into an intention.
+[triggers]
+crons = ["17 3 * * *"]
+
+# Optional. Uncomment to cap total submissions per window at the edge.
+# Per-IP flood protection belongs in a WAF rule instead, which runs in front
+# of the Worker and never hands the address to application code.
+# [[unsafe.bindings]]
+# name = "RATE_LIMIT"
+# type = "ratelimit"
+# namespace_id = "1001"
+# simple = { limit = 120, period = 60 }

@@ -11,6 +11,7 @@ import { VERSION, VERSION_DATE } from "./data/editorial";
 import type { Demographics as Demo } from "./data/demographics";
 import { orderedItems, newSeed } from "./lib/shuffle";
 import { DEFAULT_WEIGHTS, score, type Answer, type Answers, type Weights as W } from "./lib/scoring";
+import { buildSubmission, collectionEnabled, hasDemographics } from "./lib/collect";
 import {
   clearAll, loadDemographics, loadSession, newResponseId, saveDemographics, saveSession,
   type Session,
@@ -147,6 +148,29 @@ export default function App() {
     [session, result, demo, items, validation],
   );
 
+  /**
+   * §6.5 — absent entirely unless this build was given an endpoint, so a
+   * default build has no route out of the browser and no box to tick.
+   */
+  const contribute = useMemo(() => {
+    if (!collectionEnabled()) return undefined;
+    return {
+      build: (includeDemographics: boolean) =>
+        buildSubmission({
+          session,
+          result,
+          order: items.map((i) => i.id),
+          demographics: demo,
+          includeDemographics,
+          validation,
+        }),
+      responseId: session.responseId,
+      hasDemographics: hasDemographics(demo),
+      submittedAt: session.submittedAt ?? null,
+      onSubmitted: (at: string | null) => patch({ submittedAt: at }),
+    };
+  }, [session, result, items, demo, validation, patch]);
+
   const openTerm = (focus: string) => setReference({ kind: "glossary", focus });
 
   const wide = reference?.kind === "matrix" || reference?.kind === "diagnostics";
@@ -208,6 +232,7 @@ export default function App() {
             onDemographics={() => setStage("demographics")}
             onRestart={start}
             payload={payload}
+            contribute={contribute}
           />
         )}
 
