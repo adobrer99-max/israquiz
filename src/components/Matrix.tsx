@@ -1,5 +1,5 @@
 import { Fragment } from "react";
-import { BLOCKS, BLOCK_IDS, DIAGNOSTICS, ITEMS_BY_BLOCK, JL_MERGE_FLAGS, type Position } from "../data/items";
+import { BLOCKS, BLOCK_IDS, DIAGNOSTICS, INFERRED, ITEMS_BY_BLOCK, JL_MERGE_FLAGS, type Position } from "../data/items";
 import { PARTIES, type PartyCode } from "../data/parties";
 
 /**
@@ -8,9 +8,14 @@ import { PARTIES, type PartyCode } from "../data/parties";
  * into the strongest credibility claim.
  */
 const COLUMNS: PartyCode[] = [
-  "LIK", "TOG", "YSH", "SHS", "UTJ", "OTZ", "RZ", "NOAM", "YB", "DEM", "BW",
-  "ERD", "RAM", "JL", "HTA", "BAL",
+  "LIK", "TOG", "YSH", "SHS", "UTJ", "HPP", "OTZ", "RZ", "NOAM", "YB", "DEM", "BW",
+  "UNI", "RAM", "JL", "HTA", "BAL",
 ];
+
+/** Built once: overlay columns whose cells rest on reasoning, not a platform. */
+const INFERRED_SETS: Partial<Record<PartyCode, Set<string>>> = Object.fromEntries(
+  Object.entries(INFERRED).map(([code, ids]) => [code, new Set(ids)]),
+);
 
 const cls = (p: Position) =>
   p === "A" ? "cell-A" : p === "D" ? "cell-D" : p === "N" ? "cell-N" : "cell-none";
@@ -66,6 +71,9 @@ export function Matrix() {
                         )}
                         {c === "JL" && JL_MERGE_FLAGS[it.id] === "divergent" && (
                           <span className="muted" title="Components disagreed; resolved to the less committal value">†</span>
+                        )}
+                        {INFERRED_SETS[c]?.has(it.id) && (
+                          <span className="muted" title="Inferred from the party's own framing, not stated by it">‡</span>
                         )}
                       </td>
                     ))}
@@ -129,6 +137,14 @@ export function Matrix() {
         define it, a coalition of conveniences elsewhere. The exception is A13, added after validation — it
         is the first security item to divide the components, and the unity the merge appeared to show on
         security was partly an artefact of what the bank had not yet asked.
+      </p>
+      <p className="small muted" style={{ marginTop: 10 }}>
+        <span className="muted">‡</span> inferred: the cell rests on reasoning from what the party is,
+        rather than on something it has said. These are listed rather than summarised so you can disagree
+        with a specific one — the reasoning behind each set is in the editorial notes. Three columns carry
+        them, all of them parties too new or too narrow to have published much: Unity, the Haredi Public
+        Party and Noam. A column with many of these is a column to distrust, which is the point of marking
+        them at all.
       </p>
     </div>
   );

@@ -7,8 +7,8 @@
 
 export type PartyCode =
   | "LIK" | "TOG" | "YSH" | "SHS" | "UTJ" | "OTZ" | "RZ"
-  | "YB"  | "DEM" | "BW"  | "RAM" | "JL"  | "ERD"
-  | "NOAM"
+  | "YB"  | "DEM" | "BW"  | "RAM" | "JL"  | "UNI"
+  | "NOAM" | "HPP"
   | "HTA" | "BAL";
 
 /** §4.5 bloc readout. `unaligned` parties are reported in no bloc average. */
@@ -31,7 +31,7 @@ export interface Party {
 
 /**
  * Column order of the 13-character coding strings in items.ts.
- * JL and ERD are held as separate overlays because they were coded
+ * JL and UNI are held as separate overlays because they were coded
  * after the matrix was drawn (§3.6, §3.7).
  */
 export const MATRIX_ORDER: PartyCode[] = [
@@ -85,10 +85,18 @@ export const PARTIES: Record<PartyCode, Party> = {
     name: "The Joint List", lead: "Hadash · Ta'al · Balad", color: "#C0392B", bloc: "non", ballot: true,
     note: "Revived June 2026 without Ra'am, and now confirmed: Hadash–Ta'al and Balad are running together. That settles a structural question this registry was holding open — had the alliance collapsed, both would have become ballot entities in their own right and this column would not exist. Still a technical electoral arrangement rather than a shared platform, so the merged column continues to overstate unity on religion-and-state and economics.",
   },
-  ERD: {
-    name: "Erdan–Edelstein list (unnamed)", lead: "Erdan (Edelstein #2)", color: "#A0522D",
+  UNI: {
+    name: "Unity (HaAchdut)", lead: "Erdan (Edelstein #2)", color: "#A0522D",
     bloc: "unaligned", ballot: true,
-    note: "Launched 6 August 2026. Only 16 of 48 items codeable and a third of those inferred. Suppressed from the headline ranking and from the grid by the coverage rule.",
+    note: "Launched 6 August 2026 and named in August. The English name is carried with the Hebrew because 'Unity' alone collides with National Unity, Gantz's 2022 list, which appears under that name in the recalled-vote question and whose successor sits in this bank as Blue & White. Only 16 of 48 items codeable. Suppressed from the headline ranking and from the grid by the coverage rule.",
+  },
+  HPP: {
+    name: "The Haredi Public Party", lead: "Leitner", color: "#4F6D7A",
+    bloc: "unaligned", ballot: true,
+    belowThreshold: true,
+    // Not a polling claim: it is new enough that no polling exists to cite.
+    thresholdNote: "a new faction with no polling on record",
+    note: "Moti Leitner, former Mayor of Beit Shemesh. An ultra-Orthodox faction campaigning for conscription, core-curriculum education and economic reform within haredi society — the first haredi column in the bank on the pro-conscription side. Coded on three stated planks plus the religion-and-state positions its own framing makes near-certain; security, institutions and identity are left unstated. 31% coverage, so it is suppressed from the ranking and the grid. Coalition posture is genuinely unknown, hence unaligned.",
   },
   HTA: {
     name: "Hadash–Ta'al", lead: "Jabareen", color: "#B03A2E", bloc: "non", ballot: false,

@@ -316,7 +316,7 @@ export function Results({
       ))}
       <p className="small muted" style={{ marginTop: 10 }}>
         Mean match across the parties in each bloc, using your weighting. Ra'am and the Joint List are scored
-        as ballot entities here; the Erdan–Edelstein list belongs to no bloc and is excluded.
+        as ballot entities here; Unity and the Haredi Public Party belong to no bloc and are excluded.
       </p>
       {f1 !== null && (
         <p className="small" style={{ marginTop: 8 }}>

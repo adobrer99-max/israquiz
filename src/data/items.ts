@@ -205,13 +205,74 @@ export const JL_MERGE_FLAGS: Record<string, "component" | "divergent"> = {
   B4: "divergent", B10: "divergent", B13: "divergent", E3: "divergent", E8: "divergent",
 };
 
-/* --- §3.6 ERD: 17 codeable items, the rest "-" --- */
-const ERD_POS: Record<string, Position> = {
+/**
+ * Cells that rest on reasoning rather than on something the party said.
+ *
+ * The thin columns used to claim "a third of those inferred" in prose, with
+ * nothing recording which cells those were — an unfalsifiable number, and a
+ * third of sixteen is not an integer. This is the JL_MERGE_FLAGS treatment
+ * applied to inference: name the cells, render them in the matrix, and let a
+ * reader disagree with a specific one instead of with an adjective.
+ *
+ * Only overlay columns appear here. The thirteen matrix columns are coded from
+ * published platforms; where they are not, the cell is "-" or the doubt is in
+ * the editorial notes.
+ */
+export const INFERRED: Partial<Record<PartyCode, string[]>> = {
+  // Coded before the list had a platform, from Erdan's and Edelstein's records
+  // in Likud rather than from anything the new list has published.
+  UNI: ["A7", "A9", "C6", "D2", "E2", "E3"],
+  // Everything except the three stated planks (B1, B3, E2). See the note on
+  // why the haredi baseline is a defensible reading and what breaks if it is not.
+  HPP: ["B2", "B4", "B5", "B6", "B7", "B8", "B9", "B10", "B11", "B12", "B13", "B14"],
+  // Coded from a narrow platform; these are the cells extrapolated from the
+  // Har Hamor stream's positions rather than stated by the party.
+  NOAM: ["A4", "A13", "C1", "C3", "C5", "C6", "C8", "C9"],
+};
+
+/* --- §3.6 Unity (HaAchdut), the Erdan–Edelstein list ------------------------
+ *
+ * Eighteen entries, of which sixteen hit live items: C4 and D5 were retired in
+ * the redundancy cut and are kept here so the codings survive if either item is
+ * ever restored. Coverage is therefore 16/48 = 33%, well under the floor.
+ */
+const UNI_POS: Record<string, Position> = {
   A1: "D", A2: "A", A6: "D", A7: "N", A9: "N", A10: "D",
   B1: "A", B3: "A", B7: "D",
   C4: "N", C6: "N",
   D1: "A", D2: "D", D5: "A", D7: "A",
   E2: "D", E3: "A", E5: "A",
+};
+
+/* --- The Haredi Public Party ------------------------------------------------
+ *
+ * An ultra-Orthodox faction campaigning for conscription, core-curriculum
+ * education and economic reform within haredi society. It is the first haredi
+ * column in the bank on the pro-conscription side, which is the whole reason it
+ * is worth coding at all: B1 and B3 invert Shas and United Torah Judaism, and
+ * nothing else in the bank produces that cut.
+ *
+ * Three cells are stated policy — B1, B3 and E2. The other twelve follow Shas
+ * and UTJ exactly, on the reading that this is a reform faction *within*
+ * ultra-Orthodox society: its quarrel is about integration into the state —
+ * army, work, secular subjects — and not about halakha, so nothing suggests it
+ * differs on the Rabbinate, Shabbat or gender separation. Security,
+ * institutions and national identity are left unstated rather than inferred
+ * from UTJ, which is what the coverage floor exists to prevent. Fifteen of 48
+ * items is 31% coverage, so the party is suppressed from the ranking and the
+ * grid and appears under insufficient position data.
+ *
+ * E2 is the cell to check hardest. "Economic reform" could mean redirecting
+ * subsidy rather than cutting it, in which case E2 is N — and E2 is the only
+ * coded item outside block B, so if that reading is wrong the column collapses
+ * to a religion-and-state party with two flips.
+ */
+const HPP_POS: Record<string, Position> = {
+  // stated planks
+  B1: "A", B3: "A", E2: "D",
+  // haredi baseline, inferred from the party's own framing
+  B2: "D", B4: "D", B5: "A", B6: "D", B7: "A", B8: "D", B9: "A",
+  B10: "D", B11: "D", B12: "D", B13: "D", B14: "D",
 };
 
 /* --- Noam For Israel: a narrow platform, coded as narrow -------------------
@@ -256,8 +317,9 @@ export const ITEMS: Item[] = RAW.map(([id, block, sign, text, codings]) => {
     pos[code] = codings[i] as Position;
   });
   pos.JL = JL_POS[id] ?? "-";
-  pos.ERD = ERD_POS[id] ?? "-";
+  pos.UNI = UNI_POS[id] ?? "-";
   pos.NOAM = NOAM_POS[id] ?? "-";
+  pos.HPP = HPP_POS[id] ?? "-";
   return { id, block, sign, text, pos };
 });
 
@@ -319,8 +381,9 @@ export const RETIRED: RetiredItem[] = RETIRED_ROWS.map(([row, duplicateOf, reaso
     pos[code] = codings[i] as Position;
   });
   pos.JL = JL_POS[id] ?? "-";
-  pos.ERD = ERD_POS[id] ?? "-";
+  pos.UNI = UNI_POS[id] ?? "-";
   pos.NOAM = NOAM_POS[id] ?? "-";
+  pos.HPP = HPP_POS[id] ?? "-";
   return { id, block, sign, text, pos, duplicateOf, reason };
 });
 
@@ -340,24 +403,30 @@ export interface Diagnostic {
   pos?: Record<PartyCode, Position>;
 }
 
-function diagnosticPos(
-  codings: string, jl: Position, erd: Position, noam: Position,
-): Record<PartyCode, Position> {
+/**
+ * Overlays are named rather than positional. With four of them a call like
+ * `diagnosticPos("ADDAAAADDDDDD", "D", "N", "A", "-")` is unreadable and one
+ * transposition would be invisible.
+ */
+type Overlays = { jl: Position; uni: Position; noam: Position; hpp: Position };
+
+function diagnosticPos(codings: string, o: Overlays): Record<PartyCode, Position> {
   const pos = EMPTY_POS();
   MATRIX_ORDER.forEach((c, i) => {
     pos[c] = codings[i] as Position;
   });
-  pos.JL = jl;
-  pos.ERD = erd;
-  pos.NOAM = noam;
+  pos.JL = o.jl;
+  pos.UNI = o.uni;
+  pos.NOAM = o.noam;
+  pos.HPP = o.hpp;
   return pos;
 }
 
 export const F1: Diagnostic = {
   id: "F1",
   text: "Benjamin Netanyahu should continue as prime minister.",
-  // ERD explicitly declined to rule out sitting with Netanyahu.
-  pos: diagnosticPos("ADDAAAADDDDDD", "D", "N", "A"),
+  // Unity explicitly declined to rule out sitting with Netanyahu.
+  pos: diagnosticPos("ADDAAAADDDDDD", { jl: "D", uni: "N", noam: "A", hpp: "-" }),
 };
 
 export const F2: Diagnostic = {
@@ -378,13 +447,13 @@ export const F2: Diagnostic = {
 export const G1: Diagnostic = {
   id: "G1",
   text: "An Arab party should be willing to join a coalition led by a Zionist party.",
-  pos: diagnosticPos("NNNNNDDNANADD", "D", "-", "D"),
+  pos: diagnosticPos("NNNNNDDNANADD", { jl: "D", uni: "-", noam: "D", hpp: "-" }),
 };
 
 export const G2: Diagnostic = {
   id: "G2",
   text: "The electoral threshold should be raised above its current 3.25%.",
-  pos: diagnosticPos("AANDDDDADDDDD", "D", "-", "D"),
+  pos: diagnosticPos("AANDDDDADDDDD", { jl: "D", uni: "-", noam: "D", hpp: "-" }),
 };
 
 /**
@@ -397,7 +466,7 @@ export const G2: Diagnostic = {
 export const G3: Diagnostic = {
   id: "G3",
   text: "The state should acknowledge and compensate for discrimination against Mizrahi immigrants in its early decades.",
-  pos: diagnosticPos("ANNANANNANNA-", "A", "-", "N"),
+  pos: diagnosticPos("ANNANANNANNA-", { jl: "A", uni: "-", noam: "N", hpp: "-" }),
 };
 
 /** Cross-cutting items, asked after the topic weighting. */

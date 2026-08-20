@@ -64,9 +64,19 @@ export const CODING_NOTES: Note[] = [
     issue: "Economic positions are thin and subordinate to other commitments. Several N codings are low-confidence.",
   },
   {
-    items: "All Erdan–Edelstein rows",
+    items: "All Unity (HaAchdut) rows",
     severe: true,
-    issue: "The party is days old and unnamed; 64% of items are unstated and a third of the coded ones are inferred rather than stated. To be re-coded entirely once a platform exists. Also verify the list still exists at filing — Likud breakaways have a mixed survival record.",
+    issue: "Named Unity — HaAchdut in Hebrew — in August, having been launched on 6 August as an unnamed Erdan–Edelstein list. Naming a party does not give it a platform: 67% of items are still unstated (32 of 48), and most of the sixteen coded cells are inferred rather than stated. To be re-coded entirely once a platform exists. Also verify the list still exists at filing — Likud breakaways have a mixed survival record.",
+  },
+  {
+    items: "All Haredi Public Party rows",
+    severe: true,
+    issue: "Three cells are stated policy and twelve are inferred, which is the worst stated-to-inferred ratio in the bank and the reason the column is suppressed rather than ranked. B1, B3 and E2 are the party's own planks — conscription, core curriculum, and the money that sustains full-time study. The rest of the religion-and-state block follows Shas and United Torah Judaism exactly, on the reading that a reform faction within ultra-Orthodox society is quarrelling about integration into the state and not about halakha. That reading is the load-bearing judgement here: if the party turns out to differ from the haredi parties on the Rabbinate or on Shabbat, twelve cells are wrong at once. Security, institutions and national identity are left unstated rather than inferred from United Torah Judaism, which is the line between a thin column and a fabricated one.",
+  },
+  {
+    items: "E2 (Haredi Public Party)",
+    severe: true,
+    issue: "Coded D, against Shas and UTJ at A. The party campaigns for economic reform within haredi society, and the stipend question is the money version of the conscription split — but reform could equally mean redirecting subsidy toward employment rather than cutting it, in which case the honest coding is N. It is also the only coded cell outside block B, so if this reading is wrong the column reduces to a religion-and-state party with two flips and stops saying anything about economics at all.",
   },
   {
     items: "Ra'am (D1, D7, C9)",
@@ -106,6 +116,18 @@ export const INSTRUMENT_NOTES: Note[] = [
   {
     items: "The Joint List · Balad's silence is now a settled limitation",
     issue: "Balad takes no position on intra-Jewish religion-and-state questions, and the merge absorbs that silence into a ballot column. While the alliance was provisional this was an artefact that might have dissolved; with the slate confirmed it will not. The concrete consequence is worth stating for what it costs a respondent rather than what it costs the matrix: someone whose views sit closest to Balad specifically cannot see that in the headline ranking, because Balad is not a thing anyone can vote for and its distinctive positions are averaged into a column it shares with Hadash–Ta'al. The component readout below the ranking is the only place that difference surfaces, which is the reason it exists and the reason those columns stay published.",
+  },
+  {
+    items: "The Haredi Public Party · the cut nothing else made",
+    issue: "Until now every haredi column in the bank sat on the same side of B1 and B3 — against conscription on the same terms, against conditioning yeshiva funding on the core curriculum. Those are the two items block B is built around, and having no haredi party opposed to the haredi position on them meant the religion axis could not distinguish a respondent who is observant and pro-integration from one who is simply secular. The Haredi Public Party is the first column to make that cut. It is worth having even suppressed: it changes what the two items mean, and it puts a party on the A side of both that a haredi respondent could actually recognise.",
+  },
+  {
+    items: "The Haredi Public Party · it is UTJ with three flips",
+    issue: "Said plainly rather than left for a reader to notice: across the fifteen cells coded, the column is identical to United Torah Judaism except on B1, B3 and E2. That is what the party is by its own account — an internal reform faction, not a new religious tendency — so the resemblance is a finding rather than a coding failure. It does mean the column carries almost no independent information outside those three cells, and that a respondent matching it closely is really matching UTJ. The coverage floor keeps it out of the ranking, which is the right outcome for a column whose distinctiveness rests on three items.",
+  },
+  {
+    items: "Unity (HaAchdut) · two name collisions",
+    issue: "The Erdan–Edelstein list is now named Unity, and the name lands awkwardly twice. First, the recalled-vote question offers National Unity, which is Gantz's 2022 list and a different party — that option keeps its name because it has to match what was on the 2022 ballot, so the compass now shows a reader two similar names for unrelated parties. The party is therefore carried here as Unity (HaAchdut), with the Hebrew doing the disambiguating. Second, F2 asks about preferring a broad national-unity government, which is the standard term for a government type but can now read as a question about the party. The wording is kept: national-unity government is the term Israeli politics actually uses, F2 is unscored, and renaming a concept to avoid a party is how you end up describing neither. It is the first thing to check if testers stumble on it.",
   },
   {
     items: "D7 · United Torah Judaism",
