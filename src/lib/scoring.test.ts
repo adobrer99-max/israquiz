@@ -4,7 +4,7 @@ import {
   partyAxesFor, score, spansBlocs, unlikelyBedfellows, userAxes, type Answers, type Weights,
 } from "./scoring";
 import {
-  A5_ROWS, BLOCK_IDS, CROSS_CUTTING, F1, F2, G1, G2, G3, INFERRED, ITEMS, ITEMS_BY_BLOCK, JL_MERGE_FLAGS, RETIRED,
+  A5_ROWS, BLOCK_IDS, CROSS_CUTTING, F1, F2, G1, G2, G3, INFERRED, ITEMS, ITEMS_BY_BLOCK, JL_MERGE_FLAGS, PENDING, RETIRED,
   type Position,
 } from "../data/items";
 import { axisCollapses, identicalColumns, itemDiagnostics } from "./diagnostics";
@@ -542,6 +542,39 @@ describe("party match (§4.2)", () => {
     for (const code of Object.keys(INFERRED) as PartyCode[]) {
       expect(MATRIX_ORDER, code).not.toContain(code);
     }
+  });
+
+  /**
+   * A drafted item must not leak into the live bank. If it ever did, every
+   * party's coverage would shift and every saved session would be answering a
+   * different questionnaire from the one it started.
+   */
+  it("keeps drafted items out of the live bank entirely", () => {
+    const live = new Set(ITEMS.map((i) => i.id));
+    for (const p of PENDING) {
+      expect(live.has(p.item.id), `${p.item.id} has gone live without a bank revision`).toBe(false);
+      // ready to drop in: coded on every column, no gaps to discover later
+      for (const code of Object.keys(PARTIES) as PartyCode[]) {
+        expect(p.item.pos[code], `${p.item.id}/${code}`).toBeDefined();
+      }
+    }
+  });
+
+  /**
+   * B15's documented claim is that it is B1's row with exactly one cell
+   * changed. That is the argument both for it — it isolates enforcement from
+   * enlistment — and against it, since the whole item rests on one column.
+   * If the codings drift, the note stops being true and this should say so.
+   */
+  it("pins B15 as B1 separated only by the Haredi Public Party", () => {
+    const b15 = PENDING.find((p) => p.item.id === "B15")!.item;
+    const b1 = ITEMS.find((i) => i.id === "B1")!;
+    const differing = (Object.keys(PARTIES) as PartyCode[]).filter(
+      (c) => b15.pos[c] !== b1.pos[c],
+    );
+    expect(differing).toEqual(["HPP"]);
+    expect(b1.pos.HPP).toBe("A");
+    expect(b15.pos.HPP).toBe("D");
   });
 
   it("keeps Joint List components out of the ballot ranking", () => {

@@ -395,6 +395,55 @@ export const RETIRED: RetiredItem[] = RETIRED_ROWS.map(([row, duplicateOf, reaso
   return { id, block, sign, text, pos, duplicateOf, reason };
 });
 
+/* --- Drafted for the September bank revision (§8.7). Not live. -------------
+ *
+ * B1 asks whether haredi yeshiva students should be drafted on the same terms
+ * as other citizens, and for fifteen of sixteen columns that is one question:
+ * a party that wants haredim serving also wants the exemption ended. The
+ * Haredi Public Party splits it — enlistment yes, sanctions no — so B1 records
+ * its answer to half the question and cannot show the other half.
+ *
+ * This is the other half. It is held rather than added because adding an item
+ * shifts every party's coverage denominator, forces a storage-key bump that
+ * ends every in-flight session, and re-opens the §4.6 clustering check — and
+ * §8.7 already schedules exactly that work against the lists filed in
+ * September. Doing it now means doing it twice.
+ *
+ * Two things to weigh when that revision comes, both arguments against:
+ *
+ * 1. The row is B1's row with one cell changed. Only the Haredi Public Party
+ *    column moves. An item whose entire value rests on one column that is
+ *    itself weeks old and coded from press reporting is a thin item, and if
+ *    that party does not file, this has no reason to exist.
+ * 2. The wording avoids "draft evaders" deliberately. §5 requires a supporter
+ *    of the haredi position to accept the statement as a fair description of
+ *    what they oppose, and they do not accept that full-time students are
+ *    evading anything. "Do not report for service" is the neutral form.
+ */
+export const PENDING: { item: Item; rationale: string }[] = (() => {
+  const row: Row = [
+    "B15", "B", -1,
+    "Haredi men who do not report for military service should face the same legal consequences as any other citizen who does not.",
+    "DAADDNNAAA---",
+  ];
+  const [id, block, sign, text, codings] = row;
+  const pos = EMPTY_POS();
+  MATRIX_ORDER.forEach((c, i) => {
+    pos[c] = codings[i] as Position;
+  });
+  // Only HPP separates this from B1: it wants haredim serving and opposes
+  // compelling them. Noam is N on both — haredi conscription is not its fight.
+  pos.JL = "-";
+  pos.UNI = "A";
+  pos.NOAM = "N";
+  pos.HPP = "D";
+  return [{
+    item: { id, block, sign, text, pos },
+    rationale:
+      "Separates enforcement from enlistment. B1 collects \"draft them and penalise refusal\" and \"draft them by restructuring funding\" as the same answer, which was harmless until a haredi party took the second position. Held for the September bank revision rather than added now, because a new item shifts every coverage denominator, invalidates saved sessions and re-opens the clustering check — all of which that revision does anyway.",
+  }];
+})();
+
 export const ITEMS_BY_BLOCK: Record<BlockId, Item[]> = BLOCK_IDS.reduce(
   (acc, b) => {
     acc[b] = ITEMS.filter((i) => i.block === b);
