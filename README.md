@@ -54,6 +54,27 @@ Add `?validate=1` to the URL for validation mode (§4.7): the quiz asks for your
 then reports whether it recovered it, along with every statement where you flatly oppose that party. That
 is the screen to hand to the fifteen-to-twenty known voters before launch.
 
+## Running the validation round
+
+`?validate=1` produces one JSON blob per tester. To turn a pile of them into findings:
+
+```bash
+npx vite-node scripts/validation-report.ts validation/    # writes validation/REPORT.md
+```
+
+`validation/BRIEF.md` has the message to send testers and how to read what comes
+back. The headline recovery rate is the least interesting output; the table worth
+having is **cells to re-check** — statements where several people who declared the
+same party disagree with that party's coded position. A compass cannot check its
+own codings, and that table is the only mechanism here that can. Cells the
+editorial notes already flag as doubtful are marked, because an independent hit on
+one of those is as close to proof as this exercise gets.
+
+**Replies are gitignored and must stay that way.** One joins a named tester to a
+declared vote and a full answer vector — the same join §6.5.1 keeps apart
+everywhere else, and special-category data under GDPR. Only `BRIEF.md` is
+committed.
+
 ## Layout
 
 | Path | What lives there |
@@ -66,6 +87,8 @@ is the screen to hand to the fifteen-to-twenty known voters before launch.
 | `src/lib/scoring.ts` | The whole of §4. Pure functions, no React |
 | `src/lib/diagnostics.ts` | Pre-launch item validation (§4.7) |
 | `src/lib/collect.ts` | The optional research submission — the only code that can transmit anything |
+| `src/lib/validation.ts` | The §4.7 validation round: recovery rate and the miscoding table |
+| `scripts/` | Font fetcher, and the validation-report CLI |
 | `src/components/` | Screens |
 | `server/` | Reference collection backend: Cloudflare Worker, D1 schema, analysis queries |
 
