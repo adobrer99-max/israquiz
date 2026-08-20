@@ -6,7 +6,7 @@
    ============================================================ */
 
 export const VERSION = "v0.2 — preview";
-export const VERSION_DATE = "9 August 2026";
+export const VERSION_DATE = "20 August 2026";
 
 export const ELECTION = {
   knesset: 26,
@@ -56,16 +56,27 @@ export const CODING_NOTES: Note[] = [
   },
   {
     items: "The Joint List merge",
-    issue: "The technical-bloc structure means the merged column overstates unity on religion-and-state and economics, where all but one of the flagged and divergent cells fall. The exception is A13, added after validation, which is the first security item to divide the components — so the spec's claim that the three are genuinely identical outside those two blocks held partly because the bank had not asked the question. Re-examine once the joint slate is published; the ordering of the list itself will show which component's positions carry weight.",
+    severe: true,
+    issue: "The technical-bloc structure means the merged column overstates unity on religion-and-state and economics, where all but one of the flagged and divergent cells fall. The exception is A13, added after validation, which is the first security item to divide the components — so the spec's claim that the three are genuinely identical outside those two blocks held partly because the bank had not asked the question. This note used to end by saying to re-examine once the joint slate was published. It now has been, and the re-examination has not been done: sixteen cells are flagged in the matrix as the merge doing interpretive work rather than reading a position off a platform, and every one of them is a cell a published slate could settle. Ten are component positions, where one component is coded and the other silent — B2, B3, B5, B6, B7, B8, B9, B11, B12 and B14. Six are divergences resolved to the less committal value — A13, B4, B10, B13, E3 and E8. The list's own ordering is the evidence to read them against, since it shows whose positions carry weight, and none of that has been read in here.",
   },
   {
     items: "Economy block (Otzma Yehudit, Religious Zionism)",
     issue: "Economic positions are thin and subordinate to other commitments. Several N codings are low-confidence.",
   },
   {
-    items: "All Erdan–Edelstein rows",
+    items: "All Unity (HaAchdut) rows",
     severe: true,
-    issue: "The party is days old and unnamed; 64% of items are unstated and a third of the coded ones are inferred rather than stated. To be re-coded entirely once a platform exists. Also verify the list still exists at filing — Likud breakaways have a mixed survival record.",
+    issue: "Named Unity — HaAchdut in Hebrew — in August, having been launched on 6 August as an unnamed Erdan–Edelstein list. Naming a party does not give it a platform: 67% of items are still unstated (32 of 48), and most of the sixteen coded cells are inferred rather than stated. To be re-coded entirely once a platform exists. Also verify the list still exists at filing — Likud breakaways have a mixed survival record.",
+  },
+  {
+    items: "All Haredi Public Party rows",
+    severe: true,
+    issue: "Three cells are stated policy and twelve are inferred, which is the worst stated-to-inferred ratio in the bank and the reason the column is suppressed rather than ranked. B1, B3 and E2 are the party's own planks — conscription, core curriculum, and the money that sustains full-time study. The rest of the religion-and-state block follows Shas and United Torah Judaism exactly, on the reading that a reform faction within ultra-Orthodox society is quarrelling about integration into the state and not about halakha. That reading is the load-bearing judgement here: if the party turns out to differ from the haredi parties on the Rabbinate or on Shabbat, twelve cells are wrong at once. Security, institutions and national identity are left unstated rather than inferred from United Torah Judaism, which is the line between a thin column and a fabricated one.",
+  },
+  {
+    items: "E2 (Haredi Public Party)",
+    severe: true,
+    issue: "Coded D, against Shas and UTJ at A. The party campaigns for economic reform within haredi society, and the stipend question is the money version of the conscription split — but reform could equally mean redirecting subsidy toward employment rather than cutting it, in which case the honest coding is N. It is also the only coded cell outside block B, so if this reading is wrong the column reduces to a religion-and-state party with two flips and stops saying anything about economics at all.",
   },
   {
     items: "Ra'am (D1, D7, C9)",
@@ -97,6 +108,26 @@ export const INSTRUMENT_NOTES: Note[] = [
     items: "A13 · the Joint List merge",
     severe: true,
     issue: "A13 is the first item to divide the Joint List outside religion-and-state and economics. Hadash–Ta'al is coded N and Balad D, so the merged column resolves to N. The spec's observation that the three components are 'genuinely identical' on security, institutions and national identity held only because the bank had not yet asked the question that divides them. That is worth saying plainly: the unity the merge appeared to show was partly an artefact of the item set.",
+  },
+  {
+    items: "The Joint List · confirmed, and what that settles",
+    issue: "Hadash–Ta'al and Balad are now confirmed to be running together. Nothing in the codings changes, but a structural question closes: until now the alliance could have collapsed, and had it done so both would have become ballot entities in their own right and the merged column would have ceased to exist. The party registry is built to absorb exactly that, and it no longer has to. What follows is that the merge rule stops being a provisional convenience and becomes a permanent property of the ballot — which raises rather than lowers the standard the flagged cells have to meet, because they will still be there on election day.",
+  },
+  {
+    items: "The Joint List · Balad's silence is now a settled limitation",
+    issue: "Balad takes no position on intra-Jewish religion-and-state questions, and the merge absorbs that silence into a ballot column. While the alliance was provisional this was an artefact that might have dissolved; with the slate confirmed it will not. The concrete consequence is worth stating for what it costs a respondent rather than what it costs the matrix: someone whose views sit closest to Balad specifically cannot see that in the headline ranking, because Balad is not a thing anyone can vote for and its distinctive positions are averaged into a column it shares with Hadash–Ta'al. The component readout below the ranking is the only place that difference surfaces, which is the reason it exists and the reason those columns stay published.",
+  },
+  {
+    items: "The Haredi Public Party · the cut nothing else made",
+    issue: "Until now every haredi column in the bank sat on the same side of B1 and B3 — against conscription on the same terms, against conditioning yeshiva funding on the core curriculum. Those are the two items block B is built around, and having no haredi party opposed to the haredi position on them meant the religion axis could not distinguish a respondent who is observant and pro-integration from one who is simply secular. The Haredi Public Party is the first column to make that cut. It is worth having even suppressed: it changes what the two items mean, and it puts a party on the A side of both that a haredi respondent could actually recognise.",
+  },
+  {
+    items: "The Haredi Public Party · it is UTJ with three flips",
+    issue: "Said plainly rather than left for a reader to notice: across the fifteen cells coded, the column is identical to United Torah Judaism except on B1, B3 and E2. That is what the party is by its own account — an internal reform faction, not a new religious tendency — so the resemblance is a finding rather than a coding failure. It does mean the column carries almost no independent information outside those three cells, and that a respondent matching it closely is really matching UTJ. The coverage floor keeps it out of the ranking, which is the right outcome for a column whose distinctiveness rests on three items.",
+  },
+  {
+    items: "Unity (HaAchdut) · two name collisions",
+    issue: "The Erdan–Edelstein list is now named Unity, and the name lands awkwardly twice. First, the recalled-vote question offers National Unity, which is Gantz's 2022 list and a different party — that option keeps its name because it has to match what was on the 2022 ballot, so the compass now shows a reader two similar names for unrelated parties. The party is therefore carried here as Unity (HaAchdut), with the Hebrew doing the disambiguating. Second, F2 asks about preferring a broad national-unity government, which is the standard term for a government type but can now read as a question about the party. The wording is kept: national-unity government is the term Israeli politics actually uses, F2 is unscored, and renaming a concept to avoid a party is how you end up describing neither. It is the first thing to check if testers stumble on it.",
   },
   {
     items: "D7 · United Torah Judaism",

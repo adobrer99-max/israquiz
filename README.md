@@ -59,7 +59,7 @@ is the screen to hand to the fifteen-to-twenty known voters before launch.
 | Path | What lives there |
 |---|---|
 | `src/data/parties.ts` | Party registry — names, blocs, colours, ballot status |
-| `src/data/items.ts` | The 48-item bank and the 13-column coding matrix, plus the JL merge and ERD overlays |
+| `src/data/items.ts` | The 48-item bank and the 13-column coding matrix, plus the JL merge and the Unity, Noam and Haredi Public Party overlays |
 | `src/data/glossary.ts` | Glossary terms and the inline-annotation matcher (§5) |
 | `src/data/editorial.ts` | Version stamp, coding uncertainties, instrument limits (§7) |
 | `src/data/demographics.ts` | The optional post-result block (§6) |
@@ -196,6 +196,12 @@ Under **Diagnostics** in the app, recorded rather than smoothed over:
    corrected: the party has published no platform, and its five coded religion-and-state cells all lean
    secular while the other five are genuinely unstated. Whether that silence is strategy or an absence of
    settled policy is a question about the party, not about the instrument.
+4. **Balad cannot surface in the ranking, and now never will.** It takes no position on intra-Jewish
+   religion-and-state questions, and the Joint List merge absorbs that silence into a ballot column.
+   While the alliance was provisional this was an artefact that might have dissolved; with Hadash–Ta'al
+   and Balad confirmed to be running together it will not. Someone whose views sit closest to Balad
+   specifically sees the Joint List instead, and the component readout below the ranking is the only
+   place that difference appears — which is why those columns stay published.
 
 ## Before this is published
 

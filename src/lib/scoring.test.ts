@@ -4,7 +4,7 @@ import {
   partyAxesFor, score, spansBlocs, unlikelyBedfellows, userAxes, type Answers, type Weights,
 } from "./scoring";
 import {
-  A5_ROWS, BLOCK_IDS, CROSS_CUTTING, F1, F2, G1, G2, G3, ITEMS, ITEMS_BY_BLOCK, JL_MERGE_FLAGS, RETIRED,
+  A5_ROWS, BLOCK_IDS, CROSS_CUTTING, F1, F2, G1, G2, G3, INFERRED, ITEMS, ITEMS_BY_BLOCK, JL_MERGE_FLAGS, RETIRED,
   type Position,
 } from "../data/items";
 import { axisCollapses, identicalColumns, itemDiagnostics } from "./diagnostics";
@@ -123,6 +123,25 @@ describe("cross-cutting block G", () => {
     expect(after.answeredCount).toBe(before.answeredCount);
   });
 
+  /**
+   * The Joint List arrangement is confirmed rather than expected, so it is now a
+   * fact worth pinning: Hadash–Ta'al and Balad are components, the Joint List is
+   * the thing on the ballot, and no edit to the registry should quietly promote a
+   * component into a ranking a voter cannot act on.
+   */
+  it("keeps the Joint List on the ballot and its components off it", () => {
+    expect(PARTIES.JL.ballot).toBe(true);
+    expect(PARTIES.HTA.ballot).toBe(false);
+    expect(PARTIES.BAL.ballot).toBe(false);
+
+    const r = score({});
+    expect(r.components.map((c) => c.code).sort()).toEqual(["BAL", "HTA"]);
+    const ranked = r.ranked.map((x) => x.code);
+    expect(ranked).not.toContain("HTA");
+    expect(ranked).not.toContain("BAL");
+    expect([...ranked, ...r.lowCoverage.map((x) => x.code)]).toContain("JL");
+  });
+
   it("separates Ra'am from the Joint List on coalitionability (G1)", () => {
     expect(G1.pos!.RAM).toBe("A");
     expect(G1.pos!.JL).toBe("D");
@@ -214,7 +233,7 @@ describe("retired items (§4.7 — publish what you cut and why)", () => {
    */
   it("leaves exactly one duplicate row, and it is the deliberate one", () => {
     // Every column, not just the 13-character matrix: parties held in an
-    // overlay (JL, ERD, Noam) are ballot entities too, and a check blind to
+    // overlay (JL, Unity, Noam, HPP) are ballot entities too, and a check blind to
     // them would call two items identical when a real party tells them apart.
     const all = Object.keys(PARTIES) as PartyCode[];
     const canon = (it: { pos: Record<string, string> }) => {
@@ -464,12 +483,65 @@ describe("party match (§4.2)", () => {
     expect(score(a, small).all.SHS.weighted).toBeCloseTo(score(a, doubled).all.SHS.weighted, 10);
   });
 
-  it("suppresses the Erdan–Edelstein list for low coverage and keeps the Joint List in", () => {
+  it("suppresses Unity for low coverage and keeps the Joint List in", () => {
     const r = score(answerAs("LIK"));
-    expect(r.lowCoverage.map((x) => x.code)).toContain("ERD");
+    expect(r.lowCoverage.map((x) => x.code)).toContain("UNI");
     expect(r.ranked.map((x) => x.code)).toContain("JL");
-    expect(r.all.ERD.coverage).toBeLessThan(COVERAGE_FLOOR);
+    expect(r.all.UNI.coverage).toBeLessThan(COVERAGE_FLOOR);
     expect(r.all.JL.coverage).toBeGreaterThanOrEqual(0.95);
+  });
+
+  /**
+   * The Haredi Public Party exists in the bank for one reason: it is the first
+   * haredi column on the pro-conscription side, and B1 and B3 are where that
+   * shows. If either cell ever matches Shas and UTJ the column has stopped
+   * earning its place, and this test should be the thing that says so.
+   */
+  it("puts the Haredi Public Party opposite Shas and UTJ on the draft and the curriculum", () => {
+    for (const id of ["B1", "B3"]) {
+      const it_ = ITEMS.find((x) => x.id === id)!;
+      expect(it_.pos.HPP, id).toBe("A");
+      expect(it_.pos.SHS, id).toBe("D");
+      expect(it_.pos.UTJ, id).toBe("D");
+    }
+    // and the money version of the same split
+    const e2 = ITEMS.find((x) => x.id === "E2")!;
+    expect(e2.pos.HPP).toBe("D");
+    expect(e2.pos.SHS).toBe("A");
+    expect(e2.pos.UTJ).toBe("A");
+  });
+
+  it("suppresses the Haredi Public Party, which is coded on three stated planks", () => {
+    const r = score(answerAs("LIK"));
+    expect(r.lowCoverage.map((x) => x.code)).toContain("HPP");
+    expect(r.ranked.map((x) => x.code)).not.toContain("HPP");
+    expect(r.all.HPP.coverage).toBeLessThan(COVERAGE_FLOOR);
+    // religion-and-state is complete; everything else is deliberately unstated
+    expect(ITEMS.filter((x) => x.block === "B" && x.pos.HPP !== "-")).toHaveLength(14);
+    expect(ITEMS.filter((x) => x.block !== "B" && x.pos.HPP !== "-").map((x) => x.id)).toEqual(["E2"]);
+  });
+
+  /**
+   * The inference flags exist to make "a third of those inferred" checkable
+   * rather than asserted. A flag pointing at a cell the party has no coding for
+   * is worse than no flag: it claims a judgement was made where none was.
+   */
+  it("flags only cells the party is actually coded on", () => {
+    for (const [code, ids] of Object.entries(INFERRED)) {
+      for (const id of ids) {
+        const item = ITEMS.find((x) => x.id === id);
+        expect(item, `${code} flags ${id}, which is not a live item`).toBeDefined();
+        expect(item!.pos[code as PartyCode], `${code} flags ${id} but codes it "-"`).not.toBe("-");
+      }
+    }
+  });
+
+  it("never claims a matrix column is inferred", () => {
+    // The thirteen matrix columns come from published platforms. Only the thin
+    // overlay columns carry inference, and saying so is the flag's whole value.
+    for (const code of Object.keys(INFERRED) as PartyCode[]) {
+      expect(MATRIX_ORDER, code).not.toContain(code);
+    }
   });
 
   it("keeps Joint List components out of the ballot ranking", () => {
@@ -605,9 +677,9 @@ describe("bloc readout (§4.5)", () => {
     expect(b.non).toBeGreaterThan(b.pro);
   });
 
-  it("leaves the unaligned Erdan–Edelstein list out of every bloc average", () => {
-    const r = score(answerAs("ERD"));
-    expect(r.ranked.some((x) => x.code === "ERD")).toBe(false);
+  it("leaves the unaligned Unity list out of every bloc average", () => {
+    const r = score(answerAs("UNI"));
+    expect(r.ranked.some((x) => x.code === "UNI")).toBe(false);
   });
 });
 
