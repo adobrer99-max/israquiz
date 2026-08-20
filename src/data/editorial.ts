@@ -6,7 +6,7 @@
    ============================================================ */
 
 export const VERSION = "v0.2 — preview";
-export const VERSION_DATE = "9 August 2026";
+export const VERSION_DATE = "20 August 2026";
 
 export const ELECTION = {
   knesset: 26,
@@ -56,7 +56,8 @@ export const CODING_NOTES: Note[] = [
   },
   {
     items: "The Joint List merge",
-    issue: "The technical-bloc structure means the merged column overstates unity on religion-and-state and economics, where all but one of the flagged and divergent cells fall. The exception is A13, added after validation, which is the first security item to divide the components — so the spec's claim that the three are genuinely identical outside those two blocks held partly because the bank had not asked the question. Re-examine once the joint slate is published; the ordering of the list itself will show which component's positions carry weight.",
+    severe: true,
+    issue: "The technical-bloc structure means the merged column overstates unity on religion-and-state and economics, where all but one of the flagged and divergent cells fall. The exception is A13, added after validation, which is the first security item to divide the components — so the spec's claim that the three are genuinely identical outside those two blocks held partly because the bank had not asked the question. This note used to end by saying to re-examine once the joint slate was published. It now has been, and the re-examination has not been done: sixteen cells are flagged in the matrix as the merge doing interpretive work rather than reading a position off a platform, and every one of them is a cell a published slate could settle. Ten are component positions, where one component is coded and the other silent — B2, B3, B5, B6, B7, B8, B9, B11, B12 and B14. Six are divergences resolved to the less committal value — A13, B4, B10, B13, E3 and E8. The list's own ordering is the evidence to read them against, since it shows whose positions carry weight, and none of that has been read in here.",
   },
   {
     items: "Economy block (Otzma Yehudit, Religious Zionism)",
@@ -97,6 +98,14 @@ export const INSTRUMENT_NOTES: Note[] = [
     items: "A13 · the Joint List merge",
     severe: true,
     issue: "A13 is the first item to divide the Joint List outside religion-and-state and economics. Hadash–Ta'al is coded N and Balad D, so the merged column resolves to N. The spec's observation that the three components are 'genuinely identical' on security, institutions and national identity held only because the bank had not yet asked the question that divides them. That is worth saying plainly: the unity the merge appeared to show was partly an artefact of the item set.",
+  },
+  {
+    items: "The Joint List · confirmed, and what that settles",
+    issue: "Hadash–Ta'al and Balad are now confirmed to be running together. Nothing in the codings changes, but a structural question closes: until now the alliance could have collapsed, and had it done so both would have become ballot entities in their own right and the merged column would have ceased to exist. The party registry is built to absorb exactly that, and it no longer has to. What follows is that the merge rule stops being a provisional convenience and becomes a permanent property of the ballot — which raises rather than lowers the standard the flagged cells have to meet, because they will still be there on election day.",
+  },
+  {
+    items: "The Joint List · Balad's silence is now a settled limitation",
+    issue: "Balad takes no position on intra-Jewish religion-and-state questions, and the merge absorbs that silence into a ballot column. While the alliance was provisional this was an artefact that might have dissolved; with the slate confirmed it will not. The concrete consequence is worth stating for what it costs a respondent rather than what it costs the matrix: someone whose views sit closest to Balad specifically cannot see that in the headline ranking, because Balad is not a thing anyone can vote for and its distinctive positions are averaged into a column it shares with Hadash–Ta'al. The component readout below the ranking is the only place that difference surfaces, which is the reason it exists and the reason those columns stay published.",
   },
   {
     items: "D7 · United Torah Judaism",

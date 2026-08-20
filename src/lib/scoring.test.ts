@@ -123,6 +123,25 @@ describe("cross-cutting block G", () => {
     expect(after.answeredCount).toBe(before.answeredCount);
   });
 
+  /**
+   * The Joint List arrangement is confirmed rather than expected, so it is now a
+   * fact worth pinning: Hadash–Ta'al and Balad are components, the Joint List is
+   * the thing on the ballot, and no edit to the registry should quietly promote a
+   * component into a ranking a voter cannot act on.
+   */
+  it("keeps the Joint List on the ballot and its components off it", () => {
+    expect(PARTIES.JL.ballot).toBe(true);
+    expect(PARTIES.HTA.ballot).toBe(false);
+    expect(PARTIES.BAL.ballot).toBe(false);
+
+    const r = score({});
+    expect(r.components.map((c) => c.code).sort()).toEqual(["BAL", "HTA"]);
+    const ranked = r.ranked.map((x) => x.code);
+    expect(ranked).not.toContain("HTA");
+    expect(ranked).not.toContain("BAL");
+    expect([...ranked, ...r.lowCoverage.map((x) => x.code)]).toContain("JL");
+  });
+
   it("separates Ra'am from the Joint List on coalitionability (G1)", () => {
     expect(G1.pos!.RAM).toBe("A");
     expect(G1.pos!.JL).toBe("D");

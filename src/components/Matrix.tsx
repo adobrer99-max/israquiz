@@ -28,7 +28,9 @@ export function Matrix() {
       <p className="small muted">
         Hadash–Ta'al and Balad are components of the Joint List, not ballot entities. Their columns are
         published because the merge rule that produces the JL column is a judgement call, and you should be
-        able to check it.
+        able to check it. The alliance is confirmed, so that judgement is now a permanent feature of the
+        ballot rather than a provisional one — which makes the flagged cells below worth checking rather
+        than worth waiting on.
       </p>
 
       <div className="scroller">

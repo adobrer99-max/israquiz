@@ -79,11 +79,11 @@ export const PARTIES: Record<PartyCode, Party> = {
   },
   RAM: {
     name: "Ra'am", lead: "Abbas", color: "#2E7D32", bloc: "non", ballot: true,
-    note: "Declined to join the revived Joint List; runs separately. In flux — see the editorial notes on D1, D5 and C9.",
+    note: "Declined to join the revived Joint List and runs separately, now confirmed by the joint slate going ahead without it. Its own positions remain in flux — see the editorial notes on D1, D7 and C9.",
   },
   JL: {
     name: "The Joint List", lead: "Hadash · Ta'al · Balad", color: "#C0392B", bloc: "non", ballot: true,
-    note: "Revived June 2026 without Ra'am. A technical electoral arrangement, not a shared platform — the merged column overstates unity on religion-and-state and economics.",
+    note: "Revived June 2026 without Ra'am, and now confirmed: Hadash–Ta'al and Balad are running together. That settles a structural question this registry was holding open — had the alliance collapsed, both would have become ballot entities in their own right and this column would not exist. Still a technical electoral arrangement rather than a shared platform, so the merged column continues to overstate unity on religion-and-state and economics.",
   },
   ERD: {
     name: "Erdan–Edelstein list (unnamed)", lead: "Erdan (Edelstein #2)", color: "#A0522D",
@@ -92,11 +92,11 @@ export const PARTIES: Record<PartyCode, Party> = {
   },
   HTA: {
     name: "Hadash–Ta'al", lead: "Jabareen", color: "#B03A2E", bloc: "non", ballot: false,
-    note: "Component of the Joint List. Not separately votable.",
+    note: "Component of the Joint List. Not separately votable — settled now that the joint slate is confirmed, where before it was the expected case rather than the certain one.",
   },
   BAL: {
     name: "Balad", lead: "Shehadeh", color: "#7D6608", bloc: "non", ballot: false,
-    note: "Component of the Joint List. Takes no position on intra-Jewish religion-and-state questions.",
+    note: "Component of the Joint List, settled now that the joint slate is confirmed. Takes no position on intra-Jewish religion-and-state questions, and with the alliance fixed that silence is permanently absorbed into the merged column rather than provisionally so.",
   },
 };
 
