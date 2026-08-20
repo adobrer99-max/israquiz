@@ -262,10 +262,18 @@ const UNI_POS: Record<string, Position> = {
  * items is 31% coverage, so the party is suppressed from the ranking and the
  * grid and appears under insufficient position data.
  *
- * E2 is the cell to check hardest. "Economic reform" could mean redirecting
- * subsidy rather than cutting it, in which case E2 is N — and E2 is the only
- * coded item outside block B, so if that reading is wrong the column collapses
- * to a religion-and-state party with two flips.
+ * E2 was flagged as the cell to check hardest, on the worry that "economic
+ * reform" might mean redirecting subsidy rather than cutting it — which would
+ * have made it N. Reported platform detail settles it as D. The traditional
+ * haredi parties demand that daycare and student subsidies stay intact
+ * regardless of whether men enlist; this party wants funding restructured to
+ * incentivise service and workforce participation, and describes the present
+ * arrangement as locking families into state-subsidised poverty. E2 asks about
+ * increasing stipends for full-time yeshiva students, which is precisely the
+ * category it wants to stop funding unconditionally.
+ *
+ * B1 is now the cell to check hardest instead, and for a subtler reason — see
+ * the instrument notes on what the item conflates for this party alone.
  */
 const HPP_POS: Record<string, Position> = {
   // stated planks
