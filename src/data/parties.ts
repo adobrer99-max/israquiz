@@ -96,7 +96,7 @@ export const PARTIES: Record<PartyCode, Party> = {
     belowThreshold: true,
     // Not a polling claim: it is new enough that no polling exists to cite.
     thresholdNote: "a new faction with no polling on record",
-    note: "Moti Leitner, former Mayor of Beit Shemesh. An ultra-Orthodox faction campaigning for conscription, core-curriculum education and economic reform within haredi society — the first haredi column in the bank on the pro-conscription side. Coded on three stated planks plus the religion-and-state positions its own framing makes near-certain; security, institutions and identity are left unstated. 31% coverage, so it is suppressed from the ranking and the grid. Coalition posture is genuinely unknown, hence unaligned.",
+    note: "Moti Leitner, former Mayor of Beit Shemesh. An ultra-Orthodox faction campaigning for conscription, core-curriculum education and economic reform within haredi society — the first haredi column in the bank on the pro-conscription side. Its distinctive position is enlistment by incentive rather than by sanction: it wants state funding restructured to reward service and workforce participation, and argues that external coercion fails where communal reform can work. Coded on three stated planks plus the religion-and-state positions its own framing makes near-certain; security, institutions and identity are left unstated. 31% coverage, so it is suppressed from the ranking and the grid. Coalition posture is genuinely unknown, hence unaligned.",
   },
   HTA: {
     name: "Hadash–Ta'al", lead: "Jabareen", color: "#B03A2E", bloc: "non", ballot: false,

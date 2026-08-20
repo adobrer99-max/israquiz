@@ -3,7 +3,7 @@ import { collectionEnabled } from "../lib/collect";
 import { GLOSSARY } from "../data/glossary";
 import { PARTIES, type PartyCode } from "../data/parties";
 import { axisCollapses, coverageTable, itemDiagnostics } from "../lib/diagnostics";
-import { BLOCKS, RETIRED } from "../data/items";
+import { BLOCKS, PENDING, RETIRED } from "../data/items";
 
 export function GlossaryPage({ focus }: { focus?: string }) {
   return (
@@ -141,6 +141,23 @@ export function Diagnostics() {
           <div className="small muted">{r.reason}</div>
         </div>
       ))}
+      <h3 style={{ margin: "22px 0 8px" }}>Drafted, not yet asked</h3>
+      <p className="small muted" style={{ marginBottom: 10 }}>
+        Written and coded, held for the next bank revision. An item is not added mid-flight: it shifts every
+        party's coverage denominator, ends every saved session, and re-opens the clustering check.
+      </p>
+      {PENDING.map((p) => (
+        <div className="row" key={p.item.id} style={{ display: "block" }}>
+          <div className="mono tiny" style={{ color: "var(--envelope)", marginBottom: 3 }}>
+            {p.item.id} · drafted for September
+          </div>
+          <div className="small" style={{ marginBottom: 4 }}>
+            {p.item.text}
+          </div>
+          <div className="small muted">{p.rationale}</div>
+        </div>
+      ))}
+
       <p className="small muted" style={{ marginTop: 10 }}>
         One duplicate pair was kept on purpose: A8 and C9 carry the same row but sit in different blocks, and
         §3.8 added C9 for a reason that is likely to make it diverge once Ra'am's column is re-coded.

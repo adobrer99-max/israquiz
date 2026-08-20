@@ -5,3 +5,8 @@ dist/
 .vite/
 coverage/
 tsconfig.tsbuildinfo
+
+# §4.7 validation replies: named testers joined to declared votes and full
+# answer vectors. Never commit these. BRIEF.md is the exception and is forced in.
+validation/*
+!validation/BRIEF.md
