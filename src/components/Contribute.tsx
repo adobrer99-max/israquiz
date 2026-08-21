@@ -120,12 +120,13 @@ export function Contribute({
           answered after your result.
         </p>
         <p className="small">
-          <strong>What is not stored:</strong> your name, your email, your IP address, any cookie or
-          identifier that follows you between sites, and — in validation runs — the initials you typed on
-          the first screen. The answers and the background questions are written to two separate tables
-          joined only by the random reference above. No file joining a full answer vector to a full
-          background vector will be published, and no figure resting on fewer than 30 respondents will be
-          reported.
+          <strong>What is not stored:</strong> your name, your email, any cookie or identifier that
+          follows you between sites, and — in validation runs — the initials you typed on the first
+          screen. No IP address is recorded in the research database; the host handles one in transit to
+          route the request, the way every web server does, and nothing keeps it afterwards. The answers
+          and the background questions are written to two separate tables joined only by the random
+          reference above. No file joining a full answer vector to a full background vector will be
+          published, and no figure resting on fewer than 30 respondents will be reported.
         </p>
         <p className="small">
           <strong>How long:</strong> {RETENTION_MONTHS} months from submission, then deleted. You can

@@ -209,7 +209,21 @@ export const DEMO_QUESTIONS: DemoQuestion[] = [
   },
 ];
 
-export const CONSENT = `These questions are optional and come after your result, never before it. Answers stay in this browser unless you copy them out yourself. Nothing here asks for your name, and there are no free-text fields. If any of it feels like too much, skip the whole block — the button is right there, the same size as the other one.`;
+/**
+ * Two versions, because the first one stopped being true.
+ *
+ * This screen is where someone answers questions about religion, observance and
+ * community background, and it used to promise those answers stayed in the
+ * browser. With collection built that is false — the second tick-box on the
+ * results page sends exactly these answers — and the flow makes it worse, since
+ * the promise is read first and the offer to transmit comes afterwards. Which
+ * string is shown follows `collectionEnabled()`, the same way STORAGE_LIMIT in
+ * editorial.ts already does.
+ */
+export const CONSENT = {
+  local: `These questions are optional and come after your result, never before it. Answers stay in this browser unless you copy them out yourself. Nothing here asks for your name, and there are no free-text fields. If any of it feels like too much, skip the whole block — the button is right there, the same size as the other one.`,
+  collected: `These questions are optional and come after your result, never before it. Nothing here asks for your name, and there are no free-text fields. Answering here sends nothing: these answers stay on this device unless you decide to contribute them, which is a separate tick-box on the results page and a separate decision. If any of it feels like too much, skip the whole block — the button is right there, the same size as the other one.`,
+};
 
 export function visibleQuestions(d: Demographics): DemoQuestion[] {
   return DEMO_QUESTIONS.filter((q) => !q.when || q.when(d));

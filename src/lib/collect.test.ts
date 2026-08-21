@@ -6,7 +6,7 @@ import {
 import { DEFAULT_WEIGHTS, score, type Answers } from "./scoring";
 import { newResponseId, type Session } from "./storage";
 import { ITEMS } from "../data/items";
-import type { Demographics } from "../data/demographics";
+import { CONSENT, type Demographics } from "../data/demographics";
 
 const answers: Answers = Object.fromEntries(
   ITEMS.map((it, i) => [it.id, ((i % 5) - 2) as -2 | -1 | 0 | 1 | 2]),
@@ -129,6 +129,33 @@ describe("hasDemographics", () => {
     expect(hasDemographics({})).toBe(false);
     expect(hasDemographics({ D6: [], D0: "" })).toBe(false);
     expect(hasDemographics({ D6: ["Arab"] })).toBe(true);
+  });
+});
+
+/**
+ * The demographics screen is read before the contribute card is reached, and it
+ * is where someone answers questions about religion and community background.
+ * A promise there that collection would falsify is worse than no promise, so
+ * the collected variant must not make one.
+ */
+describe("what the background screen promises", () => {
+  it("does not claim the answers stay put once they can be sent", () => {
+    expect(CONSENT.local).toContain("stay in this browser");
+    for (const phrase of ["stay in this browser", "unless you copy them out yourself"]) {
+      expect(CONSENT.collected, phrase).not.toContain(phrase);
+    }
+  });
+
+  it("says sending is a separate decision taken later", () => {
+    expect(CONSENT.collected).toContain("sends nothing");
+    expect(CONSENT.collected).toContain("separate");
+  });
+
+  it("keeps the skip-the-whole-block offer in both", () => {
+    for (const v of [CONSENT.local, CONSENT.collected]) {
+      expect(v).toContain("skip the whole block");
+      expect(v).toContain("no free-text fields");
+    }
   });
 });
 

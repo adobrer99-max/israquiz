@@ -1,4 +1,5 @@
 import { CONSENT, visibleQuestions, type Demographics as D } from "../data/demographics";
+import { collectionEnabled } from "../lib/collect";
 
 /**
  * §6 — shown after results, never before and never as a gate.
@@ -45,7 +46,7 @@ export function Demographics({
     <div>
       <span className="eyebrow">Optional · after the result, not before it</span>
       <h2 style={{ margin: "10px 0 8px" }}>A few questions about you</h2>
-      <p className="small muted">{CONSENT}</p>
+      <p className="small muted">{collectionEnabled() ? CONSENT.collected : CONSENT.local}</p>
 
       <div className="card" style={{ marginTop: 18 }}>
         {questions.map((q) => (
