@@ -46,7 +46,7 @@ export function collectionEnabled(): boolean {
  * a later reader can tell what each respondent was actually shown, which is
  * the whole point of recording consent rather than asserting it.
  */
-export const CONSENT_VERSION = "consent-2026-08-10";
+export const CONSENT_VERSION = "consent-2026-08-20";
 
 /** Stated in the consent text and enforced by a scheduled delete on the server. */
 export const RETENTION_MONTHS = 24;
