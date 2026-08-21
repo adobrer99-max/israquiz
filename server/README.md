@@ -45,6 +45,45 @@ VITE_COLLECT_ENDPOINT=http://127.0.0.1:8787 npm run dev
 wrangler dev            # in server/, with ALLOWED_ORIGINS=http://localhost:5173
 ```
 
+## Check it before you deploy it
+
+`server/worker.test.mjs` stubs the database binding, so those 14 tests prove the
+validation and the statement *shapes* — they never execute a line of SQL. A
+column-count mismatch or a typo in an `ON CONFLICT` clause passes the whole suite
+and fails on the first real submission, after someone has ticked a consent box.
+
+Miniflare backs `--local` with real SQLite, so the Worker can be exercised end to
+end without a Cloudflare account:
+
+```bash
+cd server
+# any well-formed uuid works locally; put the placeholder back afterwards
+sed -i 's/REPLACE_WITH_YOUR_D1_ID/00000000-0000-0000-0000-000000000000/' wrangler.toml
+npx wrangler d1 execute israquiz --local --file=./schema.sql
+npx wrangler dev --local --port 8799
+```
+
+Then POST a payload the app actually produces, rather than one written by hand —
+`buildSubmission` in `src/lib/collect.ts` is the source of truth for the shape:
+
+```bash
+curl -X POST http://127.0.0.1:8799/ \
+  -H 'content-type: application/json' \
+  -H 'origin: https://adobrer99-max.github.io' \
+  --data-binary @payload.json
+npx wrangler d1 execute israquiz --local --command "SELECT * FROM responses;"
+```
+
+Worth walking every path, because each one has SQL the tests do not run: a
+submission with demographics, the same id sent twice (must replace, not
+duplicate), the same id sent again *without* demographics (must delete the
+demographic row — that is how withdrawing consent for the background block
+works), a withdrawal (must clear both tables), and the retention `DELETE`s from
+the `scheduled` handler.
+
+`server/.wrangler/` holds the local database and is gitignored. Restore the
+`database_id` placeholder before committing.
+
 ## Protocol
 
 One route, POST only, JSON in and JSON out, CORS locked to an exact-origin
