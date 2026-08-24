@@ -11,6 +11,15 @@ ones carrying the most risk — Together has no published platform, Unity is 67%
 unstated, the Haredi Public Party rests on press reporting. One tester for a
 high-risk column is worth five for Likud.
 
+The single most valuable reply in the round would be someone who declares **the
+Haredi Public Party**. It is confirmed on the ballot, it is the newest and
+thinnest column in the bank, twelve of its fifteen coded cells are inferred
+rather than stated, and the whole column rests on one reading — that a reform
+faction *within* ultra-Orthodox society disagrees with the haredi parties about
+integration into the state and not about halakha. One member of that community
+answering the religion-and-state block would test twelve cells at once. Nothing
+else available comes close.
+
 ---
 
 ## The message to send

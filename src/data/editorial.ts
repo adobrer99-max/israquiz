@@ -6,7 +6,7 @@
    ============================================================ */
 
 export const VERSION = "v0.2 — preview";
-export const VERSION_DATE = "20 August 2026";
+export const VERSION_DATE = "24 August 2026";
 
 export const ELECTION = {
   knesset: 26,
@@ -79,11 +79,11 @@ export const CODING_NOTES: Note[] = [
   },
   {
     items: "Ra'am (D1, D7, C9)",
-    issue: "Yoav Segalovitz's reported move to Ra'am's list comes with a stated precondition that the party recognise Israel as a Jewish state. If adopted, D1 flips and D7 moves with it — the most consequential single recoding in the bank. Not pre-empted here. The larger effect is on other parties' D2, which asks whether Arab parties are legitimate coalition partners: if bloc leaders follow the polling, several columns change on one item.",
+    issue: "Yoav Segalovitz's reported move to Ra'am's list comes with a stated precondition that the party recognise Israel as a Jewish state. If adopted, D1 flips and D7 moves with it — the most consequential single recoding in the bank. Still unresolved and not pre-empted here. Keep it apart from Ra'am's separate confirmation that it will not seek recognition of a Palestinian state as a coalition condition: recognising Israel as a Jewish state and declining to demand a Palestinian one are different commitments touching different items, and the two are adjacent enough to be merged by accident. Neither settles the other.",
   },
   {
     items: "D2 (all columns)",
-    issue: "Coded from the pre-Segalovitz landscape. Currently the most volatile cell in the matrix.",
+    issue: "Coded from the pre-Segalovitz landscape, and now the most volatile cell in the matrix for a second reason. D2 asks whether Arab parties are legitimate coalition partners, and it is coded on every column except Ra'am's. Ra'am has confirmed it will not seek recognition of a Palestinian state as a condition of entering a coalition, which removes the obstacle on its own side and leaves the question entirely with the other parties. None of them has moved, so none of their cells has been recoded — coding what a party might do once an obstacle is gone would be inventing a position rather than recording one. These are the cells to watch between now and filing.",
   },
 ];
 
@@ -128,6 +128,19 @@ export const INSTRUMENT_NOTES: Note[] = [
   {
     items: "A gap the bank now has: how to enforce conscription, not whether",
     issue: "With a haredi party arguing for enlistment by incentive and against enforcement by sanction, the live argument in Israeli politics has moved to a question the bank does not ask. Nothing here separates a respondent who wants haredim drafted and penalised for refusing from one who wants them drafted through funding incentives and communal persuasion — B1 collects both as agreement. An item on the enforcement mechanism would make a cut that currently exists nowhere: it would put the Haredi Public Party on one side, Yisrael Beiteinu and The Democrats on the other, and Shas and United Torah Judaism opposed to the premise of both. It is not added here, because adding an item shifts every party's coverage denominator, forces a storage-key bump that invalidates in-flight sessions, and re-opens the §4.6 clustering check — a decision that belongs to a bank revision rather than to a party edit.",
+  },
+  {
+    items: "A1 · Ra'am, and what a coalition condition is not",
+    severe: true,
+    issue: "Ra'am has confirmed it will not seek recognition of a Palestinian state as a condition of entering a coalition. A1 asks whether Israel should accept the establishment of a Palestinian state as part of a wider regional normalisation, and Ra'am is coded A on it. The cell does not move. A1 asks what Israel should do; the confirmation is about what Ra'am will not demand, and the gap between those two is Ra'am's entire strategy since 2021 — park the national question, join on civic terms, extract material gains for the constituency. A party can hold a position and decline to make it a precondition. Coding A1 as D would assert the party opposes a Palestinian state, which nothing supports. N was the defensible alternative and was rejected: it would record a change in coalition conduct as a change in stated policy, where §7's rule is to code the stated position and document the choice. The D8 note already settled the neighbouring case — the matrix records positions, not reasons — and this is the same shape: positions, not preconditions. What the bank cannot show is that a party's coalition behaviour and its platform can point different ways, which for Ra'am is the most important thing about it.",
+  },
+  {
+    items: "G1 · the same confirmation, where it does land",
+    issue: "G1 asks whether an Arab party should be willing to join a coalition led by a Zionist party, and codes Ra'am A against the Joint List's D — the sharpest divide between them in the bank, and the reason the item is asked at all. Ra'am declining to make a Palestinian state a coalition condition is that cell being demonstrated rather than changed. Nothing is recoded; the coding is simply better sourced than it was. This is also the answer to why G1 is unscored: it measures coalitionability rather than ideology, and the confirmation is a coalitionability fact that leaves every ideological cell where it was.",
+  },
+  {
+    items: "The Haredi Public Party · confirmed running",
+    issue: "Confirmed to be contesting the election. Nothing structural follows: the column was already coded and already suppressed at 31% coverage, which stays correct, and confirmation is not polling, so the threshold caveat stands. Its one real effect is on the drafted B15 item, whose recorded objections included that the party might simply not appear. That half retires — though confirmed is not filed, and the deadline is still weeks away — while the other half stands untouched: B15 is B1's row with one cell changed, and that cell belongs to a column coded from press reporting. B15 stays held for the September bank revision regardless, because it was never held on this question.",
   },
   {
     items: "The Haredi Public Party · it is UTJ with three flips",

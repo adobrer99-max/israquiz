@@ -412,9 +412,12 @@ export const RETIRED: RetiredItem[] = RETIRED_ROWS.map(([row, duplicateOf, reaso
  * Two things to weigh when that revision comes, both arguments against:
  *
  * 1. The row is B1's row with one cell changed. Only the Haredi Public Party
- *    column moves. An item whose entire value rests on one column that is
- *    itself weeks old and coded from press reporting is a thin item, and if
- *    that party does not file, this has no reason to exist.
+ *    column moves, so the item's entire value rests on one column that is weeks
+ *    old and coded from press reporting rather than a platform. The party is
+ *    now confirmed running, which retires the sharper half of this objection —
+ *    it will not simply fail to appear — but confirmed is not filed, and the
+ *    thin-column half is untouched. None of that changes when B15 goes in: it
+ *    was never held because the party might not run.
  * 2. The wording avoids "draft evaders" deliberately. §5 requires a supporter
  *    of the haredi position to accept the statement as a fair description of
  *    what they oppose, and they do not accept that full-time students are
