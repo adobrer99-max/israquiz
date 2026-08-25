@@ -18,7 +18,7 @@ RETENTION_MONTHS = "24"
 [[d1_databases]]
 binding = "DB"
 database_name = "israquiz"
-database_id = "REPLACE_WITH_YOUR_D1_ID"
+database_id = "44e35543-4bba-48aa-93dd-4613076ac8ed"
 
 # Retention sweep. The consent text promises deletion after RETENTION_MONTHS;
 # without this the promise decays into an intention.
