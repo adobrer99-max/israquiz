@@ -88,7 +88,7 @@ export const PARTIES: Record<PartyCode, Party> = {
   UNI: {
     name: "Unity (HaAchdut)", lead: "Erdan (Edelstein #2)", color: "#A0522D",
     bloc: "unaligned", ballot: true,
-    note: "Launched 6 August 2026 and named in August. The English name is carried with the Hebrew because 'Unity' alone collides with National Unity, Gantz's 2022 list, which appears under that name in the recalled-vote question and whose successor sits in this bank as Blue & White. Only 16 of 48 items codeable. Suppressed from the headline ranking and from the grid by the coverage rule.",
+    note: "Launched 6 August 2026 and named in August. The English name is carried with the Hebrew because 'Unity' alone collides with National Unity, Gantz's 2022 list, which appears under that name in the recalled-vote question and whose successor sits in this bank as Blue & White. Only 17 of 49 items codeable. Suppressed from the headline ranking and from the grid by the coverage rule.",
   },
   HPP: {
     name: "The Haredi Public Party", lead: "Leitner", color: "#4F6D7A",
@@ -104,7 +104,7 @@ export const PARTIES: Record<PartyCode, Party> = {
     belowThreshold: true,
     // Not a polling claim: launched days ago, no polling exists to cite.
     thresholdNote: "launched in August; no polling on record",
-    note: "Amcha Yisrael, launched in Jerusalem on 25 August 2026 by Ofer Winter, the former Givati Brigade commander released from the military in 2024. Yoseph Haddad, the Arab-Israeli activist, is announced as its candidate for public diplomacy minister. Coded from launch-speech reporting rather than a platform, and thinly: eight of 48 items, 17% coverage, so it is suppressed from the ranking and the grid. Unaligned rather than pro-Netanyahu — Winter promises the broadest possible right-wing government with as many Zionist partners as possible, which is a bloc shape and not an endorsement, and in the same speech he attacks the incumbent political class. Revisit if he endorses.",
+    note: "Amcha Yisrael, launched in Jerusalem on 25 August 2026 by Ofer Winter, the former Givati Brigade commander released from the military in 2024. Yoseph Haddad, the Arab-Israeli activist, is announced as its candidate for public diplomacy minister. Coded from launch-speech reporting rather than a platform, and thinly: nine of 49 items, 18% coverage, so it is suppressed from the ranking and the grid. Unaligned rather than pro-Netanyahu — Winter promises the broadest possible right-wing government with as many Zionist partners as possible, which is a bloc shape and not an endorsement, and in the same speech he attacks the incumbent political class. Revisit if he endorses.",
   },
   HTA: {
     name: "Hadash–Ta'al", lead: "Jabareen", color: "#B03A2E", bloc: "non", ballot: false,

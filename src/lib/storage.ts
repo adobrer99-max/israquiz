@@ -11,14 +11,20 @@ import type { Demographics } from "../data/demographics";
 
 /**
  * Bump these whenever a change makes an in-flight session unresumable. v3
- * retires v2 because the block-order shuffle changed what a stored `seed`
+ * retired v2 because the block-order shuffle changed what a stored `seed`
  * produces: answers are keyed by item id so none are lost, but the stored
  * `index` points into a sequence that no longer exists, so a respondent
  * mid-quiz would be shown a statement they had already answered and skip one
  * they had not.
+ *
+ * v4 retires v3 for the same reason from a different cause: A15 was added to
+ * the bank, so the shuffle now produces a 49-item sequence where the stored
+ * index addresses a 48-item one. Every saved session is a session that never
+ * saw A15, and resuming one would silently produce a result computed over a
+ * different questionnaire from the one it started.
  */
-const SESSION_KEY = "israquiz.session.v3";
-const DEMO_KEY = "israquiz.demographics.v3";
+const SESSION_KEY = "israquiz.session.v4";
+const DEMO_KEY = "israquiz.demographics.v4";
 
 /**
  * Superseded keys, deleted on first load. Leaving them would strand answer and
@@ -29,6 +35,8 @@ const DEMO_KEY = "israquiz.demographics.v3";
 const LEGACY_KEYS = [
   "israquiz.session.v2",
   "israquiz.demographics.v2",
+  "israquiz.session.v3",
+  "israquiz.demographics.v3",
 ];
 
 export interface Session {

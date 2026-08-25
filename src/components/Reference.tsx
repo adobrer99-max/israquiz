@@ -143,8 +143,10 @@ export function Diagnostics() {
       ))}
       <h3 style={{ margin: "22px 0 8px" }}>Drafted, not yet asked</h3>
       <p className="small muted" style={{ marginBottom: 10 }}>
-        Written and coded, held for the next bank revision. An item is not added mid-flight: it shifts every
-        party's coverage denominator, ends every saved session, and re-opens the clustering check.
+        Written and coded, waiting on the next bank revision. Adding an item mid-cycle is expensive — it
+        shifts every party's coverage denominator, ends every saved session, and re-opens the clustering
+        check — so the bar is that the bank is silent on something voters are actually being asked to choose
+        between. A15, on Gaza emigration, cleared that bar in August and went in. This one has not yet.
       </p>
       {PENDING.map((p) => (
         <div className="row" key={p.item.id} style={{ display: "block" }}>
@@ -165,7 +167,7 @@ export function Diagnostics() {
 
       <h3 style={{ margin: "22px 0 6px" }}>Coverage</h3>
       <p className="small muted">
-        Share of the 48 statements on which each party has a coded position. Below 70% a party is suppressed
+        Share of the 49 statements on which each party has a coded position. Below 70% a party is suppressed
         from the ranking and shown separately.
       </p>
       {coverage.map((r) => (

@@ -2,7 +2,7 @@
 
 An English-language election compass for the 26th Knesset, 27 October 2026.
 
-48 statements across five topics, a topic-weighting step, three unscored cross-cutting questions, a
+49 statements across five topics, a topic-weighting step, three unscored cross-cutting questions, a
 two-axis grid with the parties plotted, a ranked match percentage, and the full coding matrix published
 alongside it.
 
@@ -80,7 +80,7 @@ committed.
 | Path | What lives there |
 |---|---|
 | `src/data/parties.ts` | Party registry — names, blocs, colours, ballot status |
-| `src/data/items.ts` | The 48-item bank and the 13-column coding matrix, plus the JL merge and the Unity, Noam and Haredi Public Party overlays |
+| `src/data/items.ts` | The 49-item bank and the 13-column coding matrix, plus the JL merge and the Unity, Noam and Haredi Public Party overlays |
 | `src/data/glossary.ts` | Glossary terms and the inline-annotation matcher (§5) |
 | `src/data/editorial.ts` | Version stamp, coding uncertainties, instrument limits (§7) |
 | `src/data/demographics.ts` | The optional post-result block (§6) |
@@ -145,6 +145,26 @@ split and holds nothing.
 **A13 is the first item to divide the Joint List outside religion-and-state and economics.** Hadash–Ta'al
 is `N`, Balad `D`, so the merged column resolves to `N`. The spec's observation that the three components
 are identical on security held only because the bank had not asked the question that divides them.
+
+## A15, added mid-cycle
+
+The bank asked nothing about encouraging the emigration of Gaza's population while three ballot entities
+campaigned on it — Otzma Yehudit, Religious Zionism, and People of Israel, for which it is the central Gaza
+plank. A compass silent on a position that openly held is not describing the choice in front of voters, so
+the item went in rather than waiting for September.
+
+It earns the slot on the numbers too: it separates 68% of party pairs, above `A4`'s 64%, and it is the only
+thing keeping one pair off an identical security coordinate. `A4`, on whether Jewish settlement in Gaza may
+resume, is the adjacent item and a different question — the two rows differ on Yashar, Yisrael Beiteinu,
+Unity and People of Israel.
+
+The wording follows `D8`: it names the policy as its supporters name it, because §5 requires a supporter to
+accept the statement as a fair description of their own position, and it asks about state action rather than
+about anyone's opinion of Gazans. As with `D8`, it should be said plainly that this item asks Arab and
+Palestinian respondents about a policy aimed at people like them, and that no wording makes that comfortable.
+
+Adding it cost a storage bump to `v4`. Every session saved before it is retired rather than resumed — a
+resumed session would have produced a result computed over a questionnaire the respondent never saw.
 
 ## Block G — cross-cutting, coded, never scored
 

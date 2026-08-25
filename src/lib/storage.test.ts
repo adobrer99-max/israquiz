@@ -57,7 +57,7 @@ describe("session storage", () => {
   });
 
   it("returns null rather than throwing on corrupt data", () => {
-    store.set("israquiz.session.v3", "{not json");
+    store.set("israquiz.session.v4", "{not json");
     expect(loadSession()).toBeNull();
   });
 

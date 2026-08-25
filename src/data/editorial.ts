@@ -66,7 +66,7 @@ export const CODING_NOTES: Note[] = [
   {
     items: "All Unity (HaAchdut) rows",
     severe: true,
-    issue: "Named Unity — HaAchdut in Hebrew — in August, having been launched on 6 August as an unnamed Erdan–Edelstein list. Naming a party does not give it a platform: 67% of items are still unstated (32 of 48), and most of the sixteen coded cells are inferred rather than stated. To be re-coded entirely once a platform exists. Also verify the list still exists at filing — Likud breakaways have a mixed survival record.",
+    issue: "Named Unity — HaAchdut in Hebrew — in August, having been launched on 6 August as an unnamed Erdan–Edelstein list. Naming a party does not give it a platform: 65% of items are still unstated (32 of 49), and most of the sixteen coded cells are inferred rather than stated. To be re-coded entirely once a platform exists. Also verify the list still exists at filing — Likud breakaways have a mixed survival record.",
   },
   {
     items: "All Haredi Public Party rows",
@@ -143,9 +143,8 @@ export const INSTRUMENT_NOTES: Note[] = [
     issue: "G1 asks whether an Arab party should be willing to join a coalition led by a Zionist party. The frame assumes Arab political representation runs through Arab parties, which for every column coded so far it does. People of Israel's whole proposition is that it should not: Arabs in the security cabinet, on a Zionist list, with the existing Arab parties rejected as unrepresentative. Neither A nor D records that, so the cell is left as no position. The coding is not the problem — the item's frame is, and it is worth saying so rather than forcing an answer that would misreport the party in either direction.",
   },
   {
-    items: "A second gap: Gaza emigration, asked by nobody",
-    severe: true,
-    issue: "Nothing in the bank asks about encouraging the emigration of Gaza's population, and it is stated policy for three ballot entities — Otzma Yehudit, Religious Zionism, and People of Israel, for which it is the central Gaza plank. A4 asks about Jewish settlement resuming in Gaza, which is adjacent and not the same question. This is a wider gap than the conscription-enforcement one: B15 would separate a single column, where this position is held across the hard right and is invisible in every cell of the matrix. A15 is drafted and held for the September revision alongside B15. A compass that cannot express a position this openly held is not describing the choice in front of voters, and that is a limitation to publish rather than to leave for a reader to notice.",
+    items: "A15 · Gaza emigration, added mid-cycle",
+    issue: "The bank asked nothing about encouraging the emigration of Gaza's population while three ballot entities campaigned on it — Otzma Yehudit, Religious Zionism, and People of Israel, for which it is the central Gaza plank. A compass silent on a position that openly held is not describing the choice in front of voters, so the item was added rather than deferred to September. It earns its place on the numbers as well as the principle: it separates 68% of party pairs, above A4's 64%, and it is the sole thing keeping one pair off an identical security coordinate. A4, on whether Jewish settlement in Gaza may resume, is the adjacent item and a genuinely different question — the two rows differ on Yashar, Yisrael Beiteinu, Unity and People of Israel. Adding it mid-cycle cost a storage-key bump to v4, which ends every session saved before it: a resumed session would have produced a result computed over a questionnaire the respondent never saw. Coverage denominators moved from 48 to 49 for every column and no party crossed the 70% floor.",
   },
   {
     items: "A gap the bank now has: how to enforce conscription, not whether",

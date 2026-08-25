@@ -1,6 +1,6 @@
 /* ============================================================
    Item bank — spec §3
-   48 scored statements across five blocks, plus diagnostic and
+   49 scored statements across five blocks, plus diagnostic and
    cross-cutting items that never touch the axes or the match.
 
    Coding key: A = agree · N = neutral or deliberately ambiguous
@@ -109,6 +109,19 @@ const RAW: Row[] = [
   // parties toward the secular pole. As a sovereignty assertion it reads
   // correctly: agree is hawkish.
   ["A14", "A", 1, "Jewish prayer should be permitted on the Temple Mount.", "NNNDDAANDDDDD"],
+  // A15 asks about the policy three ballot entities campaign on and the bank
+  // was silent about: Otzma Yehudit, Religious Zionism and People of Israel,
+  // for the last of which it is the central Gaza plank. A4 asks whether Jewish
+  // settlement in Gaza may resume, which is adjacent and a different question —
+  // the two rows differ on Yashar, Yisrael Beiteinu, Unity and People of Israel.
+  //
+  // Wording follows D8. It names the policy as its supporters name it, because
+  // §5 requires a supporter to accept the statement as a fair description of
+  // their own position, and it asks about state action rather than about anyone's
+  // opinion of Gazans. As with D8 it should be said plainly that this item asks
+  // Arab and Palestinian respondents about a policy aimed at people like them,
+  // and that no wording makes that comfortable.
+  ["A15", "A", 1, "Israel should actively encourage the emigration of Gaza's population.", "NDNNNAANDDDDD"],
 
   ["B1", "B", -1, "Haredi yeshiva students should be subject to the military draft on the same terms as other citizens.", "DAADDNNAAA---"],
   ["B2", "B", -1, "Public transport should operate on Shabbat in municipalities that want it.", "DANDDDDAAN-A-"],
@@ -182,7 +195,7 @@ const RAW: Row[] = [
 
 /* --- §3.7 The Joint List: merged ballot column (Hadash + Ta'al + Balad) --- */
 const JL_POS: Record<string, Position> = {
-  A1: "A", A2: "D", A3: "D", A4: "D", A5: A5_JL[A5_VARIANT], A6: "A", A7: "D", A8: "A", A9: "D", A10: "A", A11: "A", A12: "D", A13: "N", A14: "D",
+  A1: "A", A2: "D", A3: "D", A4: "D", A15: "D", A5: A5_JL[A5_VARIANT], A6: "A", A7: "D", A8: "A", A9: "D", A10: "A", A11: "A", A12: "D", A13: "N", A14: "D",
   B1: "-", B2: "A", B3: "A", B4: "N", B5: "D", B6: "N", B7: "D", B8: "A", B9: "D", B10: "N", B11: "N", B12: "A", B13: "N", B14: "N",
   C1: "A", C2: "D", C3: "D", C4: "A", C5: "A", C6: "A", C7: "D", C8: "D", C9: "A", C10: "D",
   D1: "D", D2: "A", D3: "A", D4: "A", D5: "D", D6: "-", D7: "D", D8: "D",
@@ -236,10 +249,10 @@ export const INFERRED: Partial<Record<PartyCode, string[]>> = {
  *
  * Eighteen entries, of which sixteen hit live items: C4 and D5 were retired in
  * the redundancy cut and are kept here so the codings survive if either item is
- * ever restored. Coverage is therefore 16/48 = 33%, well under the floor.
+ * ever restored. Coverage is therefore 17/49 = 35%, well under the floor.
  */
 const UNI_POS: Record<string, Position> = {
-  A1: "D", A2: "A", A6: "D", A7: "N", A9: "N", A10: "D",
+  A1: "D", A2: "A", A6: "D", A7: "N", A9: "N", A10: "D", A15: "N",
   B1: "A", B3: "A", B7: "D",
   C4: "N", C6: "N",
   D1: "A", D2: "D", D5: "A", D7: "A",
@@ -260,7 +273,7 @@ const UNI_POS: Record<string, Position> = {
  * army, work, secular subjects — and not about halakha, so nothing suggests it
  * differs on the Rabbinate, Shabbat or gender separation. Security,
  * institutions and national identity are left unstated rather than inferred
- * from UTJ, which is what the coverage floor exists to prevent. Fifteen of 48
+ * from UTJ, which is what the coverage floor exists to prevent. Fifteen of 49
  * items is 31% coverage, so the party is suppressed from the ranking and the
  * grid and appears under insufficient position data.
  *
@@ -301,7 +314,7 @@ const HPP_POS: Record<string, Position> = {
  * assuming the far right is uniform.
  */
 const NOAM_POS: Record<string, Position> = {
-  A1: "D", A2: "A", A3: "A", A4: "N", A6: "D", A7: "A", A8: "D", A10: "D", A13: "A", A14: "D",
+  A1: "D", A2: "A", A3: "A", A4: "N", A6: "D", A7: "A", A8: "D", A10: "D", A13: "A", A14: "D", A15: "N",
   B1: "N", B2: "D", B3: "N", B4: "D", B5: "A", B6: "D", B7: "A", B8: "D", B9: "A",
   B10: "D", B11: "D", B12: "D", B13: "D", B14: "D",
   C1: "D", C3: "A", C5: "D", C6: "D", C8: "A", C9: "D",
@@ -317,7 +330,7 @@ const NOAM_POS: Record<string, Position> = {
 
 /* --- People of Israel (Amcha Yisrael) ---------------------------------------
  *
- * Eight items of 48. Coded from reporting of the launch speech, not a platform,
+ * Nine items of 49. Coded from reporting of the launch speech, not a platform,
  * which is the thinnest source in the bank and is why half these cells are
  * flagged as inferred.
  *
@@ -338,7 +351,7 @@ const NOAM_POS: Record<string, Position> = {
  * economics were not addressed at all.
  */
 const AMY_POS: Record<string, Position> = {
-  A1: "D", A2: "A", A4: "N", A10: "D", A13: "A",
+  A1: "D", A2: "A", A4: "N", A10: "D", A13: "A", A15: "A",
   B1: "A",
   D2: "D", D7: "A",
 };
@@ -486,18 +499,6 @@ export const PENDING: { item: Item; rationale: string }[] = [
     ),
     rationale:
       "Separates enforcement from enlistment. B1 collects \"draft them and penalise refusal\" and \"draft them by restructuring funding\" as the same answer, which was harmless until a haredi party took the second position. Held for the September bank revision rather than added now, because a new item shifts every coverage denominator, invalidates saved sessions and re-opens the clustering check — all of which that revision does anyway.",
-  },
-  {
-    item: draft(
-      [
-        "A15", "A", 1,
-        "Israel should actively encourage the emigration of Gaza's population.",
-        "NDNNNAANDDDDD",
-      ],
-      { jl: "D", uni: "N", noam: "N", hpp: "-", amy: "A" },
-    ),
-    rationale:
-      "The bank asks nothing about this, and it is stated policy for three ballot entities — Otzma Yehudit, Religious Zionism, and People of Israel, for which it is the central Gaza plank. A compass silent on a position held across the hard right is not describing the choice in front of voters, which makes this a wider gap than B15's: that item separates one column, this one is invisible in every cell. Wording follows D8. It names the policy as its supporters name it, because §5 requires a supporter to accept the statement as a fair description of their own position, and it asks about state action rather than about anyone's opinion of Gazans. As with D8, it should be said plainly that this item asks Arab and Palestinian respondents about a policy aimed at people like them, and that no wording makes that comfortable. Held for September for the same reasons as B15. Two things to weigh then: whether it duplicates A4 once the hard-right columns are re-read against filed platforms, since parties coded A on one are likely A on the other; and whether Likud's N survives contact with a published platform.",
   },
 ];
 
