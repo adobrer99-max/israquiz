@@ -84,6 +84,73 @@ the `scheduled` handler.
 `server/.wrangler/` holds the local database and is gitignored. Restore the
 `database_id` placeholder before committing.
 
+## Check it once it is live
+
+The local run proves the SQL. It cannot prove the deployment, and the two differ
+in ways that only bite in production:
+
+- `wrangler d1 execute --remote --file=./schema.sql` is a separate command from
+  the local one. Skip it, or point it at the wrong database, and the Worker
+  deploys cleanly and fails on the first real submission with a missing-table
+  error — after a respondent has ticked a consent box.
+- The remote binding resolves `database_id`; the local one ignores it entirely.
+  A clean local run says nothing about whether that id is right.
+- `ALLOWED_ORIGINS` is only exercised for real once a browser sends a genuine
+  `Origin` header at a public URL.
+
+This is what the two separate switches are for. The Worker is live and receiving
+nothing until `COLLECT_ENDPOINT` is set, so this is the window to prove it works.
+
+Watch the logs in one shell:
+
+```bash
+npx wrangler tail
+```
+
+In another, send a real submission — one built by `buildSubmission`, not written
+by hand, for the same reason as the local check:
+
+```bash
+ENDPOINT=https://israquiz-collect.<your-subdomain>.workers.dev
+curl -i -X POST "$ENDPOINT" \
+  -H 'content-type: application/json' \
+  -H 'origin: https://adobrer99-max.github.io' \
+  --data-binary @payload.json          # expect 200 {"ok":true}
+```
+
+Confirm it reached the **remote** database. This is the step that catches a
+schema never applied with `--remote`:
+
+```bash
+npx wrangler d1 execute israquiz --remote --command "SELECT COUNT(*) FROM responses;"
+```
+
+Confirm the allowlist is live:
+
+```bash
+curl -s -o /dev/null -w '%{http_code}\n' -X POST "$ENDPOINT" \
+  -H 'content-type: application/json' -H 'origin: https://evil.test' \
+  --data-binary @payload.json          # expect 403
+```
+
+**Then delete the test row.** Send a withdrawal for the same `responseId` and
+re-run the count, expecting zero:
+
+```bash
+curl -s -X POST "$ENDPOINT" -H 'content-type: application/json' \
+  -H 'origin: https://adobrer99-max.github.io' \
+  -d '{"format":"israquiz.withdrawal.v1","responseId":"<the id you sent>"}'
+npx wrangler d1 execute israquiz --remote --command "SELECT COUNT(*) FROM responses;"
+```
+
+That leaves the database empty, so the first real respondent is genuinely the
+first row. A test record left behind is a row someone later has to explain, and
+it quietly corrupts the first `n` you report.
+
+The cron trigger fires at 03:17 UTC. The day after deploying, the retention query
+at the end of `queries.sql` should return zero — that is the first evidence the
+sweep is actually scheduled rather than merely configured.
+
 ## Protocol
 
 One route, POST only, JSON in and JSON out, CORS locked to an exact-origin
