@@ -8,7 +8,7 @@
 export type PartyCode =
   | "LIK" | "TOG" | "YSH" | "SHS" | "UTJ" | "OTZ" | "RZ"
   | "YB"  | "DEM" | "BW"  | "RAM" | "JL"  | "UNI"
-  | "NOAM" | "HPP"
+  | "NOAM" | "HPP" | "AMY"
   | "HTA" | "BAL";
 
 /** §4.5 bloc readout. `unaligned` parties are reported in no bloc average. */
@@ -88,7 +88,7 @@ export const PARTIES: Record<PartyCode, Party> = {
   UNI: {
     name: "Unity (HaAchdut)", lead: "Erdan (Edelstein #2)", color: "#A0522D",
     bloc: "unaligned", ballot: true,
-    note: "Launched 6 August 2026 and named in August. The English name is carried with the Hebrew because 'Unity' alone collides with National Unity, Gantz's 2022 list, which appears under that name in the recalled-vote question and whose successor sits in this bank as Blue & White. Only 16 of 48 items codeable. Suppressed from the headline ranking and from the grid by the coverage rule.",
+    note: "Launched 6 August 2026 and named in August. The English name is carried with the Hebrew because 'Unity' alone collides with National Unity, Gantz's 2022 list, which appears under that name in the recalled-vote question and whose successor sits in this bank as Blue & White. Only 17 of 49 items codeable. Suppressed from the headline ranking and from the grid by the coverage rule.",
   },
   HPP: {
     name: "The Haredi Public Party", lead: "Leitner", color: "#4F6D7A",
@@ -96,7 +96,15 @@ export const PARTIES: Record<PartyCode, Party> = {
     belowThreshold: true,
     // Not a polling claim: it is new enough that no polling exists to cite.
     thresholdNote: "a new faction with no polling on record",
-    note: "Moti Leitner, former Mayor of Beit Shemesh. An ultra-Orthodox faction campaigning for conscription, core-curriculum education and economic reform within haredi society — the first haredi column in the bank on the pro-conscription side. Its distinctive position is enlistment by incentive rather than by sanction: it wants state funding restructured to reward service and workforce participation, and argues that external coercion fails where communal reform can work. Coded on three stated planks plus the religion-and-state positions its own framing makes near-certain; security, institutions and identity are left unstated. 31% coverage, so it is suppressed from the ranking and the grid. Coalition posture is genuinely unknown, hence unaligned.",
+    note: "Confirmed running, which settles whether the column belongs in the bank and nothing else — it is not polling, so the threshold risk stands, and the codings still rest on press reporting rather than a published platform. Moti Leitner, former Mayor of Beit Shemesh. An ultra-Orthodox faction campaigning for conscription, core-curriculum education and economic reform within haredi society — the first haredi column in the bank on the pro-conscription side. Its distinctive position is enlistment by incentive rather than by sanction: it wants state funding restructured to reward service and workforce participation, and argues that external coercion fails where communal reform can work. Coded on three stated planks plus the religion-and-state positions its own framing makes near-certain; security, institutions and identity are left unstated. 31% coverage, so it is suppressed from the ranking and the grid. Running is settled; coalition posture is not, hence unaligned.",
+  },
+  AMY: {
+    name: "People of Israel", lead: "Winter", color: "#8C5A2B",
+    bloc: "unaligned", ballot: true,
+    belowThreshold: true,
+    // Not a polling claim: launched days ago, no polling exists to cite.
+    thresholdNote: "launched in August; no polling on record",
+    note: "Amcha Yisrael, launched in Jerusalem on 25 August 2026 by Ofer Winter, the former Givati Brigade commander released from the military in 2024. Yoseph Haddad, the Arab-Israeli activist, is announced as its candidate for public diplomacy minister. Coded from launch-speech reporting rather than a platform, and thinly: nine of 49 items, 18% coverage, so it is suppressed from the ranking and the grid. Unaligned rather than pro-Netanyahu — Winter promises the broadest possible right-wing government with as many Zionist partners as possible, which is a bloc shape and not an endorsement, and in the same speech he attacks the incumbent political class. Revisit if he endorses.",
   },
   HTA: {
     name: "Hadash–Ta'al", lead: "Jabareen", color: "#B03A2E", bloc: "non", ballot: false,

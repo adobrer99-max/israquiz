@@ -1,6 +1,6 @@
 /* ============================================================
    Item bank — spec §3
-   48 scored statements across five blocks, plus diagnostic and
+   49 scored statements across five blocks, plus diagnostic and
    cross-cutting items that never touch the axes or the match.
 
    Coding key: A = agree · N = neutral or deliberately ambiguous
@@ -109,6 +109,19 @@ const RAW: Row[] = [
   // parties toward the secular pole. As a sovereignty assertion it reads
   // correctly: agree is hawkish.
   ["A14", "A", 1, "Jewish prayer should be permitted on the Temple Mount.", "NNNDDAANDDDDD"],
+  // A15 asks about the policy three ballot entities campaign on and the bank
+  // was silent about: Otzma Yehudit, Religious Zionism and People of Israel,
+  // for the last of which it is the central Gaza plank. A4 asks whether Jewish
+  // settlement in Gaza may resume, which is adjacent and a different question —
+  // the two rows differ on Yashar, Yisrael Beiteinu, Unity and People of Israel.
+  //
+  // Wording follows D8. It names the policy as its supporters name it, because
+  // §5 requires a supporter to accept the statement as a fair description of
+  // their own position, and it asks about state action rather than about anyone's
+  // opinion of Gazans. As with D8 it should be said plainly that this item asks
+  // Arab and Palestinian respondents about a policy aimed at people like them,
+  // and that no wording makes that comfortable.
+  ["A15", "A", 1, "Israel should actively encourage the emigration of Gaza's population.", "NDNNNAANDDDDD"],
 
   ["B1", "B", -1, "Haredi yeshiva students should be subject to the military draft on the same terms as other citizens.", "DAADDNNAAA---"],
   ["B2", "B", -1, "Public transport should operate on Shabbat in municipalities that want it.", "DANDDDDAAN-A-"],
@@ -182,7 +195,7 @@ const RAW: Row[] = [
 
 /* --- §3.7 The Joint List: merged ballot column (Hadash + Ta'al + Balad) --- */
 const JL_POS: Record<string, Position> = {
-  A1: "A", A2: "D", A3: "D", A4: "D", A5: A5_JL[A5_VARIANT], A6: "A", A7: "D", A8: "A", A9: "D", A10: "A", A11: "A", A12: "D", A13: "N", A14: "D",
+  A1: "A", A2: "D", A3: "D", A4: "D", A15: "D", A5: A5_JL[A5_VARIANT], A6: "A", A7: "D", A8: "A", A9: "D", A10: "A", A11: "A", A12: "D", A13: "N", A14: "D",
   B1: "-", B2: "A", B3: "A", B4: "N", B5: "D", B6: "N", B7: "D", B8: "A", B9: "D", B10: "N", B11: "N", B12: "A", B13: "N", B14: "N",
   C1: "A", C2: "D", C3: "D", C4: "A", C5: "A", C6: "A", C7: "D", C8: "D", C9: "A", C10: "D",
   D1: "D", D2: "A", D3: "A", D4: "A", D5: "D", D6: "-", D7: "D", D8: "D",
@@ -228,16 +241,18 @@ export const INFERRED: Partial<Record<PartyCode, string[]>> = {
   // Coded from a narrow platform; these are the cells extrapolated from the
   // Har Hamor stream's positions rather than stated by the party.
   NOAM: ["A4", "A13", "C1", "C3", "C5", "C6", "C8", "C9"],
+  // Half the column. A1, B1, D2 and D7 were said outright; these were not.
+  AMY: ["A2", "A4", "A10", "A13"],
 };
 
 /* --- §3.6 Unity (HaAchdut), the Erdan–Edelstein list ------------------------
  *
  * Eighteen entries, of which sixteen hit live items: C4 and D5 were retired in
  * the redundancy cut and are kept here so the codings survive if either item is
- * ever restored. Coverage is therefore 16/48 = 33%, well under the floor.
+ * ever restored. Coverage is therefore 17/49 = 35%, well under the floor.
  */
 const UNI_POS: Record<string, Position> = {
-  A1: "D", A2: "A", A6: "D", A7: "N", A9: "N", A10: "D",
+  A1: "D", A2: "A", A6: "D", A7: "N", A9: "N", A10: "D", A15: "N",
   B1: "A", B3: "A", B7: "D",
   C4: "N", C6: "N",
   D1: "A", D2: "D", D5: "A", D7: "A",
@@ -258,7 +273,7 @@ const UNI_POS: Record<string, Position> = {
  * army, work, secular subjects — and not about halakha, so nothing suggests it
  * differs on the Rabbinate, Shabbat or gender separation. Security,
  * institutions and national identity are left unstated rather than inferred
- * from UTJ, which is what the coverage floor exists to prevent. Fifteen of 48
+ * from UTJ, which is what the coverage floor exists to prevent. Fifteen of 49
  * items is 31% coverage, so the party is suppressed from the ranking and the
  * grid and appears under insufficient position data.
  *
@@ -299,7 +314,7 @@ const HPP_POS: Record<string, Position> = {
  * assuming the far right is uniform.
  */
 const NOAM_POS: Record<string, Position> = {
-  A1: "D", A2: "A", A3: "A", A4: "N", A6: "D", A7: "A", A8: "D", A10: "D", A13: "A", A14: "D",
+  A1: "D", A2: "A", A3: "A", A4: "N", A6: "D", A7: "A", A8: "D", A10: "D", A13: "A", A14: "D", A15: "N",
   B1: "N", B2: "D", B3: "N", B4: "D", B5: "A", B6: "D", B7: "A", B8: "D", B9: "A",
   B10: "D", B11: "D", B12: "D", B13: "D", B14: "D",
   C1: "D", C3: "A", C5: "D", C6: "D", C8: "A", C9: "D",
@@ -311,6 +326,34 @@ const NOAM_POS: Record<string, Position> = {
  // trait that produces its D on A14. Read Noam as simply another
  // religious-Zionist list and this becomes A; that is the alternative to check.
   // A5, A9, A12 and the whole economy block: no position on record.
+};
+
+/* --- People of Israel (Amcha Yisrael) ---------------------------------------
+ *
+ * Nine items of 49. Coded from reporting of the launch speech, not a platform,
+ * which is the thinnest source in the bank and is why half these cells are
+ * flagged as inferred.
+ *
+ * Four are stated outright: there can never be a Palestinian state (A1),
+ * integrating the haredim into the IDF (B1), a right-wing government of Zionist
+ * partners with the Arab parties rejected (D2), and the Zionist frame running
+ * through the whole speech (D7).
+ *
+ * A4 follows the Noam precedent rather than the party's general direction.
+ * Winter said the only solution in Gaza is Palestinian emigration and that an
+ * enemy "will pay a heavy territorial price" — territorial maximalism, but not
+ * a resettlement pledge, and the bank already settled that campaigning on Gaza
+ * resettlement earns A while not campaigning on it earns N, even for a party
+ * that would not oppose it in principle.
+ *
+ * Block C is empty on purpose. "A significant change in the justice system" is
+ * a direction, and every institutions item asks about a mechanism. Religion and
+ * economics were not addressed at all.
+ */
+const AMY_POS: Record<string, Position> = {
+  A1: "D", A2: "A", A4: "N", A10: "D", A13: "A", A15: "A",
+  B1: "A",
+  D2: "D", D7: "A",
 };
 
 const EMPTY_POS = (): Record<PartyCode, Position> =>
@@ -328,6 +371,7 @@ export const ITEMS: Item[] = RAW.map(([id, block, sign, text, codings]) => {
   pos.UNI = UNI_POS[id] ?? "-";
   pos.NOAM = NOAM_POS[id] ?? "-";
   pos.HPP = HPP_POS[id] ?? "-";
+  pos.AMY = AMY_POS[id] ?? "-";
   return { id, block, sign, text, pos };
 });
 
@@ -392,6 +436,7 @@ export const RETIRED: RetiredItem[] = RETIRED_ROWS.map(([row, duplicateOf, reaso
   pos.UNI = UNI_POS[id] ?? "-";
   pos.NOAM = NOAM_POS[id] ?? "-";
   pos.HPP = HPP_POS[id] ?? "-";
+  pos.AMY = AMY_POS[id] ?? "-";
   return { id, block, sign, text, pos, duplicateOf, reason };
 });
 
@@ -412,37 +457,50 @@ export const RETIRED: RetiredItem[] = RETIRED_ROWS.map(([row, duplicateOf, reaso
  * Two things to weigh when that revision comes, both arguments against:
  *
  * 1. The row is B1's row with one cell changed. Only the Haredi Public Party
- *    column moves. An item whose entire value rests on one column that is
- *    itself weeks old and coded from press reporting is a thin item, and if
- *    that party does not file, this has no reason to exist.
+ *    column moves, so the item's entire value rests on one column that is weeks
+ *    old and coded from press reporting rather than a platform. The party is
+ *    now confirmed running, which retires the sharper half of this objection —
+ *    it will not simply fail to appear — but confirmed is not filed, and the
+ *    thin-column half is untouched. None of that changes when B15 goes in: it
+ *    was never held because the party might not run.
  * 2. The wording avoids "draft evaders" deliberately. §5 requires a supporter
  *    of the haredi position to accept the statement as a fair description of
  *    what they oppose, and they do not accept that full-time students are
  *    evading anything. "Do not report for service" is the neutral form.
  */
-export const PENDING: { item: Item; rationale: string }[] = (() => {
-  const row: Row = [
-    "B15", "B", -1,
-    "Haredi men who do not report for military service should face the same legal consequences as any other citizen who does not.",
-    "DAADDNNAAA---",
-  ];
+const draft = (row: Row, overlays: Overlays): Item => {
   const [id, block, sign, text, codings] = row;
   const pos = EMPTY_POS();
   MATRIX_ORDER.forEach((c, i) => {
     pos[c] = codings[i] as Position;
   });
-  // Only HPP separates this from B1: it wants haredim serving and opposes
-  // compelling them. Noam is N on both — haredi conscription is not its fight.
-  pos.JL = "-";
-  pos.UNI = "A";
-  pos.NOAM = "N";
-  pos.HPP = "D";
-  return [{
-    item: { id, block, sign, text, pos },
+  pos.JL = overlays.jl;
+  pos.UNI = overlays.uni;
+  pos.NOAM = overlays.noam;
+  pos.HPP = overlays.hpp;
+  pos.AMY = overlays.amy;
+  return { id, block, sign, text, pos };
+};
+
+export const PENDING: { item: Item; rationale: string }[] = [
+  {
+    item: draft(
+      [
+        "B15", "B", -1,
+        "Haredi men who do not report for military service should face the same legal consequences as any other citizen who does not.",
+        "DAADDNNAAA---",
+      ],
+      // HPP is the only column taking a different position from B1: it wants
+      // haredim serving and opposes compelling them. Noam is N on both —
+      // haredi conscription is not its fight. People of Israel wants them
+      // drafted and has said nothing about enforcement, so it differs from B1
+      // by silence rather than by disagreeing.
+      { jl: "-", uni: "A", noam: "N", hpp: "D", amy: "-" },
+    ),
     rationale:
       "Separates enforcement from enlistment. B1 collects \"draft them and penalise refusal\" and \"draft them by restructuring funding\" as the same answer, which was harmless until a haredi party took the second position. Held for the September bank revision rather than added now, because a new item shifts every coverage denominator, invalidates saved sessions and re-opens the clustering check — all of which that revision does anyway.",
-  }];
-})();
+  },
+];
 
 export const ITEMS_BY_BLOCK: Record<BlockId, Item[]> = BLOCK_IDS.reduce(
   (acc, b) => {
@@ -465,7 +523,7 @@ export interface Diagnostic {
  * `diagnosticPos("ADDAAAADDDDDD", "D", "N", "A", "-")` is unreadable and one
  * transposition would be invisible.
  */
-type Overlays = { jl: Position; uni: Position; noam: Position; hpp: Position };
+type Overlays = { jl: Position; uni: Position; noam: Position; hpp: Position; amy: Position };
 
 function diagnosticPos(codings: string, o: Overlays): Record<PartyCode, Position> {
   const pos = EMPTY_POS();
@@ -476,6 +534,7 @@ function diagnosticPos(codings: string, o: Overlays): Record<PartyCode, Position
   pos.UNI = o.uni;
   pos.NOAM = o.noam;
   pos.HPP = o.hpp;
+  pos.AMY = o.amy;
   return pos;
 }
 
@@ -483,7 +542,7 @@ export const F1: Diagnostic = {
   id: "F1",
   text: "Benjamin Netanyahu should continue as prime minister.",
   // Unity explicitly declined to rule out sitting with Netanyahu.
-  pos: diagnosticPos("ADDAAAADDDDDD", { jl: "D", uni: "N", noam: "A", hpp: "-" }),
+  pos: diagnosticPos("ADDAAAADDDDDD", { jl: "D", uni: "N", noam: "A", hpp: "-", amy: "N" }),
 };
 
 export const F2: Diagnostic = {
@@ -504,13 +563,13 @@ export const F2: Diagnostic = {
 export const G1: Diagnostic = {
   id: "G1",
   text: "An Arab party should be willing to join a coalition led by a Zionist party.",
-  pos: diagnosticPos("NNNNNDDNANADD", { jl: "D", uni: "-", noam: "D", hpp: "-" }),
+  pos: diagnosticPos("NNNNNDDNANADD", { jl: "D", uni: "-", noam: "D", hpp: "-", amy: "-" }),
 };
 
 export const G2: Diagnostic = {
   id: "G2",
   text: "The electoral threshold should be raised above its current 3.25%.",
-  pos: diagnosticPos("AANDDDDADDDDD", { jl: "D", uni: "-", noam: "D", hpp: "-" }),
+  pos: diagnosticPos("AANDDDDADDDDD", { jl: "D", uni: "-", noam: "D", hpp: "-", amy: "-" }),
 };
 
 /**
@@ -523,7 +582,7 @@ export const G2: Diagnostic = {
 export const G3: Diagnostic = {
   id: "G3",
   text: "The state should acknowledge and compensate for discrimination against Mizrahi immigrants in its early decades.",
-  pos: diagnosticPos("ANNANANNANNA-", { jl: "A", uni: "-", noam: "N", hpp: "-" }),
+  pos: diagnosticPos("ANNANANNANNA-", { jl: "A", uni: "-", noam: "N", hpp: "-", amy: "-" }),
 };
 
 /** Cross-cutting items, asked after the topic weighting. */

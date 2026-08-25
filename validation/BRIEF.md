@@ -7,9 +7,18 @@ already chosen? If it does not, that is worth knowing before anyone else sees it
 **Recruit against the gaps.** Run the report once with whatever you have and read
 the *Columns no tester validated* section. Sixteen parties and fifteen testers
 means most columns get nobody, and the columns hardest to recruit for are the
-ones carrying the most risk — Together has no published platform, Unity is 67%
+ones carrying the most risk — Together has no published platform, Unity is 65%
 unstated, the Haredi Public Party rests on press reporting. One tester for a
 high-risk column is worth five for Likud.
+
+The single most valuable reply in the round would be someone who declares **the
+Haredi Public Party**. It is confirmed on the ballot, it is the newest and
+thinnest column in the bank, twelve of its fifteen coded cells are inferred
+rather than stated, and the whole column rests on one reading — that a reform
+faction *within* ultra-Orthodox society disagrees with the haredi parties about
+integration into the state and not about halakha. One member of that community
+answering the religion-and-state block would test twelve cells at once. Nothing
+else available comes close.
 
 ---
 
@@ -18,7 +27,7 @@ high-risk column is worth five for Likud.
 > I've built an English-language election compass for October and I need people
 > who have already decided how they're voting to test whether it works.
 >
-> It takes about eight minutes: 48 statements, then five sliders. It asks who you
+> It takes about eight minutes: 49 statements, then five sliders. It asks who you
 > plan to vote for **first**, so the result can't quietly talk you into agreeing
 > with it.
 >

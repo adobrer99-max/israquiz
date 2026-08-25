@@ -6,7 +6,7 @@
    ============================================================ */
 
 export const VERSION = "v0.2 — preview";
-export const VERSION_DATE = "20 August 2026";
+export const VERSION_DATE = "25 August 2026";
 
 export const ELECTION = {
   knesset: 26,
@@ -66,7 +66,7 @@ export const CODING_NOTES: Note[] = [
   {
     items: "All Unity (HaAchdut) rows",
     severe: true,
-    issue: "Named Unity — HaAchdut in Hebrew — in August, having been launched on 6 August as an unnamed Erdan–Edelstein list. Naming a party does not give it a platform: 67% of items are still unstated (32 of 48), and most of the sixteen coded cells are inferred rather than stated. To be re-coded entirely once a platform exists. Also verify the list still exists at filing — Likud breakaways have a mixed survival record.",
+    issue: "Named Unity — HaAchdut in Hebrew — in August, having been launched on 6 August as an unnamed Erdan–Edelstein list. Naming a party does not give it a platform: 65% of items are still unstated (32 of 49), and most of the sixteen coded cells are inferred rather than stated. To be re-coded entirely once a platform exists. Also verify the list still exists at filing — Likud breakaways have a mixed survival record.",
   },
   {
     items: "All Haredi Public Party rows",
@@ -78,12 +78,21 @@ export const CODING_NOTES: Note[] = [
     issue: "Coded D, against Shas and UTJ at A, and previously flagged as the cell most likely to be wrong: economic reform might have meant redirecting subsidy rather than cutting it, which would make the honest coding N. Reported platform detail settles it. The traditional haredi parties demand daycare and student subsidies stay intact regardless of whether men enlist; this party wants funding restructured to incentivise service and workforce participation, and describes the existing arrangement as locking families into state-subsidised poverty. E2 asks whether stipends for full-time yeshiva students should be increased — the exact category it wants to stop funding unconditionally. D stands, and it is now sourced rather than inferred.",
   },
   {
+    items: "All People of Israel rows",
+    severe: true,
+    issue: "The thinnest column in the bank and the weakest-sourced. Ofer Winter launched Amcha Yisrael in Jerusalem on 25 August 2026, and these eight cells come from reporting of that launch speech rather than from any platform — half of them are flagged inferred for that reason. Four were said outright: there can never be a Palestinian state (A1), integrating the haredim into the IDF (B1), a right-wing government of Zionist partners with the Arab parties rejected (D2), and the Zionist frame running through the speech (D7). Block C is empty on purpose: a significant change in the justice system is a direction, and every institutions item asks about a mechanism. Religion-and-state and economics went unmentioned. At 17% coverage the column is suppressed, which is the correct outcome for a party three days old — it belongs in the published matrix so a reader can check it, and nowhere near a ranking.",
+  },
+  {
+    items: "A4 (People of Israel)",
+    issue: "Coded N on resuming Jewish settlement in Gaza, following the precedent already set for Noam rather than the party's general direction. Winter said the only solution in Gaza is Palestinian emigration and that an enemy will pay a heavy territorial price — territorial maximalism, and a reader could reasonably expect A. But the bank settled this question once already: campaigning on Gaza resettlement earns A, not campaigning on it earns N, even for a party that would not oppose it in principle. Winter campaigned on emigration and said nothing about settlement. Applying the rule consistently is worth more here than squeezing the last drop of signal out of a launch speech.",
+  },
+  {
     items: "Ra'am (D1, D7, C9)",
-    issue: "Yoav Segalovitz's reported move to Ra'am's list comes with a stated precondition that the party recognise Israel as a Jewish state. If adopted, D1 flips and D7 moves with it — the most consequential single recoding in the bank. Not pre-empted here. The larger effect is on other parties' D2, which asks whether Arab parties are legitimate coalition partners: if bloc leaders follow the polling, several columns change on one item.",
+    issue: "Yoav Segalovitz's reported move to Ra'am's list comes with a stated precondition that the party recognise Israel as a Jewish state. If adopted, D1 flips and D7 moves with it — the most consequential single recoding in the bank. Still unresolved and not pre-empted here. Keep it apart from Ra'am's separate confirmation that it will not seek recognition of a Palestinian state as a coalition condition: recognising Israel as a Jewish state and declining to demand a Palestinian one are different commitments touching different items, and the two are adjacent enough to be merged by accident. Neither settles the other.",
   },
   {
     items: "D2 (all columns)",
-    issue: "Coded from the pre-Segalovitz landscape. Currently the most volatile cell in the matrix.",
+    issue: "Coded from the pre-Segalovitz landscape, and now the most volatile cell in the matrix for a second reason. D2 asks whether Arab parties are legitimate coalition partners, and it is coded on every column except Ra'am's. Ra'am has confirmed it will not seek recognition of a Palestinian state as a condition of entering a coalition, which removes the obstacle on its own side and leaves the question entirely with the other parties. None of them has moved, so none of their cells has been recoded — coding what a party might do once an obstacle is gone would be inventing a position rather than recording one. These are the cells to watch between now and filing.",
   },
 ];
 
@@ -126,8 +135,33 @@ export const INSTRUMENT_NOTES: Note[] = [
     issue: "B1 asks whether haredi yeshiva students should be subject to the draft on the same terms as other citizens. For every other column that is one question, because supporting haredi enlistment and supporting equal legal compulsion are the same position — the parties that want haredim serving also want the exemption ended, and the parties that do not want neither. The Haredi Public Party splits them. It supports integrating haredi men into the military and wants state funding restructured to incentivise service, while arguing that aggressive external coercion — the legal and financial sanctions the secular opposition parties favour — fails, and that the change has to be driven from inside the community. Coded A, because on the direction the item measures it is the only haredi column that wants haredim in uniform. N was considered and rejected: it would place the party beside Otzma Yehudit and Religious Zionism, which are N for the opposite reason — support in principle while voting to protect exemptions — and merging those two positions would be a worse error than the imprecision it fixed. The honest statement is that the cell records the enlistment half of the item and is silent on the compulsion half, and that no cell in this bank can show the difference.",
   },
   {
+    items: "People of Israel · Arab citizens in, Arab parties out",
+    issue: "D2 is the best-sourced cell in this column and it is sourced twice — Winter promising a right-wing government with as many Zionist partners as possible, and Yoseph Haddad, the party's Arab-Israeli candidate for public diplomacy minister, attacking the Arab parties for representing Gaza, Jenin and Ramallah rather than their own communities. What makes it worth a note is the pairing: the same party runs an Arab candidate for the security cabinet, cites Arab soldiers, and campaigns on connecting Arabs who want the good of the country. Arab citizens in, Arab parties out. That is a real and coherent position, it is held by a party on the ballot, and D2 captures it exactly — which is unusual enough to record, since most of the notes here are about things the bank cannot express.",
+  },
+  {
+    items: "G1 · an item whose frame does not fit a new party",
+    issue: "G1 asks whether an Arab party should be willing to join a coalition led by a Zionist party. The frame assumes Arab political representation runs through Arab parties, which for every column coded so far it does. People of Israel's whole proposition is that it should not: Arabs in the security cabinet, on a Zionist list, with the existing Arab parties rejected as unrepresentative. Neither A nor D records that, so the cell is left as no position. The coding is not the problem — the item's frame is, and it is worth saying so rather than forcing an answer that would misreport the party in either direction.",
+  },
+  {
+    items: "A15 · Gaza emigration, added mid-cycle",
+    issue: "The bank asked nothing about encouraging the emigration of Gaza's population while three ballot entities campaigned on it — Otzma Yehudit, Religious Zionism, and People of Israel, for which it is the central Gaza plank. A compass silent on a position that openly held is not describing the choice in front of voters, so the item was added rather than deferred to September. It earns its place on the numbers as well as the principle: it separates 68% of party pairs, above A4's 64%, and it is the sole thing keeping one pair off an identical security coordinate. A4, on whether Jewish settlement in Gaza may resume, is the adjacent item and a genuinely different question — the two rows differ on Yashar, Yisrael Beiteinu, Unity and People of Israel. Adding it mid-cycle cost a storage-key bump to v4, which ends every session saved before it: a resumed session would have produced a result computed over a questionnaire the respondent never saw. Coverage denominators moved from 48 to 49 for every column and no party crossed the 70% floor.",
+  },
+  {
     items: "A gap the bank now has: how to enforce conscription, not whether",
     issue: "With a haredi party arguing for enlistment by incentive and against enforcement by sanction, the live argument in Israeli politics has moved to a question the bank does not ask. Nothing here separates a respondent who wants haredim drafted and penalised for refusing from one who wants them drafted through funding incentives and communal persuasion — B1 collects both as agreement. An item on the enforcement mechanism would make a cut that currently exists nowhere: it would put the Haredi Public Party on one side, Yisrael Beiteinu and The Democrats on the other, and Shas and United Torah Judaism opposed to the premise of both. It is not added here, because adding an item shifts every party's coverage denominator, forces a storage-key bump that invalidates in-flight sessions, and re-opens the §4.6 clustering check — a decision that belongs to a bank revision rather than to a party edit.",
+  },
+  {
+    items: "A1 · Ra'am, and what a coalition condition is not",
+    severe: true,
+    issue: "Ra'am has confirmed it will not seek recognition of a Palestinian state as a condition of entering a coalition. A1 asks whether Israel should accept the establishment of a Palestinian state as part of a wider regional normalisation, and Ra'am is coded A on it. The cell does not move. A1 asks what Israel should do; the confirmation is about what Ra'am will not demand, and the gap between those two is Ra'am's entire strategy since 2021 — park the national question, join on civic terms, extract material gains for the constituency. A party can hold a position and decline to make it a precondition. Coding A1 as D would assert the party opposes a Palestinian state, which nothing supports. N was the defensible alternative and was rejected: it would record a change in coalition conduct as a change in stated policy, where §7's rule is to code the stated position and document the choice. The D8 note already settled the neighbouring case — the matrix records positions, not reasons — and this is the same shape: positions, not preconditions. What the bank cannot show is that a party's coalition behaviour and its platform can point different ways, which for Ra'am is the most important thing about it.",
+  },
+  {
+    items: "G1 · the same confirmation, where it does land",
+    issue: "G1 asks whether an Arab party should be willing to join a coalition led by a Zionist party, and codes Ra'am A against the Joint List's D — the sharpest divide between them in the bank, and the reason the item is asked at all. Ra'am declining to make a Palestinian state a coalition condition is that cell being demonstrated rather than changed. Nothing is recoded; the coding is simply better sourced than it was. This is also the answer to why G1 is unscored: it measures coalitionability rather than ideology, and the confirmation is a coalitionability fact that leaves every ideological cell where it was.",
+  },
+  {
+    items: "The Haredi Public Party · confirmed running",
+    issue: "Confirmed to be contesting the election. Nothing structural follows: the column was already coded and already suppressed at 31% coverage, which stays correct, and confirmation is not polling, so the threshold caveat stands. Its one real effect is on the drafted B15 item, whose recorded objections included that the party might simply not appear. That half retires — though confirmed is not filed, and the deadline is still weeks away — while the other half stands untouched: B15 is B1's row with one cell changed, and that cell belongs to a column coded from press reporting. B15 stays held for the September bank revision regardless, because it was never held on this question.",
   },
   {
     items: "The Haredi Public Party · it is UTJ with three flips",

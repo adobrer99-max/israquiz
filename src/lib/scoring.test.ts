@@ -23,9 +23,9 @@ function answerAs(code: PartyCode): Answers {
 }
 
 describe("bank integrity (§3, §5)", () => {
-  it("holds 48 scored items across five blocks", () => {
-    expect(ITEMS).toHaveLength(48);
-    expect(BLOCK_IDS.map((b) => ITEMS_BY_BLOCK[b].length)).toEqual([13, 14, 6, 7, 8]);
+  it("holds 49 scored items across five blocks", () => {
+    expect(ITEMS).toHaveLength(49);
+    expect(BLOCK_IDS.map((b) => ITEMS_BY_BLOCK[b].length)).toEqual([14, 14, 6, 7, 8]);
   });
 
   it("gives every party a coding cell for every item", () => {
@@ -463,7 +463,7 @@ describe("party match (§4.2)", () => {
     a.A1 = null;
     const r = score(a).all.LIK;
     expect(Math.round(r.weighted)).toBe(100);
-    expect(r.scoredItems).toBe(47);
+    expect(r.scoredItems).toBe(48);
   });
 
   it("reproduces the unweighted result when every topic keeps its default allocation", () => {
@@ -566,15 +566,45 @@ describe("party match (§4.2)", () => {
    * enlistment — and against it, since the whole item rests on one column.
    * If the codings drift, the note stops being true and this should say so.
    */
-  it("pins B15 as B1 separated only by the Haredi Public Party", () => {
+  it("pins B15 as B1 separated by one stated position and one silence", () => {
     const b15 = PENDING.find((p) => p.item.id === "B15")!.item;
     const b1 = ITEMS.find((i) => i.id === "B1")!;
     const differing = (Object.keys(PARTIES) as PartyCode[]).filter(
       (c) => b15.pos[c] !== b1.pos[c],
     );
-    expect(differing).toEqual(["HPP"]);
+    expect(differing.sort()).toEqual(["AMY", "HPP"]);
+
+    // HPP is the whole point: it wants haredim serving and opposes compelling them.
     expect(b1.pos.HPP).toBe("A");
     expect(b15.pos.HPP).toBe("D");
+
+    // People of Israel differs only by silence — it wants them drafted and has
+    // said nothing about enforcement. That is not a second party separated.
+    expect(b1.pos.AMY).toBe("A");
+    expect(b15.pos.AMY).toBe("-");
+  });
+
+  it("suppresses People of Israel, the thinnest column in the bank", () => {
+    const r = score(answerAs("LIK"));
+    expect(r.lowCoverage.map((x) => x.code)).toContain("AMY");
+    expect(r.ranked.map((x) => x.code)).not.toContain("AMY");
+    expect(r.all.AMY.coverage).toBeLessThan(COVERAGE_FLOOR);
+    // nine cells, and block C deliberately empty — a direction is not a mechanism
+    expect(ITEMS.filter((x) => x.pos.AMY !== "-")).toHaveLength(9);
+    expect(ITEMS.filter((x) => x.block === "C" && x.pos.AMY !== "-")).toHaveLength(0);
+  });
+
+  /**
+   * D2 is the one cell in this column sourced twice over, and the pairing it
+   * captures — Arab citizens in, Arab parties out — is the party's most
+   * distinctive position. If it ever drifts, the column stops saying anything
+   * the bank could not have guessed.
+   */
+  it("records People of Israel rejecting Arab parties while running an Arab candidate", () => {
+    const d2 = ITEMS.find((x) => x.id === "D2")!;
+    expect(d2.pos.AMY).toBe("D");
+    const d7 = ITEMS.find((x) => x.id === "D7")!;
+    expect(d7.pos.AMY).toBe("A");
   });
 
   it("keeps Joint List components out of the ballot ranking", () => {
@@ -747,7 +777,7 @@ describe("empty and degenerate inputs", () => {
     const a: Answers = {};
     for (const it of ITEMS) a[it.id] = null;
     const r = score(a);
-    expect(r.skippedCount).toBe(48);
+    expect(r.skippedCount).toBe(49);
     expect(r.ranked.every((x) => x.weighted === 0)).toBe(true);
   });
 

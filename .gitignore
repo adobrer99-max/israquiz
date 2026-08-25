@@ -10,3 +10,7 @@ tsconfig.tsbuildinfo
 # answer vectors. Never commit these. BRIEF.md is the exception and is forced in.
 validation/*
 !validation/BRIEF.md
+
+# Local D1 state from `wrangler dev --local`: holds a SQLite database
+# with whatever test payloads were posted through it.
+server/.wrangler/

@@ -8,7 +8,7 @@ import { PARTIES, type PartyCode } from "../data/parties";
  * into the strongest credibility claim.
  */
 const COLUMNS: PartyCode[] = [
-  "LIK", "TOG", "YSH", "SHS", "UTJ", "HPP", "OTZ", "RZ", "NOAM", "YB", "DEM", "BW",
+  "LIK", "TOG", "YSH", "SHS", "UTJ", "HPP", "OTZ", "RZ", "NOAM", "AMY", "YB", "DEM", "BW",
   "UNI", "RAM", "JL", "HTA", "BAL",
 ];
 
@@ -141,9 +141,9 @@ export function Matrix() {
       <p className="small muted" style={{ marginTop: 10 }}>
         <span className="muted">‡</span> inferred: the cell rests on reasoning from what the party is,
         rather than on something it has said. These are listed rather than summarised so you can disagree
-        with a specific one — the reasoning behind each set is in the editorial notes. Three columns carry
+        with a specific one — the reasoning behind each set is in the editorial notes. Four columns carry
         them, all of them parties too new or too narrow to have published much: Unity, the Haredi Public
-        Party and Noam. A column with many of these is a column to distrust, which is the point of marking
+        Party, Noam and People of Israel. A column with many of these is a column to distrust, which is the point of marking
         them at all.
       </p>
     </div>
