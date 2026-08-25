@@ -228,6 +228,8 @@ export const INFERRED: Partial<Record<PartyCode, string[]>> = {
   // Coded from a narrow platform; these are the cells extrapolated from the
   // Har Hamor stream's positions rather than stated by the party.
   NOAM: ["A4", "A13", "C1", "C3", "C5", "C6", "C8", "C9"],
+  // Half the column. A1, B1, D2 and D7 were said outright; these were not.
+  AMY: ["A2", "A4", "A10", "A13"],
 };
 
 /* --- §3.6 Unity (HaAchdut), the Erdan–Edelstein list ------------------------
@@ -313,6 +315,34 @@ const NOAM_POS: Record<string, Position> = {
   // A5, A9, A12 and the whole economy block: no position on record.
 };
 
+/* --- People of Israel (Amcha Yisrael) ---------------------------------------
+ *
+ * Eight items of 48. Coded from reporting of the launch speech, not a platform,
+ * which is the thinnest source in the bank and is why half these cells are
+ * flagged as inferred.
+ *
+ * Four are stated outright: there can never be a Palestinian state (A1),
+ * integrating the haredim into the IDF (B1), a right-wing government of Zionist
+ * partners with the Arab parties rejected (D2), and the Zionist frame running
+ * through the whole speech (D7).
+ *
+ * A4 follows the Noam precedent rather than the party's general direction.
+ * Winter said the only solution in Gaza is Palestinian emigration and that an
+ * enemy "will pay a heavy territorial price" — territorial maximalism, but not
+ * a resettlement pledge, and the bank already settled that campaigning on Gaza
+ * resettlement earns A while not campaigning on it earns N, even for a party
+ * that would not oppose it in principle.
+ *
+ * Block C is empty on purpose. "A significant change in the justice system" is
+ * a direction, and every institutions item asks about a mechanism. Religion and
+ * economics were not addressed at all.
+ */
+const AMY_POS: Record<string, Position> = {
+  A1: "D", A2: "A", A4: "N", A10: "D", A13: "A",
+  B1: "A",
+  D2: "D", D7: "A",
+};
+
 const EMPTY_POS = (): Record<PartyCode, Position> =>
   ({} as Record<PartyCode, Position>);
 
@@ -328,6 +358,7 @@ export const ITEMS: Item[] = RAW.map(([id, block, sign, text, codings]) => {
   pos.UNI = UNI_POS[id] ?? "-";
   pos.NOAM = NOAM_POS[id] ?? "-";
   pos.HPP = HPP_POS[id] ?? "-";
+  pos.AMY = AMY_POS[id] ?? "-";
   return { id, block, sign, text, pos };
 });
 
@@ -392,6 +423,7 @@ export const RETIRED: RetiredItem[] = RETIRED_ROWS.map(([row, duplicateOf, reaso
   pos.UNI = UNI_POS[id] ?? "-";
   pos.NOAM = NOAM_POS[id] ?? "-";
   pos.HPP = HPP_POS[id] ?? "-";
+  pos.AMY = AMY_POS[id] ?? "-";
   return { id, block, sign, text, pos, duplicateOf, reason };
 });
 
@@ -423,29 +455,51 @@ export const RETIRED: RetiredItem[] = RETIRED_ROWS.map(([row, duplicateOf, reaso
  *    what they oppose, and they do not accept that full-time students are
  *    evading anything. "Do not report for service" is the neutral form.
  */
-export const PENDING: { item: Item; rationale: string }[] = (() => {
-  const row: Row = [
-    "B15", "B", -1,
-    "Haredi men who do not report for military service should face the same legal consequences as any other citizen who does not.",
-    "DAADDNNAAA---",
-  ];
+const draft = (row: Row, overlays: Overlays): Item => {
   const [id, block, sign, text, codings] = row;
   const pos = EMPTY_POS();
   MATRIX_ORDER.forEach((c, i) => {
     pos[c] = codings[i] as Position;
   });
-  // Only HPP separates this from B1: it wants haredim serving and opposes
-  // compelling them. Noam is N on both — haredi conscription is not its fight.
-  pos.JL = "-";
-  pos.UNI = "A";
-  pos.NOAM = "N";
-  pos.HPP = "D";
-  return [{
-    item: { id, block, sign, text, pos },
+  pos.JL = overlays.jl;
+  pos.UNI = overlays.uni;
+  pos.NOAM = overlays.noam;
+  pos.HPP = overlays.hpp;
+  pos.AMY = overlays.amy;
+  return { id, block, sign, text, pos };
+};
+
+export const PENDING: { item: Item; rationale: string }[] = [
+  {
+    item: draft(
+      [
+        "B15", "B", -1,
+        "Haredi men who do not report for military service should face the same legal consequences as any other citizen who does not.",
+        "DAADDNNAAA---",
+      ],
+      // HPP is the only column taking a different position from B1: it wants
+      // haredim serving and opposes compelling them. Noam is N on both —
+      // haredi conscription is not its fight. People of Israel wants them
+      // drafted and has said nothing about enforcement, so it differs from B1
+      // by silence rather than by disagreeing.
+      { jl: "-", uni: "A", noam: "N", hpp: "D", amy: "-" },
+    ),
     rationale:
       "Separates enforcement from enlistment. B1 collects \"draft them and penalise refusal\" and \"draft them by restructuring funding\" as the same answer, which was harmless until a haredi party took the second position. Held for the September bank revision rather than added now, because a new item shifts every coverage denominator, invalidates saved sessions and re-opens the clustering check — all of which that revision does anyway.",
-  }];
-})();
+  },
+  {
+    item: draft(
+      [
+        "A15", "A", 1,
+        "Israel should actively encourage the emigration of Gaza's population.",
+        "NDNNNAANDDDDD",
+      ],
+      { jl: "D", uni: "N", noam: "N", hpp: "-", amy: "A" },
+    ),
+    rationale:
+      "The bank asks nothing about this, and it is stated policy for three ballot entities — Otzma Yehudit, Religious Zionism, and People of Israel, for which it is the central Gaza plank. A compass silent on a position held across the hard right is not describing the choice in front of voters, which makes this a wider gap than B15's: that item separates one column, this one is invisible in every cell. Wording follows D8. It names the policy as its supporters name it, because §5 requires a supporter to accept the statement as a fair description of their own position, and it asks about state action rather than about anyone's opinion of Gazans. As with D8, it should be said plainly that this item asks Arab and Palestinian respondents about a policy aimed at people like them, and that no wording makes that comfortable. Held for September for the same reasons as B15. Two things to weigh then: whether it duplicates A4 once the hard-right columns are re-read against filed platforms, since parties coded A on one are likely A on the other; and whether Likud's N survives contact with a published platform.",
+  },
+];
 
 export const ITEMS_BY_BLOCK: Record<BlockId, Item[]> = BLOCK_IDS.reduce(
   (acc, b) => {
@@ -468,7 +522,7 @@ export interface Diagnostic {
  * `diagnosticPos("ADDAAAADDDDDD", "D", "N", "A", "-")` is unreadable and one
  * transposition would be invisible.
  */
-type Overlays = { jl: Position; uni: Position; noam: Position; hpp: Position };
+type Overlays = { jl: Position; uni: Position; noam: Position; hpp: Position; amy: Position };
 
 function diagnosticPos(codings: string, o: Overlays): Record<PartyCode, Position> {
   const pos = EMPTY_POS();
@@ -479,6 +533,7 @@ function diagnosticPos(codings: string, o: Overlays): Record<PartyCode, Position
   pos.UNI = o.uni;
   pos.NOAM = o.noam;
   pos.HPP = o.hpp;
+  pos.AMY = o.amy;
   return pos;
 }
 
@@ -486,7 +541,7 @@ export const F1: Diagnostic = {
   id: "F1",
   text: "Benjamin Netanyahu should continue as prime minister.",
   // Unity explicitly declined to rule out sitting with Netanyahu.
-  pos: diagnosticPos("ADDAAAADDDDDD", { jl: "D", uni: "N", noam: "A", hpp: "-" }),
+  pos: diagnosticPos("ADDAAAADDDDDD", { jl: "D", uni: "N", noam: "A", hpp: "-", amy: "N" }),
 };
 
 export const F2: Diagnostic = {
@@ -507,13 +562,13 @@ export const F2: Diagnostic = {
 export const G1: Diagnostic = {
   id: "G1",
   text: "An Arab party should be willing to join a coalition led by a Zionist party.",
-  pos: diagnosticPos("NNNNNDDNANADD", { jl: "D", uni: "-", noam: "D", hpp: "-" }),
+  pos: diagnosticPos("NNNNNDDNANADD", { jl: "D", uni: "-", noam: "D", hpp: "-", amy: "-" }),
 };
 
 export const G2: Diagnostic = {
   id: "G2",
   text: "The electoral threshold should be raised above its current 3.25%.",
-  pos: diagnosticPos("AANDDDDADDDDD", { jl: "D", uni: "-", noam: "D", hpp: "-" }),
+  pos: diagnosticPos("AANDDDDADDDDD", { jl: "D", uni: "-", noam: "D", hpp: "-", amy: "-" }),
 };
 
 /**
@@ -526,7 +581,7 @@ export const G2: Diagnostic = {
 export const G3: Diagnostic = {
   id: "G3",
   text: "The state should acknowledge and compensate for discrimination against Mizrahi immigrants in its early decades.",
-  pos: diagnosticPos("ANNANANNANNA-", { jl: "A", uni: "-", noam: "N", hpp: "-" }),
+  pos: diagnosticPos("ANNANANNANNA-", { jl: "A", uni: "-", noam: "N", hpp: "-", amy: "-" }),
 };
 
 /** Cross-cutting items, asked after the topic weighting. */

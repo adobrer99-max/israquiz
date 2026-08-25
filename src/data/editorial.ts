@@ -6,7 +6,7 @@
    ============================================================ */
 
 export const VERSION = "v0.2 — preview";
-export const VERSION_DATE = "24 August 2026";
+export const VERSION_DATE = "25 August 2026";
 
 export const ELECTION = {
   knesset: 26,
@@ -78,6 +78,15 @@ export const CODING_NOTES: Note[] = [
     issue: "Coded D, against Shas and UTJ at A, and previously flagged as the cell most likely to be wrong: economic reform might have meant redirecting subsidy rather than cutting it, which would make the honest coding N. Reported platform detail settles it. The traditional haredi parties demand daycare and student subsidies stay intact regardless of whether men enlist; this party wants funding restructured to incentivise service and workforce participation, and describes the existing arrangement as locking families into state-subsidised poverty. E2 asks whether stipends for full-time yeshiva students should be increased — the exact category it wants to stop funding unconditionally. D stands, and it is now sourced rather than inferred.",
   },
   {
+    items: "All People of Israel rows",
+    severe: true,
+    issue: "The thinnest column in the bank and the weakest-sourced. Ofer Winter launched Amcha Yisrael in Jerusalem on 25 August 2026, and these eight cells come from reporting of that launch speech rather than from any platform — half of them are flagged inferred for that reason. Four were said outright: there can never be a Palestinian state (A1), integrating the haredim into the IDF (B1), a right-wing government of Zionist partners with the Arab parties rejected (D2), and the Zionist frame running through the speech (D7). Block C is empty on purpose: a significant change in the justice system is a direction, and every institutions item asks about a mechanism. Religion-and-state and economics went unmentioned. At 17% coverage the column is suppressed, which is the correct outcome for a party three days old — it belongs in the published matrix so a reader can check it, and nowhere near a ranking.",
+  },
+  {
+    items: "A4 (People of Israel)",
+    issue: "Coded N on resuming Jewish settlement in Gaza, following the precedent already set for Noam rather than the party's general direction. Winter said the only solution in Gaza is Palestinian emigration and that an enemy will pay a heavy territorial price — territorial maximalism, and a reader could reasonably expect A. But the bank settled this question once already: campaigning on Gaza resettlement earns A, not campaigning on it earns N, even for a party that would not oppose it in principle. Winter campaigned on emigration and said nothing about settlement. Applying the rule consistently is worth more here than squeezing the last drop of signal out of a launch speech.",
+  },
+  {
     items: "Ra'am (D1, D7, C9)",
     issue: "Yoav Segalovitz's reported move to Ra'am's list comes with a stated precondition that the party recognise Israel as a Jewish state. If adopted, D1 flips and D7 moves with it — the most consequential single recoding in the bank. Still unresolved and not pre-empted here. Keep it apart from Ra'am's separate confirmation that it will not seek recognition of a Palestinian state as a coalition condition: recognising Israel as a Jewish state and declining to demand a Palestinian one are different commitments touching different items, and the two are adjacent enough to be merged by accident. Neither settles the other.",
   },
@@ -124,6 +133,19 @@ export const INSTRUMENT_NOTES: Note[] = [
     items: "B1 · what the item conflates, for one party only",
     severe: true,
     issue: "B1 asks whether haredi yeshiva students should be subject to the draft on the same terms as other citizens. For every other column that is one question, because supporting haredi enlistment and supporting equal legal compulsion are the same position — the parties that want haredim serving also want the exemption ended, and the parties that do not want neither. The Haredi Public Party splits them. It supports integrating haredi men into the military and wants state funding restructured to incentivise service, while arguing that aggressive external coercion — the legal and financial sanctions the secular opposition parties favour — fails, and that the change has to be driven from inside the community. Coded A, because on the direction the item measures it is the only haredi column that wants haredim in uniform. N was considered and rejected: it would place the party beside Otzma Yehudit and Religious Zionism, which are N for the opposite reason — support in principle while voting to protect exemptions — and merging those two positions would be a worse error than the imprecision it fixed. The honest statement is that the cell records the enlistment half of the item and is silent on the compulsion half, and that no cell in this bank can show the difference.",
+  },
+  {
+    items: "People of Israel · Arab citizens in, Arab parties out",
+    issue: "D2 is the best-sourced cell in this column and it is sourced twice — Winter promising a right-wing government with as many Zionist partners as possible, and Yoseph Haddad, the party's Arab-Israeli candidate for public diplomacy minister, attacking the Arab parties for representing Gaza, Jenin and Ramallah rather than their own communities. What makes it worth a note is the pairing: the same party runs an Arab candidate for the security cabinet, cites Arab soldiers, and campaigns on connecting Arabs who want the good of the country. Arab citizens in, Arab parties out. That is a real and coherent position, it is held by a party on the ballot, and D2 captures it exactly — which is unusual enough to record, since most of the notes here are about things the bank cannot express.",
+  },
+  {
+    items: "G1 · an item whose frame does not fit a new party",
+    issue: "G1 asks whether an Arab party should be willing to join a coalition led by a Zionist party. The frame assumes Arab political representation runs through Arab parties, which for every column coded so far it does. People of Israel's whole proposition is that it should not: Arabs in the security cabinet, on a Zionist list, with the existing Arab parties rejected as unrepresentative. Neither A nor D records that, so the cell is left as no position. The coding is not the problem — the item's frame is, and it is worth saying so rather than forcing an answer that would misreport the party in either direction.",
+  },
+  {
+    items: "A second gap: Gaza emigration, asked by nobody",
+    severe: true,
+    issue: "Nothing in the bank asks about encouraging the emigration of Gaza's population, and it is stated policy for three ballot entities — Otzma Yehudit, Religious Zionism, and People of Israel, for which it is the central Gaza plank. A4 asks about Jewish settlement resuming in Gaza, which is adjacent and not the same question. This is a wider gap than the conscription-enforcement one: B15 would separate a single column, where this position is held across the hard right and is invisible in every cell of the matrix. A15 is drafted and held for the September revision alongside B15. A compass that cannot express a position this openly held is not describing the choice in front of voters, and that is a limitation to publish rather than to leave for a reader to notice.",
   },
   {
     items: "A gap the bank now has: how to enforce conscription, not whether",

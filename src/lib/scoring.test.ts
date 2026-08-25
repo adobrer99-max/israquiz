@@ -566,15 +566,45 @@ describe("party match (§4.2)", () => {
    * enlistment — and against it, since the whole item rests on one column.
    * If the codings drift, the note stops being true and this should say so.
    */
-  it("pins B15 as B1 separated only by the Haredi Public Party", () => {
+  it("pins B15 as B1 separated by one stated position and one silence", () => {
     const b15 = PENDING.find((p) => p.item.id === "B15")!.item;
     const b1 = ITEMS.find((i) => i.id === "B1")!;
     const differing = (Object.keys(PARTIES) as PartyCode[]).filter(
       (c) => b15.pos[c] !== b1.pos[c],
     );
-    expect(differing).toEqual(["HPP"]);
+    expect(differing.sort()).toEqual(["AMY", "HPP"]);
+
+    // HPP is the whole point: it wants haredim serving and opposes compelling them.
     expect(b1.pos.HPP).toBe("A");
     expect(b15.pos.HPP).toBe("D");
+
+    // People of Israel differs only by silence — it wants them drafted and has
+    // said nothing about enforcement. That is not a second party separated.
+    expect(b1.pos.AMY).toBe("A");
+    expect(b15.pos.AMY).toBe("-");
+  });
+
+  it("suppresses People of Israel, the thinnest column in the bank", () => {
+    const r = score(answerAs("LIK"));
+    expect(r.lowCoverage.map((x) => x.code)).toContain("AMY");
+    expect(r.ranked.map((x) => x.code)).not.toContain("AMY");
+    expect(r.all.AMY.coverage).toBeLessThan(COVERAGE_FLOOR);
+    // eight cells, and block C deliberately empty — a direction is not a mechanism
+    expect(ITEMS.filter((x) => x.pos.AMY !== "-")).toHaveLength(8);
+    expect(ITEMS.filter((x) => x.block === "C" && x.pos.AMY !== "-")).toHaveLength(0);
+  });
+
+  /**
+   * D2 is the one cell in this column sourced twice over, and the pairing it
+   * captures — Arab citizens in, Arab parties out — is the party's most
+   * distinctive position. If it ever drifts, the column stops saying anything
+   * the bank could not have guessed.
+   */
+  it("records People of Israel rejecting Arab parties while running an Arab candidate", () => {
+    const d2 = ITEMS.find((x) => x.id === "D2")!;
+    expect(d2.pos.AMY).toBe("D");
+    const d7 = ITEMS.find((x) => x.id === "D7")!;
+    expect(d7.pos.AMY).toBe("A");
   });
 
   it("keeps Joint List components out of the ballot ranking", () => {
