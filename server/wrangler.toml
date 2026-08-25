@@ -2,6 +2,20 @@ name = "israquiz-collect"
 main = "worker.js"
 compatibility_date = "2026-08-01"
 
+# Both of these default to on, and both were being taken by default rather than
+# chosen. workers.dev is the endpoint, so state it; a wrangler release changing
+# the default would otherwise silently move the URL the site posts to.
+workers_dev = true
+
+# Preview URLs give every past version its own permanent hostname, each one
+# bound to the same production D1. There is no preview workflow here — one
+# endpoint, set once as COLLECT_ENDPOINT — so the only thing they add is that
+# superseded code stays live and writable against the current database. Tighten
+# validation or change the consent wording later and the old versions go on
+# accepting the old shape, which quietly breaks the one property this dataset
+# depends on: that every row is attributable to what its respondent was shown.
+preview_urls = false
+
 # Deliberately no observability block. Cloudflare's request logs would record
 # the client IP alongside the request the consent text says carries none, and
 # nothing here needs them to work.
