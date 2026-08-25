@@ -45,6 +45,58 @@ VITE_COLLECT_ENDPOINT=http://127.0.0.1:8787 npm run dev
 wrangler dev            # in server/, with ALLOWED_ORIGINS=http://localhost:5173
 ```
 
+## Deploying from GitHub instead
+
+Cloudflare's Git integration (Workers Builds) can run the deploy on push. It
+needs one setting changed from the default, and it changes one thing about this
+repository that is worth deciding deliberately rather than discovering.
+
+**Set the build's root directory to `server`.** Settings → Build → Root
+directory. Left at the repository root, wrangler finds no config, falls back to
+framework detection, and picks up the only thing it can see — the React
+frontend:
+
+```
+- Worker Name: israquiz
+- Framework: Vite
+- Build Command: npm run build
+- Output Directory: dist
+```
+
+On Vite 5 that fails with *"The version of Vite used in the project cannot be
+automatically configured. Please update the Vite version to at least 6.0.0"*.
+The Vite version is irrelevant to this Worker and upgrading to satisfy the
+message is the wrong fix: it clears the error and then deploys the site as a
+second Worker, built without `VITE_COLLECT_ENDPOINT` and served from an origin
+that is not in `ALLOWED_ORIGINS`. The site is deployed by
+`.github/workflows/deploy.yml` to GitHub Pages; only the Worker belongs here.
+`npx wrangler deploy --config server/wrangler.toml` from the repository root
+works too — `main` resolves relative to the config file — but the root-directory
+setting is the one that stops the fallback from happening at all.
+
+Four consequences, in the order they bite:
+
+1. **`database_id` has to be committed.** The build reads `wrangler.toml` from
+   git, and the id lives in the config rather than the environment, so there is
+   nowhere else to put it. It is not a credential — it does nothing without
+   account access — but it is public from then on. Deploying from a laptop keeps
+   the placeholder in the repository; this route does not. Decide which you want
+   before the first push, because the decision is hard to take back.
+2. **The Worker is named `israquiz-collect`**, from `name` at the top of this
+   file's neighbour. A first failed build under the repository's own name leaves
+   an empty project behind; delete it, or the dashboard grows a second entry and
+   a `workers.dev` hostname that serves nothing.
+3. **The schema is still applied by hand.** `wrangler deploy` runs no
+   migrations and neither does the Git integration. `wrangler d1 execute
+   israquiz --remote --file=./schema.sql`, once, from a machine that is logged
+   in. Skipping it fails exactly as described below.
+4. **Every push to `main` redeploys the collector.** An `ALLOWED_ORIGINS` edit
+   goes live on merge rather than when someone decides it should, and a wrong
+   one 403s every submission with no command run and no console open. The two
+   switches this design turns on — deploy the Worker, then set
+   `COLLECT_ENDPOINT` — stay separate, but the first one stops being an
+   explicit act.
+
 ## Check it before you deploy it
 
 `server/worker.test.mjs` stubs the database binding, so those 14 tests prove the
@@ -57,7 +109,9 @@ end without a Cloudflare account:
 
 ```bash
 cd server
-# any well-formed uuid works locally; put the placeholder back afterwards
+# --local ignores database_id, but the file must still parse; any well-formed
+# uuid does. Put back whatever was there before — the placeholder if you deploy
+# by hand, the real id if the Git integration deploys for you.
 sed -i 's/REPLACE_WITH_YOUR_D1_ID/00000000-0000-0000-0000-000000000000/' wrangler.toml
 npx wrangler d1 execute israquiz --local --file=./schema.sql
 npx wrangler dev --local --port 8799
@@ -81,8 +135,77 @@ demographic row — that is how withdrawing consent for the background block
 works), a withdrawal (must clear both tables), and the retention `DELETE`s from
 the `scheduled` handler.
 
-`server/.wrangler/` holds the local database and is gitignored. Restore the
-`database_id` placeholder before committing.
+`server/.wrangler/` holds the local database and is gitignored. Do not leave the
+throwaway uuid committed: by hand it is merely wrong, but under the Git
+integration it is a `database_id` that resolves to nothing, and the Worker
+deploys green and then cannot find a table.
+
+## Check it once it is live
+
+The local run proves the SQL. It cannot prove the deployment, and the two differ
+in ways that only bite in production:
+
+- `wrangler d1 execute --remote --file=./schema.sql` is a separate command from
+  the local one. Skip it, or point it at the wrong database, and the Worker
+  deploys cleanly and fails on the first real submission with a missing-table
+  error — after a respondent has ticked a consent box.
+- The remote binding resolves `database_id`; the local one ignores it entirely.
+  A clean local run says nothing about whether that id is right.
+- `ALLOWED_ORIGINS` is only exercised for real once a browser sends a genuine
+  `Origin` header at a public URL.
+
+This is what the two separate switches are for. The Worker is live and receiving
+nothing until `COLLECT_ENDPOINT` is set, so this is the window to prove it works.
+
+Watch the logs in one shell:
+
+```bash
+npx wrangler tail
+```
+
+In another, send a real submission — one built by `buildSubmission`, not written
+by hand, for the same reason as the local check:
+
+```bash
+ENDPOINT=https://israquiz-collect.<your-subdomain>.workers.dev
+curl -i -X POST "$ENDPOINT" \
+  -H 'content-type: application/json' \
+  -H 'origin: https://adobrer99-max.github.io' \
+  --data-binary @payload.json          # expect 200 {"ok":true}
+```
+
+Confirm it reached the **remote** database. This is the step that catches a
+schema never applied with `--remote`:
+
+```bash
+npx wrangler d1 execute israquiz --remote --command "SELECT COUNT(*) FROM responses;"
+```
+
+Confirm the allowlist is live:
+
+```bash
+curl -s -o /dev/null -w '%{http_code}\n' -X POST "$ENDPOINT" \
+  -H 'content-type: application/json' -H 'origin: https://evil.test' \
+  --data-binary @payload.json          # expect 403
+```
+
+**Then delete the test row.** Send a withdrawal for the same `responseId` and
+re-run the count, expecting zero:
+
+```bash
+curl -s -X POST "$ENDPOINT" -H 'content-type: application/json' \
+  -H 'origin: https://adobrer99-max.github.io' \
+  -d '{"format":"israquiz.withdrawal.v1","responseId":"<the id you sent>"}'
+npx wrangler d1 execute israquiz --remote --command "SELECT COUNT(*) FROM responses;"
+```
+
+That leaves the database empty, so the first real respondent is genuinely the
+first row. A test record left behind is a row someone later has to explain, and
+it quietly corrupts the first `n` you report.
+
+The cron trigger fires at 03:17 UTC. The day after deploying, the retention query
+at the end of `queries.sql` should return zero — that is the first evidence the
+sweep is actually scheduled rather than merely configured.
 
 ## Protocol
 
