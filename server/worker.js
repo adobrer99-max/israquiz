@@ -27,7 +27,7 @@
 
 const MAX_BODY = 64 * 1024;
 
-const MAX_ITEMS = 200;          // the bank is 49 + a handful unscored
+const MAX_ITEMS = 200;          // the bank is 50 + a handful unscored
 const MAX_DEMO_KEYS = 40;
 const MAX_DEMO_VALUE = 96;      // longest real option is well under this
 const MAX_DEMO_ARRAY = 24;

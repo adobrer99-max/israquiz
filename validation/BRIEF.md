@@ -27,7 +27,7 @@ else available comes close.
 > I've built an English-language election compass for October and I need people
 > who have already decided how they're voting to test whether it works.
 >
-> It takes about eight minutes: 49 statements, then five sliders. It asks who you
+> It takes about eight minutes: 50 statements, then five sliders. It asks who you
 > plan to vote for **first**, so the result can't quietly talk you into agreeing
 > with it.
 >

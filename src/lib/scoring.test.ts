@@ -5,11 +5,11 @@ import {
 } from "./scoring";
 import {
   A5_ROWS, BLOCK_IDS, CROSS_CUTTING, F1, F2, G1, G2, G3, INFERRED, ITEMS, ITEMS_BY_BLOCK, JL_MERGE_FLAGS, PENDING, RETIRED,
-  type Position,
+  type Item, type Position,
 } from "../data/items";
 import { axisCollapses, identicalColumns, itemDiagnostics } from "./diagnostics";
 import { orderedBlocks, orderedItems } from "./shuffle";
-import { MATRIX_ORDER, PARTIES, type PartyCode } from "../data/parties";
+import { BALLOT_PARTIES, MATRIX_ORDER, PARTIES, type PartyCode } from "../data/parties";
 
 /** Answer every item exactly as a party would, at full intensity. */
 function answerAs(code: PartyCode): Answers {
@@ -23,9 +23,9 @@ function answerAs(code: PartyCode): Answers {
 }
 
 describe("bank integrity (§3, §5)", () => {
-  it("holds 49 scored items across five blocks", () => {
-    expect(ITEMS).toHaveLength(49);
-    expect(BLOCK_IDS.map((b) => ITEMS_BY_BLOCK[b].length)).toEqual([14, 14, 6, 7, 8]);
+  it("holds 50 scored items across five blocks", () => {
+    expect(ITEMS).toHaveLength(50);
+    expect(BLOCK_IDS.map((b) => ITEMS_BY_BLOCK[b].length)).toEqual([15, 14, 6, 7, 8]);
   });
 
   it("gives every party a coding cell for every item", () => {
@@ -405,6 +405,63 @@ describe("D8 — state programmes against Jewish–Arab relationships", () => {
   });
 });
 
+/**
+ * A16's justification is stated in the editorial notes as a number — the
+ * highest discrimination in block A — so it should be checked rather than
+ * asserted. An item added to close a gap that turns out to separate nobody is
+ * an item to re-argue, not to keep because it was once justified.
+ */
+describe("Gaza security-control item (A16)", () => {
+  const a16 = () => ITEMS.find((i) => i.id === "A16")!;
+
+  const discrimination = (item: Item) => {
+    let split = 0;
+    let pairs = 0;
+    for (let i = 0; i < BALLOT_PARTIES.length; i++) {
+      for (let j = i + 1; j < BALLOT_PARTIES.length; j++) {
+        const a = item.pos[BALLOT_PARTIES[i]];
+        const b = item.pos[BALLOT_PARTIES[j]];
+        if (a === "-" || b === "-") continue;
+        pairs++;
+        if (a !== b) split++;
+      }
+    }
+    return split / pairs;
+  };
+
+  it("sits on the security axis with agreement as the dovish side", () => {
+    expect(a16().block).toBe("A");
+    expect(a16().sign).toBe(-1);
+  });
+
+  it("is the most discriminating item in the security block", () => {
+    const rest = ITEMS.filter((i) => i.block === "A" && i.id !== "A16");
+    const best = Math.max(...rest.map(discrimination));
+    expect(discrimination(a16())).toBeGreaterThan(best);
+    // the claim the editorial note makes, to two figures
+    expect(Math.round(discrimination(a16()) * 100)).toBe(72);
+  });
+
+  it("puts Together on the opposite side from Likud", () => {
+    expect(a16().pos.TOG).toBe("A");
+    expect(a16().pos.LIK).toBe("N");
+  });
+
+  it("is not a restatement of the other Gaza items", () => {
+    for (const other of ["A5", "A6", "A10"]) {
+      const o = ITEMS.find((i) => i.id === other)!;
+      const identical = MATRIX_ORDER.every((c) => o.pos[c] === a16().pos[c]);
+      expect(identical, `A16 duplicates ${other}`).toBe(false);
+    }
+  });
+
+  it("takes no position for the three columns that have not addressed it", () => {
+    for (const c of ["UNI", "NOAM", "HPP"] as PartyCode[]) {
+      expect(a16().pos[c], c).toBe("-");
+    }
+  });
+});
+
 describe("chametz item (B12)", () => {
   const b12 = () => ITEMS.find((i) => i.id === "B12")!;
 
@@ -463,7 +520,7 @@ describe("party match (§4.2)", () => {
     a.A1 = null;
     const r = score(a).all.LIK;
     expect(Math.round(r.weighted)).toBe(100);
-    expect(r.scoredItems).toBe(48);
+    expect(r.scoredItems).toBe(49);
   });
 
   it("reproduces the unweighted result when every topic keeps its default allocation", () => {
@@ -589,8 +646,8 @@ describe("party match (§4.2)", () => {
     expect(r.lowCoverage.map((x) => x.code)).toContain("AMY");
     expect(r.ranked.map((x) => x.code)).not.toContain("AMY");
     expect(r.all.AMY.coverage).toBeLessThan(COVERAGE_FLOOR);
-    // nine cells, and block C deliberately empty — a direction is not a mechanism
-    expect(ITEMS.filter((x) => x.pos.AMY !== "-")).toHaveLength(9);
+    // ten cells, and block C deliberately empty — a direction is not a mechanism
+    expect(ITEMS.filter((x) => x.pos.AMY !== "-")).toHaveLength(10);
     expect(ITEMS.filter((x) => x.block === "C" && x.pos.AMY !== "-")).toHaveLength(0);
   });
 
@@ -777,7 +834,7 @@ describe("empty and degenerate inputs", () => {
     const a: Answers = {};
     for (const it of ITEMS) a[it.id] = null;
     const r = score(a);
-    expect(r.skippedCount).toBe(49);
+    expect(r.skippedCount).toBe(50);
     expect(r.ranked.every((x) => x.weighted === 0)).toBe(true);
   });
 

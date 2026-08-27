@@ -225,7 +225,7 @@ allowlist.
 // submission
 {
   "format": "israquiz.submission.v1",
-  "instrument": { "version": "v0.2 — preview", "itemCount": 49, "a5Variant": "live", … },
+  "instrument": { "version": "v0.2 — preview", "itemCount": 50, "a5Variant": "live", … },
   "consent":    { "version": "consent-2026-08-10", "at": "…", "demographics": false },
   "responses":  { "responseId": "…", "answers": {…}, "weights": {…}, … },
   "demographics": null            // or { "responseId": "…", "D0": "Israel", … }

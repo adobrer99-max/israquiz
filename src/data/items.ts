@@ -1,6 +1,6 @@
 /* ============================================================
    Item bank — spec §3
-   49 scored statements across five blocks, plus diagnostic and
+   50 scored statements across five blocks, plus diagnostic and
    cross-cutting items that never touch the axes or the match.
 
    Coding key: A = agree · N = neutral or deliberately ambiguous
@@ -122,6 +122,29 @@ const RAW: Row[] = [
   // Arab and Palestinian respondents about a policy aimed at people like them,
   // and that no wording makes that comfortable.
   ["A15", "A", 1, "Israel should actively encourage the emigration of Gaza's population.", "NDNNNAANDDDDD"],
+  // A16 fills the gap the August reporting on Bennett exposed: every other
+  // Gaza item asks about status, territory or talks, and none asked who
+  // actually polices the place — the mechanism his whole differentiation from
+  // Netanyahu rests on, and one a respondent had no row to answer.
+  //
+  // It earns the slot on the numbers too: 72% of codeable party pairs, the
+  // highest discrimination of any item in block A, just above A9 at 71%.
+  //
+  // Deliberately not "do you support the Trump plan". Naming a person makes
+  // the item measure opinion of that person — the reason F1 keeps Netanyahu
+  // out of the scoring and part of why C4 was retired — and the plan is a
+  // bundle of six things, which fails §5's one-question test. It would also
+  // have coded Bennett N, since his position is that the plan is unworkable
+  // alone *and* was imposed because Israel offered nothing else, so the row
+  // would have returned nothing for the party that motivated it. Naming the
+  // mechanism instead survives the plan being renamed or collapsing, which
+  // A5 may not.
+  //
+  // The comparative clause is load-bearing. Most parties will accept a
+  // stabilisation force in the abstract; the disagreement is over whether it
+  // replaces the IDF or operates alongside it, and without "rather than
+  // remain with the IDF" almost every column collapses to A.
+  ["A16", "A", -1, "Security control in Gaza should pass to a force of Arab and Muslim states rather than remain with the IDF.", "NANNNDDDAAAAA"],
 
   ["B1", "B", -1, "Haredi yeshiva students should be subject to the military draft on the same terms as other citizens.", "DAADDNNAAA---"],
   ["B2", "B", -1, "Public transport should operate on Shabbat in municipalities that want it.", "DANDDDDAAN-A-"],
@@ -195,7 +218,7 @@ const RAW: Row[] = [
 
 /* --- §3.7 The Joint List: merged ballot column (Hadash + Ta'al + Balad) --- */
 const JL_POS: Record<string, Position> = {
-  A1: "A", A2: "D", A3: "D", A4: "D", A15: "D", A5: A5_JL[A5_VARIANT], A6: "A", A7: "D", A8: "A", A9: "D", A10: "A", A11: "A", A12: "D", A13: "N", A14: "D",
+  A1: "A", A2: "D", A3: "D", A4: "D", A15: "D", A16: "A", A5: A5_JL[A5_VARIANT], A6: "A", A7: "D", A8: "A", A9: "D", A10: "A", A11: "A", A12: "D", A13: "N", A14: "D",
   B1: "-", B2: "A", B3: "A", B4: "N", B5: "D", B6: "N", B7: "D", B8: "A", B9: "D", B10: "N", B11: "N", B12: "A", B13: "N", B14: "N",
   C1: "A", C2: "D", C3: "D", C4: "A", C5: "A", C6: "A", C7: "D", C8: "D", C9: "A", C10: "D",
   D1: "D", D2: "A", D3: "A", D4: "A", D5: "D", D6: "-", D7: "D", D8: "D",
@@ -242,14 +265,18 @@ export const INFERRED: Partial<Record<PartyCode, string[]>> = {
   // Har Hamor stream's positions rather than stated by the party.
   NOAM: ["A4", "A13", "C1", "C3", "C5", "C6", "C8", "C9"],
   // Half the column. A1, B1, D2 and D7 were said outright; these were not.
-  AMY: ["A2", "A4", "A10", "A13"],
+  // A16 is inference of the firmer kind: a launch speech promising Gaza
+  // emigration and a heavy territorial price for an enemy who starts a war is
+  // not compatible with handing security control to Arab states, but he was
+  // not asked and did not say.
+  AMY: ["A2", "A4", "A10", "A13", "A16"],
 };
 
 /* --- §3.6 Unity (HaAchdut), the Erdan–Edelstein list ------------------------
  *
  * Eighteen entries, of which sixteen hit live items: C4 and D5 were retired in
  * the redundancy cut and are kept here so the codings survive if either item is
- * ever restored. Coverage is therefore 17/49 = 35%, well under the floor.
+ * ever restored. Coverage is therefore 17/50 = 34%, well under the floor.
  */
 const UNI_POS: Record<string, Position> = {
   A1: "D", A2: "A", A6: "D", A7: "N", A9: "N", A10: "D", A15: "N",
@@ -273,7 +300,7 @@ const UNI_POS: Record<string, Position> = {
  * army, work, secular subjects — and not about halakha, so nothing suggests it
  * differs on the Rabbinate, Shabbat or gender separation. Security,
  * institutions and national identity are left unstated rather than inferred
- * from UTJ, which is what the coverage floor exists to prevent. Fifteen of 49
+ * from UTJ, which is what the coverage floor exists to prevent. Fifteen of 50
  * items is 31% coverage, so the party is suppressed from the ranking and the
  * grid and appears under insufficient position data.
  *
@@ -330,7 +357,7 @@ const NOAM_POS: Record<string, Position> = {
 
 /* --- People of Israel (Amcha Yisrael) ---------------------------------------
  *
- * Nine items of 49. Coded from reporting of the launch speech, not a platform,
+ * Ten items of 50. Coded from reporting of the launch speech, not a platform,
  * which is the thinnest source in the bank and is why half these cells are
  * flagged as inferred.
  *
@@ -351,7 +378,7 @@ const NOAM_POS: Record<string, Position> = {
  * economics were not addressed at all.
  */
 const AMY_POS: Record<string, Position> = {
-  A1: "D", A2: "A", A4: "N", A10: "D", A13: "A", A15: "A",
+  A1: "D", A2: "A", A4: "N", A10: "D", A13: "A", A15: "A", A16: "D",
   B1: "A",
   D2: "D", D7: "A",
 };

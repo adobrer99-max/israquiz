@@ -146,7 +146,9 @@ export function Diagnostics() {
         Written and coded, waiting on the next bank revision. Adding an item mid-cycle is expensive — it
         shifts every party's coverage denominator, ends every saved session, and re-opens the clustering
         check — so the bar is that the bank is silent on something voters are actually being asked to choose
-        between. A15, on Gaza emigration, cleared that bar in August and went in. This one has not yet.
+        between. Two items cleared that bar in August and went in — A15 on Gaza emigration and A16 on who
+        holds security control there. This one has not, and two mid-cycle additions in a month is already
+        more than the bar was meant to admit.
       </p>
       {PENDING.map((p) => (
         <div className="row" key={p.item.id} style={{ display: "block" }}>
@@ -167,7 +169,7 @@ export function Diagnostics() {
 
       <h3 style={{ margin: "22px 0 6px" }}>Coverage</h3>
       <p className="small muted">
-        Share of the 49 statements on which each party has a coded position. Below 70% a party is suppressed
+        Share of the 50 statements on which each party has a coded position. Below 70% a party is suppressed
         from the ranking and shown separately.
       </p>
       {coverage.map((r) => (
