@@ -57,9 +57,17 @@ type Row = [id: string, block: BlockId, sign: 1 | -1, text: string, codings: str
  * every N stays N.
  *
  * Swap by changing A5_VARIANT. Nothing else in the codebase moves.
+ *
+ * Swapped to durable in August, before the live wording became false rather
+ * than after. Hamas has accepted the roadmap framework, Israel has rejected the
+ * present sequencing and force deployment is under negotiation, so the live row
+ * was about to describe a proposal nobody was any longer arguing about in those
+ * terms. The cleavage it was built to measure — whether withdrawal precedes or
+ * follows disarmament — is the durable one, and it does not depend on the Board
+ * of Peace surviving under that name.
  */
 export type A5Variant = "live" | "durable";
-export const A5_VARIANT: A5Variant = "live";
+export const A5_VARIANT: A5Variant = "durable";
 
 export const A5_ROWS: Record<A5Variant, Row> = {
   live: [
@@ -126,29 +134,29 @@ const RAW: Row[] = [
   // Arab and Palestinian respondents about a policy aimed at people like them,
   // and that no wording makes that comfortable.
   ["A15", "A", 1, "Israel should actively encourage the emigration of Gaza's population.", "NDNNNAANDDDDD"],
-  // A16 fills the gap the August reporting on Bennett exposed: every other
-  // Gaza item asks about status, territory or talks, and none asked who
-  // actually polices the place — the mechanism his whole differentiation from
-  // Netanyahu rests on, and one a respondent had no row to answer.
+  // A16, rewritten in August after an external audit showed the first wording
+  // misdescribed the choice. It said security control should pass to "a force
+  // of Arab and Muslim states", which is wrong twice over. The stabilisation
+  // force under discussion is not Arab and Muslim — Albania, Indonesia,
+  // Kazakhstan, Kosovo, Uganda and Burundi are among those named — so the
+  // phrase added an identity cue the actual proposal does not carry, which is
+  // exactly what §5 forbids. And the force does not receive security control:
+  // the roadmap has it monitoring the ceasefire, supporting demilitarisation
+  // and training police, while Palestinian civilian police do the policing.
+  // The old row compressed a three-actor structure into two and would have
+  // produced coding errors from correct sources.
   //
-  // It earns the slot on the numbers too: 72% of codeable party pairs, the
-  // highest discrimination of any item in block A, just above A9 at 71%.
+  // The rewrite names the institutional choice — permanent IDF control against
+  // Palestinian policing under international backing — and survives changes in
+  // which countries contribute troops.
   //
-  // Deliberately not "do you support the Trump plan". Naming a person makes
-  // the item measure opinion of that person — the reason F1 keeps Netanyahu
-  // out of the scoring and part of why C4 was retired — and the plan is a
-  // bundle of six things, which fails §5's one-question test. It would also
-  // have coded Bennett N, since his position is that the plan is unworkable
-  // alone *and* was imposed because Israel offered nothing else, so the row
-  // would have returned nothing for the party that motivated it. Naming the
-  // mechanism instead survives the plan being renamed or collapsing, which
-  // A5 may not.
-  //
-  // The comparative clause is load-bearing. Most parties will accept a
-  // stabilisation force in the abstract; the disagreement is over whether it
-  // replaces the IDF or operates alongside it, and without "rather than
-  // remain with the IDF" almost every column collapses to A.
-  ["A16", "A", -1, "Security control in Gaza should pass to a force of Arab and Muslim states rather than remain with the IDF.", "NANNNDDDAAAAA"],
+  // The original justification is void and should not be quietly reused. A16
+  // was defended partly as the row that finally gave Together a security
+  // signal; under the corrected wording Together is "-", because Bennett's
+  // stated mechanism is Egyptian troops rather than Palestinian police and the
+  // list has resolved nothing. What survives is the substantive case: nothing
+  // else in the bank asks who polices Gaza.
+  ["A16", "A", -1, "Day-to-day security inside Gaza should pass to Palestinian police backed by an international force, rather than remain under permanent IDF control.", "D----DD-AAAAA"],
 
   // Religious Zionism stays N here. Smotrich's August backing of the haredi
   // exemption bill was tried as a D and reverted: it collapsed Religious
@@ -274,11 +282,7 @@ export const INFERRED: Partial<Record<PartyCode, string[]>> = {
   // Har Hamor stream's positions rather than stated by the party.
   NOAM: ["A4", "A13", "C1", "C3", "C5", "C6", "C8", "C9"],
   // Half the column. A1, B1, D2 and D7 were said outright; these were not.
-  // A16 is inference of the firmer kind: a launch speech promising Gaza
-  // emigration and a heavy territorial price for an enemy who starts a war is
-  // not compatible with handing security control to Arab states, but he was
-  // not asked and did not say.
-  AMY: ["A2", "A4", "A10", "A13", "A16"],
+  AMY: ["A2", "A4", "A10", "A13"],
 };
 
 /* --- §3.6 Unity (HaAchdut), the Erdan–Edelstein list ------------------------
@@ -387,7 +391,7 @@ const NOAM_POS: Record<string, Position> = {
  * economics were not addressed at all.
  */
 const AMY_POS: Record<string, Position> = {
-  A1: "D", A2: "A", A4: "N", A10: "D", A13: "A", A15: "A", A16: "D",
+  A1: "D", A2: "A", A4: "N", A10: "D", A13: "A", A15: "A",
   B1: "A",
   D2: "D", D7: "A",
 };
