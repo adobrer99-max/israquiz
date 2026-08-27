@@ -79,7 +79,11 @@ const A5_JL: Record<A5Variant, Position> = { live: "A", durable: "D" };
 
 /* --- the 13-column matrix, in MATRIX_ORDER --- */
 const RAW: Row[] = [
-  ["A1", "A", -1, "Israel should accept the establishment of a Palestinian state as part of a wider regional normalization agreement.", "DDNDDDDDADAAA"],
+  // Yashar moved from N to D in August. Eisenkot, asked directly about the
+  // two-state solution, called anyone still thinking about it after 7 October
+  // "delusional" — the first flatly stated position from a column whose N
+  // codings otherwise mean genuinely unstated rather than centrist.
+  ["A1", "A", -1, "Israel should accept the establishment of a Palestinian state as part of a wider regional normalization agreement.", "DDDDDDDDADAAA"],
   ["A2", "A", 1, "Israel should retain indefinite overriding security control over the entire area west of the Jordan River.", "AAAANAAADADDD"],
   ["A3", "A", 1, "Israel should apply Israeli sovereignty to parts of the West Bank.", "ADDNNAANDDDDD"],
   ["A4", "A", 1, "Jewish civilian settlement in the Gaza Strip should be permitted to resume.", "NDDNNAADDDDDD"],

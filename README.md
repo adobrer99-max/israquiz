@@ -235,11 +235,17 @@ Under **Diagnostics** in the app, recorded rather than smoothed over:
 2. **Institutions still collapses three ways, twice.** Likud with Otzma Yehudit and Religious Zionism at
    one pole; The Democrats with Ra'am and the Joint List at the other. Both look real rather than
    artefactual, and institutions is a reported bar rather than a grid axis.
-3. **Yashar plots at −60 on religion** rather than near the origin. This is reported as a finding, not
+3. **Yashar and Blue & White share a security coordinate** at −13.3, a collision created in August when
+   Eisenkot's "delusional" remark moved Yashar to D on A1. Two former chiefs of staff running
+   anti-Netanyahu lists landing on the same point is a defensible reading rather than an artefact, but
+   unlike the Democrats–Ra'am pair above they are only 36 points apart on the other grid axis, so they
+   plot near each other rather than merely sharing a number. Left as a finding for the September
+   re-verification to resolve or confirm.
+4. **Yashar plots at −60 on religion** rather than near the origin. This is reported as a finding, not
    corrected: the party has published no platform, and its five coded religion-and-state cells all lean
    secular while the other five are genuinely unstated. Whether that silence is strategy or an absence of
    settled policy is a question about the party, not about the instrument.
-4. **Balad cannot surface in the ranking, and now never will.** It takes no position on intra-Jewish
+5. **Balad cannot surface in the ranking, and now never will.** It takes no position on intra-Jewish
    religion-and-state questions, and the Joint List merge absorbs that silence into a ballot column.
    While the alliance was provisional this was an artefact that might have dissolved; with Hadash–Ta'al
    and Balad confirmed to be running together it will not. Someone whose views sit closest to Balad
