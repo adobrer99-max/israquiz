@@ -2,7 +2,7 @@
 
 An English-language election compass for the 26th Knesset, 27 October 2026.
 
-49 statements across five topics, a topic-weighting step, three unscored cross-cutting questions, a
+50 statements across five topics, a topic-weighting step, three unscored cross-cutting questions, a
 two-axis grid with the parties plotted, a ranked match percentage, and the full coding matrix published
 alongside it.
 
@@ -245,6 +245,34 @@ Under **Diagnostics** in the app, recorded rather than smoothed over:
    and Balad confirmed to be running together it will not. Someone whose views sit closest to Balad
    specifically sees the Joint List instead, and the component readout below the ranking is the only
    place that difference appears — which is why those columns stay published.
+
+## Two things to build when the lists file
+
+Neither is started, and both are cheap only if the September re-verification is
+done first — they consume its output rather than duplicating it.
+
+**A platforms guide.** Once the filed lists publish platforms, the bank stops
+resting on press reporting and starts resting on documents, and those documents
+are worth surfacing rather than merely citing. The material already exists in
+shape: `CODING_NOTES` in `src/data/editorial.ts` records what every doubtful
+cell rests on, `INFERRED` marks the cells extrapolated rather than stated, and
+`JL_MERGE_FLAGS` marks where the Joint List merge did interpretive work. A guide
+would be those three joined to a per-party page — what the platform says, which
+cells it settles, and which it leaves the compass guessing at. The columns that
+would gain most are the ones flagged severe today: Together, Unity, the Haredi
+Public Party, People of Israel, all coded from statements rather than platforms.
+
+**An issues monitor.** The bank is a snapshot, and this cycle has already forced
+two mid-cycle additions, one item retirement plan (A5's durable replacement),
+several re-codings, and a party registry that changed six times in a month. All
+of that currently lives in commit messages. A monitor would make the record a
+feature: what changed, when, on what evidence, and which items or codings moved
+as a result — the changelog §8 asks for, kept as it happens rather than
+reconstructed in September. `RETIRED` and `PENDING` already carry the reasoning
+for items cut and items held; this would be the same discipline applied to the
+things that changed while live.
+
+Both are read-only additions to a static site and need no backend.
 
 ## Before this is published
 
