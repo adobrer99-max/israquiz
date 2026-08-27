@@ -40,8 +40,8 @@ else available comes close.
 > The most useful thing you can send back is not the score. Near the bottom you
 > will see **"Where you break with [your party]"** — the statements where your
 > answer is the opposite of what I've recorded as your party's position. **If any
-> of those look wrong to you, tell me.** That means I've miscoded your party, and
-> you are the only person who can catch it.
+> of those look wrong to you, tell me.** It may mean I've miscoded your party,
+> and you are the best-placed person to catch it.
 >
 > Say anything else you want about the wording. If a statement felt unanswerable,
 > loaded, or like it was asking two things at once, that is a finding.
@@ -71,9 +71,12 @@ issue, do not put the report in the repository.
 that recovered everybody would mostly be telling you that decided voters know
 their own minds.
 
-**Cells to re-check** is the point. When several testers who declared the same
-party all disagree with that party's coded position on one statement, the coding
-is probably wrong. Cells marked **‡** were already flagged in the editorial notes
+**Cells to re-check** is the point — but it is a trigger to re-open the source,
+not a verdict. People vote for parties over a leader, a coalition calculation, an
+identity or one salient issue, and a Likud voter can genuinely disagree with
+Likud about five things without Likud being miscoded. When several testers who
+declared the same party all break with the same coded cell, go back to the
+platform. Do not flip the cell on the strength of the replies alone. Cells marked **‡** were already flagged in the editorial notes
 as doubtful — an independent hit on one of those is as close to proof as this
 exercise gets, and should be acted on before the September revision rather than
 after it.

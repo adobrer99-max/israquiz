@@ -65,12 +65,12 @@ export const A5_ROWS: Record<A5Variant, Row> = {
   live: [
     "A5", "A", -1,
     "Israel should accept the Board of Peace's phased disarmament plan, withdrawing its forces in stages as Hamas decommissions its weapons.",
-    "DNNNNDDNANAAA",
+    "DN-NNDDNANAAA",
   ],
   durable: [
     "A5", "A", 1,
     "Israeli forces should withdraw from Gaza only once Hamas has completely disarmed.",
-    "ANNNNAANDNDDD",
+    "AN-NNAANDNDDD",
   ],
 };
 
@@ -83,12 +83,12 @@ const RAW: Row[] = [
   // two-state solution, called anyone still thinking about it after 7 October
   // "delusional" — the first flatly stated position from a column whose N
   // codings otherwise mean genuinely unstated rather than centrist.
-  ["A1", "A", -1, "Israel should accept the establishment of a Palestinian state as part of a wider regional normalization agreement.", "DDDDDDDDADAAA"],
+  ["A1", "A", -1, "Israel should accept the establishment of a Palestinian state as part of a wider regional normalization agreement.", "D-DDDDDDADAAA"],
   ["A2", "A", 1, "Israel should retain indefinite overriding security control over the entire area west of the Jordan River.", "AAAANAAADADDD"],
   ["A3", "A", 1, "Israel should apply Israeli sovereignty to parts of the West Bank.", "ADDNNAANDDDDD"],
   ["A4", "A", 1, "Jewish civilian settlement in the Gaza Strip should be permitted to resume.", "NDDNNAADDDDDD"],
   A5_ROWS[A5_VARIANT],
-  ["A6", "A", -1, "The Palestinian Authority should be given a governing role in post-war Gaza.", "DDNDNDDDADAAA"],
+  ["A6", "A", -1, "The Palestinian Authority should be given a governing role in post-war Gaza.", "D--DNDDDADAAA"],
   ["A7", "A", 1, "Settlement construction in the West Bank should continue to expand.", "ANDNNAANDNDDD"],
   // Was "the state should vigorously enforce the law against...". The
   // intensifier made the disagreeing side sound like it was endorsing
@@ -99,8 +99,8 @@ const RAW: Row[] = [
   // prosecutions. Codings unchanged; the row was never about enforcement in
   // the abstract.
   ["A8", "A", -1, "Illegal outposts should be removed and settler violence prosecuted.", "DAANNDDAAAAAA"],
-  ["A9", "A", 1, "Israel should be prepared to take major military action against Iran without American approval.", "AANNNAAADNDDD"],
-  ["A10", "A", -1, "Israel should be willing to negotiate indirectly with Hamas to reach long-term arrangements.", "DDNNNDDDADAAA"],
+  ["A9", "A", 1, "Israel should be prepared to take major military action against Iran without American approval.", "AA-NNAAADNDDD"],
+  ["A10", "A", -1, "Israel should be willing to negotiate indirectly with Hamas to reach long-term arrangements.", "DD-NNDDDADAAA"],
   ["A12", "A", 1, "The death penalty should be available for convicted terrorists.", "ADDNNAAADDDDD"],
   // A13 added after §4.7 validation: nothing else in the bank separated The
   // Democrats, Ra'am and the Joint List, all three of which were coded
@@ -195,7 +195,7 @@ const RAW: Row[] = [
   ["C9", "C", 1, "Operational policing decisions should be insulated from ministerial direction.", "DAANNDDAAAAAA"],
 
   ["D1", "D", -1, "Israel should be defined first and foremost as a Jewish state, even where this limits full equality for non-Jewish citizens.", "ANDANAANDNDDD"],
-  ["D2", "D", 1, "Arab parties should be legitimate partners in a governing coalition.", "DNNDDDDDADAAA"],
+  ["D2", "D", 1, "Arab parties should be legitimate partners in a governing coalition.", "D-NDDDDDADAAA"],
   ["D3", "D", 1, "The Nation-State Basic Law should be amended to add a clause guaranteeing equality.", "DNNDDDDDANAAA"],
   ["D4", "D", 1, "Government investment in Arab towns should be substantially increased and insulated from coalition politics.", "NAANNDDNAAAAA"],
   ["D6", "D", -1, "The Law of Return's “grandchild clause” should be narrowed.", "NDDAAAADDD---"],
@@ -431,7 +431,7 @@ export interface RetiredItem extends Item {
 
 const RETIRED_ROWS: (readonly [Row, string, string])[] = [
   [
-    ["A11", "A", -1, "Israel should allow humanitarian aid into Gaza without limiting its volume.", "DNNNNDDNANAAA"],
+    ["A11", "A", -1, "Israel should allow humanitarian aid into Gaza without limiting its volume.", "DN-NNDDNANAAA"],
     "A5",
     "Identical contribution to the security axis as A5. A5 was kept because it has a succession plan — §5's durable replacement is drafted and one line swaps it in — where this item had none. The closest of the six calls, and the easiest to reverse.",
   ],
