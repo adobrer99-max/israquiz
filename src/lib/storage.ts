@@ -23,12 +23,19 @@ import type { Demographics } from "../data/demographics";
  * saw A15, and resuming one would silently produce a result computed over a
  * different questionnaire from the one it started.
  *
- * v5 retires v4 on the same grounds for A16. Two bank additions inside a month
- * is more churn than §8.10 anticipated, and the September revision should be
- * the last one before the election that does this to a saved session.
+ * v5 retires v4 on the same grounds for A16.
+ *
+ * v6 retires v5 for a different reason: no item was added, but two were
+ * rewritten. A5 swapped to its durable wording, which inverts its polarity, and
+ * A16 was rewritten after an audit showed it misdescribed the choice. The item
+ * count and the shuffle are unchanged, so a resumed session would look correct
+ * and would carry answers given to two questions that no longer exist. Three
+ * bumps in a month is well past what §8.10 anticipated, and it is an argument
+ * for freezing the bank at the September revision rather than a reason to have
+ * left either wording standing.
  */
-const SESSION_KEY = "israquiz.session.v5";
-const DEMO_KEY = "israquiz.demographics.v5";
+const SESSION_KEY = "israquiz.session.v6";
+const DEMO_KEY = "israquiz.demographics.v6";
 
 /**
  * Superseded keys, deleted on first load. Leaving them would strand answer and
@@ -43,6 +50,8 @@ const LEGACY_KEYS = [
   "israquiz.demographics.v3",
   "israquiz.session.v4",
   "israquiz.demographics.v4",
+  "israquiz.session.v5",
+  "israquiz.demographics.v5",
 ];
 
 export interface Session {

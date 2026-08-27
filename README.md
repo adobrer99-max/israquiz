@@ -2,7 +2,7 @@
 
 An English-language election compass for the 26th Knesset, 27 October 2026.
 
-49 statements across five topics, a topic-weighting step, three unscored cross-cutting questions, a
+50 statements across five topics, a topic-weighting step, three unscored cross-cutting questions, a
 two-axis grid with the parties plotted, a ranked match percentage, and the full coding matrix published
 alongside it.
 
@@ -235,16 +235,81 @@ Under **Diagnostics** in the app, recorded rather than smoothed over:
 2. **Institutions still collapses three ways, twice.** Likud with Otzma Yehudit and Religious Zionism at
    one pole; The Democrats with Ra'am and the Joint List at the other. Both look real rather than
    artefactual, and institutions is a reported bar rather than a grid axis.
-3. **Yashar plots at −60 on religion** rather than near the origin. This is reported as a finding, not
+3. **Yashar's security position now rests on ten items, not fifteen.** A5, A6, A9 and A10 became `-`
+   in the August audit pass, and A1 became D on Eisenkot's own words, which moved the party from −13.3
+   to −20.0 with axis confidence of 0.67. It briefly shared a coordinate with Blue & White; it no
+   longer does, and the pair are now 6.7 points apart on security and 36 on religion. The finding to
+   carry forward is not the collision but the confidence: a third of this party's security axis is
+   built from nothing, and the marker is drawn low-confidence for that reason.
+4. **Yashar plots at −60 on religion** rather than near the origin. This is reported as a finding, not
    corrected: the party has published no platform, and its five coded religion-and-state cells all lean
    secular while the other five are genuinely unstated. Whether that silence is strategy or an absence of
    settled policy is a question about the party, not about the instrument.
-4. **Balad cannot surface in the ranking, and now never will.** It takes no position on intra-Jewish
+5. **Balad cannot surface in the ranking, and now never will.** It takes no position on intra-Jewish
    religion-and-state questions, and the Joint List merge absorbs that silence into a ballot column.
    While the alliance was provisional this was an artefact that might have dissolved; with Hadash–Ta'al
    and Balad confirmed to be running together it will not. Someone whose views sit closest to Balad
    specifically sees the Joint List instead, and the component readout below the ranking is the only
    place that difference appears — which is why those columns stay published.
+
+## Two things to build when the lists file
+
+Neither is started, and both are cheap only if the September re-verification is
+done first — they consume its output rather than duplicating it.
+
+**A platforms guide.** Once the filed lists publish platforms, the bank stops
+resting on press reporting and starts resting on documents, and those documents
+are worth surfacing rather than merely citing. The material already exists in
+shape: `CODING_NOTES` in `src/data/editorial.ts` records what every doubtful
+cell rests on, `INFERRED` marks the cells extrapolated rather than stated, and
+`JL_MERGE_FLAGS` marks where the Joint List merge did interpretive work. A guide
+would be those three joined to a per-party page — what the platform says, which
+cells it settles, and which it leaves the compass guessing at. The columns that
+would gain most are the ones flagged severe today: Together, Unity, the Haredi
+Public Party, People of Israel, all coded from statements rather than platforms.
+
+**An issues monitor.** The bank is a snapshot, and this cycle has already forced
+two mid-cycle additions, one item retirement plan (A5's durable replacement),
+several re-codings, and a party registry that changed six times in a month. All
+of that currently lives in commit messages. A monitor would make the record a
+feature: what changed, when, on what evidence, and which items or codings moved
+as a result — the changelog §8 asks for, kept as it happens rather than
+reconstructed in September. `RETIRED` and `PENDING` already carry the reasoning
+for items cut and items held; this would be the same discipline applied to the
+things that changed while live.
+
+Both are read-only additions to a static site and need no backend.
+
+## Open after the August audit
+
+An external methodology review in August produced eight findings. Five are acted
+on in the code and history; three are recorded here because they are real and
+not yet done.
+
+**Per-cell evidence provenance is not machine-readable.** A coding is one
+character. Whether it came from a published platform, a direct quotation, a
+leadership record, a component merge or a press reconstruction lives in prose in
+`src/data/editorial.ts`, which makes the transparency auditable by a reader and
+not by the program. `INFERRED` and `JL_MERGE_FLAGS` are partial versions of the
+thing that is wanted, which is a position carrying `evidence`, `confidence`,
+`source` and a date. With that, questions like "which rankings depend on
+low-confidence evidence" and "which codings are older than the last platform"
+become queries instead of readings. This is the v1 task.
+
+**A hard overlap gate is not implemented, only the disclosure.** Every match now
+reports the number of shared answers it was computed from, and a caution appears
+when the top match rests on fewer than 20 items or less than 60% of what the
+respondent answered. Whether a party should be *removed* from the ranking on
+those grounds is a user-visible design decision with real costs, and the
+thresholds to use are exactly the sort of parameter that should be set against
+respondent data rather than guessed.
+
+**Item–axis correlation has never been tested.** Several items were added or
+placed because of what they did to party positions, which makes party placement
+both input and output — see the note on item selection under Diagnostics. A13's
+loading on the security axis is the specific open case. Resolving it needs real
+respondent answers, which is one of the things the collection endpoint is for,
+and no further argument substitutes for it.
 
 ## Before this is published
 

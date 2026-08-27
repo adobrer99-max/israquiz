@@ -57,20 +57,28 @@ type Row = [id: string, block: BlockId, sign: 1 | -1, text: string, codings: str
  * every N stays N.
  *
  * Swap by changing A5_VARIANT. Nothing else in the codebase moves.
+ *
+ * Swapped to durable in August, before the live wording became false rather
+ * than after. Hamas has accepted the roadmap framework, Israel has rejected the
+ * present sequencing and force deployment is under negotiation, so the live row
+ * was about to describe a proposal nobody was any longer arguing about in those
+ * terms. The cleavage it was built to measure — whether withdrawal precedes or
+ * follows disarmament — is the durable one, and it does not depend on the Board
+ * of Peace surviving under that name.
  */
 export type A5Variant = "live" | "durable";
-export const A5_VARIANT: A5Variant = "live";
+export const A5_VARIANT: A5Variant = "durable";
 
 export const A5_ROWS: Record<A5Variant, Row> = {
   live: [
     "A5", "A", -1,
     "Israel should accept the Board of Peace's phased disarmament plan, withdrawing its forces in stages as Hamas decommissions its weapons.",
-    "DNNNNDDNANAAA",
+    "DN-NNDDNANAAA",
   ],
   durable: [
     "A5", "A", 1,
     "Israeli forces should withdraw from Gaza only once Hamas has completely disarmed.",
-    "ANNNNAANDNDDD",
+    "AN-NNAANDNDDD",
   ],
 };
 
@@ -79,12 +87,16 @@ const A5_JL: Record<A5Variant, Position> = { live: "A", durable: "D" };
 
 /* --- the 13-column matrix, in MATRIX_ORDER --- */
 const RAW: Row[] = [
-  ["A1", "A", -1, "Israel should accept the establishment of a Palestinian state as part of a wider regional normalization agreement.", "DDNDDDDDADAAA"],
+  // Yashar moved from N to D in August. Eisenkot, asked directly about the
+  // two-state solution, called anyone still thinking about it after 7 October
+  // "delusional" — the first flatly stated position from a column whose N
+  // codings otherwise mean genuinely unstated rather than centrist.
+  ["A1", "A", -1, "Israel should accept the establishment of a Palestinian state as part of a wider regional normalization agreement.", "D-DDDDDDADAAA"],
   ["A2", "A", 1, "Israel should retain indefinite overriding security control over the entire area west of the Jordan River.", "AAAANAAADADDD"],
   ["A3", "A", 1, "Israel should apply Israeli sovereignty to parts of the West Bank.", "ADDNNAANDDDDD"],
   ["A4", "A", 1, "Jewish civilian settlement in the Gaza Strip should be permitted to resume.", "NDDNNAADDDDDD"],
   A5_ROWS[A5_VARIANT],
-  ["A6", "A", -1, "The Palestinian Authority should be given a governing role in post-war Gaza.", "DDNDNDDDADAAA"],
+  ["A6", "A", -1, "The Palestinian Authority should be given a governing role in post-war Gaza.", "D--DNDDDADAAA"],
   ["A7", "A", 1, "Settlement construction in the West Bank should continue to expand.", "ANDNNAANDNDDD"],
   // Was "the state should vigorously enforce the law against...". The
   // intensifier made the disagreeing side sound like it was endorsing
@@ -95,8 +107,8 @@ const RAW: Row[] = [
   // prosecutions. Codings unchanged; the row was never about enforcement in
   // the abstract.
   ["A8", "A", -1, "Illegal outposts should be removed and settler violence prosecuted.", "DAANNDDAAAAAA"],
-  ["A9", "A", 1, "Israel should be prepared to take major military action against Iran without American approval.", "AANNNAAADNDDD"],
-  ["A10", "A", -1, "Israel should be willing to negotiate indirectly with Hamas to reach long-term arrangements.", "DDNNNDDDADAAA"],
+  ["A9", "A", 1, "Israel should be prepared to take major military action against Iran without American approval.", "AA-NNAAADNDDD"],
+  ["A10", "A", -1, "Israel should be willing to negotiate indirectly with Hamas to reach long-term arrangements.", "DD-NNDDDADAAA"],
   ["A12", "A", 1, "The death penalty should be available for convicted terrorists.", "ADDNNAAADDDDD"],
   // A13 added after §4.7 validation: nothing else in the bank separated The
   // Democrats, Ra'am and the Joint List, all three of which were coded
@@ -122,30 +134,35 @@ const RAW: Row[] = [
   // Arab and Palestinian respondents about a policy aimed at people like them,
   // and that no wording makes that comfortable.
   ["A15", "A", 1, "Israel should actively encourage the emigration of Gaza's population.", "NDNNNAANDDDDD"],
-  // A16 fills the gap the August reporting on Bennett exposed: every other
-  // Gaza item asks about status, territory or talks, and none asked who
-  // actually polices the place — the mechanism his whole differentiation from
-  // Netanyahu rests on, and one a respondent had no row to answer.
+  // A16, rewritten in August after an external audit showed the first wording
+  // misdescribed the choice. It said security control should pass to "a force
+  // of Arab and Muslim states", which is wrong twice over. The stabilisation
+  // force under discussion is not Arab and Muslim — Albania, Indonesia,
+  // Kazakhstan, Kosovo, Uganda and Burundi are among those named — so the
+  // phrase added an identity cue the actual proposal does not carry, which is
+  // exactly what §5 forbids. And the force does not receive security control:
+  // the roadmap has it monitoring the ceasefire, supporting demilitarisation
+  // and training police, while Palestinian civilian police do the policing.
+  // The old row compressed a three-actor structure into two and would have
+  // produced coding errors from correct sources.
   //
-  // It earns the slot on the numbers too: 72% of codeable party pairs, the
-  // highest discrimination of any item in block A, just above A9 at 71%.
+  // The rewrite names the institutional choice — permanent IDF control against
+  // Palestinian policing under international backing — and survives changes in
+  // which countries contribute troops.
   //
-  // Deliberately not "do you support the Trump plan". Naming a person makes
-  // the item measure opinion of that person — the reason F1 keeps Netanyahu
-  // out of the scoring and part of why C4 was retired — and the plan is a
-  // bundle of six things, which fails §5's one-question test. It would also
-  // have coded Bennett N, since his position is that the plan is unworkable
-  // alone *and* was imposed because Israel offered nothing else, so the row
-  // would have returned nothing for the party that motivated it. Naming the
-  // mechanism instead survives the plan being renamed or collapsing, which
-  // A5 may not.
-  //
-  // The comparative clause is load-bearing. Most parties will accept a
-  // stabilisation force in the abstract; the disagreement is over whether it
-  // replaces the IDF or operates alongside it, and without "rather than
-  // remain with the IDF" almost every column collapses to A.
-  ["A16", "A", -1, "Security control in Gaza should pass to a force of Arab and Muslim states rather than remain with the IDF.", "NANNNDDDAAAAA"],
+  // The original justification is void and should not be quietly reused. A16
+  // was defended partly as the row that finally gave Together a security
+  // signal; under the corrected wording Together is "-", because Bennett's
+  // stated mechanism is Egyptian troops rather than Palestinian police and the
+  // list has resolved nothing. What survives is the substantive case: nothing
+  // else in the bank asks who polices Gaza.
+  ["A16", "A", -1, "Day-to-day security inside Gaza should pass to Palestinian police backed by an international force, rather than remain under permanent IDF control.", "D----DD-AAAAA"],
 
+  // Religious Zionism stays N here. Smotrich's August backing of the haredi
+  // exemption bill was tried as a D and reverted: it collapsed Religious
+  // Zionism onto Shas and UTJ at religion 100, and a party whose own base is
+  // reported as furious about that backing is not a party that has adopted the
+  // haredi position on service. See the note.
   ["B1", "B", -1, "Haredi yeshiva students should be subject to the military draft on the same terms as other citizens.", "DAADDNNAAA---"],
   ["B2", "B", -1, "Public transport should operate on Shabbat in municipalities that want it.", "DANDDDDAAN-A-"],
   ["B3", "B", -1, "State funding for yeshivot should be conditional on teaching the core curriculum (mathematics, English, science).", "NAADDDDAAA-A-"],
@@ -186,7 +203,7 @@ const RAW: Row[] = [
   ["C9", "C", 1, "Operational policing decisions should be insulated from ministerial direction.", "DAANNDDAAAAAA"],
 
   ["D1", "D", -1, "Israel should be defined first and foremost as a Jewish state, even where this limits full equality for non-Jewish citizens.", "ANDANAANDNDDD"],
-  ["D2", "D", 1, "Arab parties should be legitimate partners in a governing coalition.", "DNNDDDDDADAAA"],
+  ["D2", "D", 1, "Arab parties should be legitimate partners in a governing coalition.", "D-NDDDDDADAAA"],
   ["D3", "D", 1, "The Nation-State Basic Law should be amended to add a clause guaranteeing equality.", "DNNDDDDDANAAA"],
   ["D4", "D", 1, "Government investment in Arab towns should be substantially increased and insulated from coalition politics.", "NAANNDDNAAAAA"],
   ["D6", "D", -1, "The Law of Return's “grandchild clause” should be narrowed.", "NDDAAAADDD---"],
@@ -265,11 +282,7 @@ export const INFERRED: Partial<Record<PartyCode, string[]>> = {
   // Har Hamor stream's positions rather than stated by the party.
   NOAM: ["A4", "A13", "C1", "C3", "C5", "C6", "C8", "C9"],
   // Half the column. A1, B1, D2 and D7 were said outright; these were not.
-  // A16 is inference of the firmer kind: a launch speech promising Gaza
-  // emigration and a heavy territorial price for an enemy who starts a war is
-  // not compatible with handing security control to Arab states, but he was
-  // not asked and did not say.
-  AMY: ["A2", "A4", "A10", "A13", "A16"],
+  AMY: ["A2", "A4", "A10", "A13"],
 };
 
 /* --- §3.6 Unity (HaAchdut), the Erdan–Edelstein list ------------------------
@@ -378,7 +391,7 @@ const NOAM_POS: Record<string, Position> = {
  * economics were not addressed at all.
  */
 const AMY_POS: Record<string, Position> = {
-  A1: "D", A2: "A", A4: "N", A10: "D", A13: "A", A15: "A", A16: "D",
+  A1: "D", A2: "A", A4: "N", A10: "D", A13: "A", A15: "A",
   B1: "A",
   D2: "D", D7: "A",
 };
@@ -422,7 +435,7 @@ export interface RetiredItem extends Item {
 
 const RETIRED_ROWS: (readonly [Row, string, string])[] = [
   [
-    ["A11", "A", -1, "Israel should allow humanitarian aid into Gaza without limiting its volume.", "DNNNNDDNANAAA"],
+    ["A11", "A", -1, "Israel should allow humanitarian aid into Gaza without limiting its volume.", "DN-NNDDNANAAA"],
     "A5",
     "Identical contribution to the security axis as A5. A5 was kept because it has a succession plan — §5's durable replacement is drafted and one line swaps it in — where this item had none. The closest of the six calls, and the easiest to reverse.",
   ],

@@ -5,11 +5,11 @@ import {
 } from "./scoring";
 import {
   A5_ROWS, BLOCK_IDS, CROSS_CUTTING, F1, F2, G1, G2, G3, INFERRED, ITEMS, ITEMS_BY_BLOCK, JL_MERGE_FLAGS, PENDING, RETIRED,
-  type Item, type Position,
+  type Position,
 } from "../data/items";
 import { axisCollapses, identicalColumns, itemDiagnostics } from "./diagnostics";
 import { orderedBlocks, orderedItems } from "./shuffle";
-import { BALLOT_PARTIES, MATRIX_ORDER, PARTIES, type PartyCode } from "../data/parties";
+import { MATRIX_ORDER, PARTIES, type PartyCode } from "../data/parties";
 
 /** Answer every item exactly as a party would, at full intensity. */
 function answerAs(code: PartyCode): Answers {
@@ -330,6 +330,28 @@ describe("items revised after tester feedback", () => {
   });
 });
 
+/**
+ * A governing party polling out of the next Knesset is the case §4.8.1 exists
+ * for, and the easiest one to forget to flag — the threshold caveat is usually
+ * added for new or tiny lists, not for the one holding the finance ministry.
+ */
+describe("Religious Zionism's threshold caveat", () => {
+  it("carries a polling-based threshold flag despite governing", () => {
+    expect(PARTIES.RZ.ballot).toBe(true);
+    expect(PARTIES.RZ.belowThreshold).toBe(true);
+    expect(PARTIES.RZ.thresholdNote).toMatch(/polling/);
+    expect(score({}).ranked.map((r) => r.code)).toContain("RZ");
+  });
+
+  it("keeps it off the haredi religion coordinate", () => {
+    // B1 was briefly coded D here on Smotrich's backing of the exemption bill.
+    // It collapsed RZ onto Shas and UTJ at religion 100 and was reverted; this
+    // pins the outcome so the same change cannot land again unnoticed.
+    expect(ITEMS.find((i) => i.id === "B1")!.pos.RZ).toBe("N");
+    expect(partyAxesFor("RZ").value.B).not.toBe(partyAxesFor("SHS").value.B);
+  });
+});
+
 describe("Noam For Israel", () => {
   const item = (id: string) => ITEMS.find((i) => i.id === id)!;
 
@@ -406,59 +428,81 @@ describe("D8 — state programmes against Jewish–Arab relationships", () => {
 });
 
 /**
- * A16's justification is stated in the editorial notes as a number — the
- * highest discrimination in block A — so it should be checked rather than
- * asserted. An item added to close a gap that turns out to separate nobody is
- * an item to re-argue, not to keep because it was once justified.
+ * A16 was justified on two grounds and only one of them survived the August
+ * rewrite. The discrimination argument is gone — the corrected wording puts
+ * five columns at "-", and the item now separates fewer pairs than most of
+ * block A. What it is checked for here is the construct: it must ask about the
+ * institutional choice rather than about who the troops are, which is the
+ * §5 failure the first wording committed.
  */
-describe("Gaza security-control item (A16)", () => {
+describe("Gaza security-responsibility item (A16)", () => {
   const a16 = () => ITEMS.find((i) => i.id === "A16")!;
-
-  const discrimination = (item: Item) => {
-    let split = 0;
-    let pairs = 0;
-    for (let i = 0; i < BALLOT_PARTIES.length; i++) {
-      for (let j = i + 1; j < BALLOT_PARTIES.length; j++) {
-        const a = item.pos[BALLOT_PARTIES[i]];
-        const b = item.pos[BALLOT_PARTIES[j]];
-        if (a === "-" || b === "-") continue;
-        pairs++;
-        if (a !== b) split++;
-      }
-    }
-    return split / pairs;
-  };
 
   it("sits on the security axis with agreement as the dovish side", () => {
     expect(a16().block).toBe("A");
     expect(a16().sign).toBe(-1);
   });
 
-  it("is the most discriminating item in the security block", () => {
-    const rest = ITEMS.filter((i) => i.block === "A" && i.id !== "A16");
-    const best = Math.max(...rest.map(discrimination));
-    expect(discrimination(a16())).toBeGreaterThan(best);
-    // the claim the editorial note makes, to two figures
-    expect(Math.round(discrimination(a16()) * 100)).toBe(72);
+  /**
+   * The first wording asked about "a force of Arab and Muslim states", which
+   * named the troops by ethnicity and religion for a force that is neither.
+   * An identity cue changes what a respondent is answering.
+   */
+  it("names no national, ethnic or religious group", () => {
+    expect(a16().text).not.toMatch(/Arab|Muslim|Egypt|Jewish|Turk|Qatar/i);
   });
 
-  it("puts Together on the opposite side from Likud", () => {
-    expect(a16().pos.TOG).toBe("A");
-    expect(a16().pos.LIK).toBe("N");
+  it("asks about policing, not governance, so it is not a second A6", () => {
+    const a6 = ITEMS.find((i) => i.id === "A6")!;
+    const identical = MATRIX_ORDER.every((c) => a6.pos[c] === a16().pos[c]);
+    expect(identical, "A16 duplicates A6").toBe(false);
+    expect(a16().text).toMatch(/security|police/i);
   });
 
-  it("is not a restatement of the other Gaza items", () => {
-    for (const other of ["A5", "A6", "A10"]) {
-      const o = ITEMS.find((i) => i.id === other)!;
-      const identical = MATRIX_ORDER.every((c) => o.pos[c] === a16().pos[c]);
-      expect(identical, `A16 duplicates ${other}`).toBe(false);
-    }
-  });
-
-  it("takes no position for the three columns that have not addressed it", () => {
-    for (const c of ["UNI", "NOAM", "HPP"] as PartyCode[]) {
+  it("takes no position for the columns that have not addressed the structure", () => {
+    for (const c of ["TOG", "YSH", "UNI", "NOAM", "HPP", "AMY"] as PartyCode[]) {
       expect(a16().pos[c], c).toBe("-");
     }
+    // and does still separate the parties that have
+    expect(a16().pos.LIK).toBe("D");
+    expect(a16().pos.DEM).toBe("A");
+  });
+});
+
+/**
+ * Coverage answers "how completely is this party coded", which is a fact about
+ * the bank. Overlap answers "how much of what this respondent said was actually
+ * compared", which is a fact about the result on screen. The audit that
+ * prompted this pointed out that a party can pass the coverage floor and still
+ * be matched on almost nothing, and the two were indistinguishable.
+ */
+describe("effective overlap (§4.2)", () => {
+  it("reports the size of the comparison, not just the size of the column", () => {
+    const full = score(answerAs("LIK"));
+    expect(full.all.LIK.overlap).toBe(1);
+
+    // answer three items only, all of them ones Likud is coded on
+    const sparse: Answers = { A1: -2, A2: 2, A3: 2 };
+    const r = score(sparse);
+    expect(r.all.LIK.coverage).toBe(1);        // the column is still fully coded
+    expect(r.all.LIK.scoredItems).toBe(3);     // but the comparison is three items
+    expect(r.all.LIK.overlap).toBe(1);
+    expect(Math.round(r.all.LIK.weighted)).toBeGreaterThan(0);
+  });
+
+  it("falls when the respondent answers items the party has no position on", () => {
+    // A16 is "-" for Together; A9 and A10 are "-" for Yashar
+    const answers: Answers = { A16: 2, A9: 2, A10: 2, A1: 2 };
+    const r = score(answers);
+    expect(r.answeredCount).toBe(4);
+    expect(r.all.YSH.scoredItems).toBe(1);     // only A1 is both answered and coded
+    expect(r.all.YSH.overlap).toBeCloseTo(0.25);
+    expect(r.all.LIK.overlap).toBe(1);         // Likud is coded on all four
+  });
+
+  it("is zero rather than NaN when nothing is answered", () => {
+    const r = score({});
+    for (const row of r.ranked) expect(row.overlap, row.code).toBe(0);
   });
 });
 
@@ -646,8 +690,8 @@ describe("party match (§4.2)", () => {
     expect(r.lowCoverage.map((x) => x.code)).toContain("AMY");
     expect(r.ranked.map((x) => x.code)).not.toContain("AMY");
     expect(r.all.AMY.coverage).toBeLessThan(COVERAGE_FLOOR);
-    // ten cells, and block C deliberately empty — a direction is not a mechanism
-    expect(ITEMS.filter((x) => x.pos.AMY !== "-")).toHaveLength(10);
+    // nine cells, and block C deliberately empty — a direction is not a mechanism
+    expect(ITEMS.filter((x) => x.pos.AMY !== "-")).toHaveLength(9);
     expect(ITEMS.filter((x) => x.block === "C" && x.pos.AMY !== "-")).toHaveLength(0);
   });
 

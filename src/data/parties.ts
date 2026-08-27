@@ -46,11 +46,11 @@ export const PARTIES: Record<PartyCode, Party> = {
   },
   TOG: {
     name: "Together", lead: "Bennett (Lapid #2)", color: "#0E8A7D", bloc: "anti", ballot: true,
-    note: "Yesh Atid + Bennett merger, April 2026. No published platform — the highest-risk column in the bank.",
+    note: "Yesh Atid + Bennett merger, April 2026. A platform has since been published at be-yahad.org.il/en/plans. Its education and ageing sections have been read in and confirm B3; every other cell still rests on Yesh Atid's prior platform and Bennett's public statements. The highest-risk column in the bank, and now the most fixable.",
   },
   YSH: {
     name: "Yashar", lead: "Eisenkot", color: "#6E7B8B", bloc: "anti", ballot: true,
-    note: "Deliberately undefined platform. Many N codings mean 'genuinely unstated' rather than 'centrist'.",
+    note: "Deliberately undefined platform. The four cells where N was standing in for an unknown — A5, A6, A9 and A10 — are now '-', so its coverage reads 92% rather than a false 100%. Where N remains it is meant to say the party is genuinely equivocal.",
   },
   SHS: { name: "Shas", lead: "Deri", color: "#5B3E96", bloc: "pro", ballot: true },
   UTJ: {
@@ -58,7 +58,12 @@ export const PARTIES: Record<PartyCode, Party> = {
     note: "Degel HaTorah + Agudat Yisrael.",
   },
   OTZ: { name: "Otzma Yehudit", lead: "Ben Gvir", color: "#6E1F16", bloc: "pro", ballot: true },
-  RZ: { name: "Religious Zionism", lead: "Smotrich", color: "#C07C13", bloc: "pro", ballot: true },
+  RZ: {
+    name: "Religious Zionism", lead: "Smotrich", color: "#C07C13", bloc: "pro", ballot: true,
+    belowThreshold: true,
+    thresholdNote: "polling below the 3.25% threshold",
+    note: "Reported in August as repeatedly failing to cross the threshold in polling, which is a change in this registry and not in the party: it holds the finance ministry and sweeping West Bank powers, and a governing party polling itself out of the next Knesset is the sort of thing a results page should say plainly rather than leave a user to discover on election night.",
+  },
   YB: { name: "Yisrael Beiteinu", lead: "Liberman", color: "#3B8FC4", bloc: "anti", ballot: true },
   DEM: {
     name: "The Democrats", lead: "Golan", color: "#D8456B", bloc: "anti", ballot: true,
@@ -96,7 +101,7 @@ export const PARTIES: Record<PartyCode, Party> = {
     belowThreshold: true,
     // Not a polling claim: it is new enough that no polling exists to cite.
     thresholdNote: "a new faction with no polling on record",
-    note: "Confirmed running, which settles whether the column belongs in the bank and nothing else — it is not polling, so the threshold risk stands, and the codings still rest on press reporting rather than a published platform. Moti Leitner, former Mayor of Beit Shemesh. An ultra-Orthodox faction campaigning for conscription, core-curriculum education and economic reform within haredi society — the first haredi column in the bank on the pro-conscription side. Its distinctive position is enlistment by incentive rather than by sanction: it wants state funding restructured to reward service and workforce participation, and argues that external coercion fails where communal reform can work. Coded on three stated planks plus the religion-and-state positions its own framing makes near-certain; security, institutions and identity are left unstated. 31% coverage, so it is suppressed from the ranking and the grid. Running is settled; coalition posture is not, hence unaligned.",
+    note: "Confirmed running, which settles whether the column belongs in the bank and nothing else — it is not polling, so the threshold risk stands, and the codings still rest on press reporting rather than a published platform. Moti Leitner, deputy mayor of Beit Shemesh. An ultra-Orthodox faction campaigning for conscription, core-curriculum education and economic reform within haredi society — the first haredi column in the bank on the pro-conscription side. Its distinctive position is enlistment by incentive rather than by sanction: it wants state funding restructured to reward service and workforce participation, and argues that external coercion fails where communal reform can work. Coded on three stated planks plus the religion-and-state positions its own framing makes near-certain; security, institutions and identity are left unstated. 30% coverage, so it is suppressed from the ranking and the grid. Running is settled; coalition posture is not, hence unaligned.",
   },
   AMY: {
     name: "People of Israel", lead: "Winter", color: "#8C5A2B",
@@ -112,7 +117,7 @@ export const PARTIES: Record<PartyCode, Party> = {
   },
   BAL: {
     name: "Balad", lead: "Shehadeh", color: "#7D6608", bloc: "non", ballot: false,
-    note: "Component of the Joint List, settled now that the joint slate is confirmed. Takes no position on intra-Jewish religion-and-state questions, and with the alliance fixed that silence is permanently absorbed into the merged column rather than provisionally so.",
+    note: "Component of the Joint List, settled now that the joint slate is confirmed. Coded '-' on the specific intra-Jewish religion-and-state mechanisms — the Rabbinate's authority, Shabbat, the egalitarian plaza — which is narrower than saying it has no religion-and-state position. It has a general commitment to separating religion from the state; what it has not done is take sides on how Jewish religious authority should be organised within Israel. With the alliance fixed that silence is permanently absorbed into the merged column rather than provisionally so.",
   },
 };
 
