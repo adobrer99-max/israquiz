@@ -58,7 +58,12 @@ export const PARTIES: Record<PartyCode, Party> = {
     note: "Degel HaTorah + Agudat Yisrael.",
   },
   OTZ: { name: "Otzma Yehudit", lead: "Ben Gvir", color: "#6E1F16", bloc: "pro", ballot: true },
-  RZ: { name: "Religious Zionism", lead: "Smotrich", color: "#C07C13", bloc: "pro", ballot: true },
+  RZ: {
+    name: "Religious Zionism", lead: "Smotrich", color: "#C07C13", bloc: "pro", ballot: true,
+    belowThreshold: true,
+    thresholdNote: "polling below the 3.25% threshold",
+    note: "Reported in August as repeatedly failing to cross the threshold in polling, which is a change in this registry and not in the party: it holds the finance ministry and sweeping West Bank powers, and a governing party polling itself out of the next Knesset is the sort of thing a results page should say plainly rather than leave a user to discover on election night.",
+  },
   YB: { name: "Yisrael Beiteinu", lead: "Liberman", color: "#3B8FC4", bloc: "anti", ballot: true },
   DEM: {
     name: "The Democrats", lead: "Golan", color: "#D8456B", bloc: "anti", ballot: true,

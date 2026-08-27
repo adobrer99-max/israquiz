@@ -330,6 +330,28 @@ describe("items revised after tester feedback", () => {
   });
 });
 
+/**
+ * A governing party polling out of the next Knesset is the case §4.8.1 exists
+ * for, and the easiest one to forget to flag — the threshold caveat is usually
+ * added for new or tiny lists, not for the one holding the finance ministry.
+ */
+describe("Religious Zionism's threshold caveat", () => {
+  it("carries a polling-based threshold flag despite governing", () => {
+    expect(PARTIES.RZ.ballot).toBe(true);
+    expect(PARTIES.RZ.belowThreshold).toBe(true);
+    expect(PARTIES.RZ.thresholdNote).toMatch(/polling/);
+    expect(score({}).ranked.map((r) => r.code)).toContain("RZ");
+  });
+
+  it("keeps it off the haredi religion coordinate", () => {
+    // B1 was briefly coded D here on Smotrich's backing of the exemption bill.
+    // It collapsed RZ onto Shas and UTJ at religion 100 and was reverted; this
+    // pins the outcome so the same change cannot land again unnoticed.
+    expect(ITEMS.find((i) => i.id === "B1")!.pos.RZ).toBe("N");
+    expect(partyAxesFor("RZ").value.B).not.toBe(partyAxesFor("SHS").value.B);
+  });
+});
+
 describe("Noam For Israel", () => {
   const item = (id: string) => ITEMS.find((i) => i.id === id)!;
 

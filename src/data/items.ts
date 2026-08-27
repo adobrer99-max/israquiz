@@ -146,6 +146,11 @@ const RAW: Row[] = [
   // remain with the IDF" almost every column collapses to A.
   ["A16", "A", -1, "Security control in Gaza should pass to a force of Arab and Muslim states rather than remain with the IDF.", "NANNNDDDAAAAA"],
 
+  // Religious Zionism stays N here. Smotrich's August backing of the haredi
+  // exemption bill was tried as a D and reverted: it collapsed Religious
+  // Zionism onto Shas and UTJ at religion 100, and a party whose own base is
+  // reported as furious about that backing is not a party that has adopted the
+  // haredi position on service. See the note.
   ["B1", "B", -1, "Haredi yeshiva students should be subject to the military draft on the same terms as other citizens.", "DAADDNNAAA---"],
   ["B2", "B", -1, "Public transport should operate on Shabbat in municipalities that want it.", "DANDDDDAAN-A-"],
   ["B3", "B", -1, "State funding for yeshivot should be conditional on teaching the core curriculum (mathematics, English, science).", "NAADDDDAAA-A-"],

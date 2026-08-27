@@ -44,7 +44,7 @@ export const CODING_NOTES: Note[] = [
   },
   {
     items: "B1 (Otzma Yehudit, Religious Zionism)",
-    issue: "Both have voiced support for haredi conscription in principle while voting to protect exemptions. Coded N; defensible either way.",
+    issue: "Both are coded N because both voiced support for haredi conscription in principle while voting to protect exemptions. August reporting tested that. Smotrich is described as backing the ultra-Orthodox campaign to enshrine mass exemption in legislation, to the reported disillusionment of national-religious voters, and Religious Zionism was moved to D on that basis. The change was reverted after the §4.6 clustering check failed: coding it D makes Religious Zionism agree with the haredi parties on all fourteen religion items, putting it at religion 100 alongside Shas and United Torah Judaism and drawing all three on one point of the grid. A religious-Zionist party is not a haredi one, and the collapse was the instrument saying so. The better reading is the one §7 already applies to Likud on A3 and A4: backing an exemption bill his own base is angry about is coalition management, and the party's stated position on service has not moved. N survives, now with evidence considered rather than merely asserted."
   },
   {
     items: "D2 (Together)",
@@ -244,7 +244,7 @@ export const INSTRUMENT_NOTES: Note[] = [
   },
   {
     items: "B14 · women in combat roles, and Otzma Yehudit's N",
-    issue: "The item exists to separate Religious Zionism from Otzma Yehudit, which nothing else in the bank did. Religious Zionism and its rabbis have campaigned directly and repeatedly against expanding women's combat service; Otzma Yehudit, whose politics runs through policing and deterrence rather than rabbinic authority, has not made it a cause. Otzma is therefore coded N. That is the cell doing all the discriminating work here, which makes it the one to check hardest against the filed list — if it should read D, the item stops separating them and should be reconsidered.",
+    issue: "The item exists to separate Religious Zionism from Otzma Yehudit, which nothing else in the bank does. Religious Zionism and its rabbis have campaigned directly and repeatedly against expanding women's combat service; Otzma Yehudit, whose politics runs through policing and deterrence rather than rabbinic authority, has not made it a cause. Otzma is therefore coded N. That is the cell doing all the discriminating work here, which makes it the one to check hardest against the filed list — if it should read D, the item stops separating them and should be reconsidered.",
   },
   {
     items: "B14 · why it is not a security item",
