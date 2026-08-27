@@ -146,9 +146,10 @@ export function Diagnostics() {
         Written and coded, waiting on the next bank revision. Adding an item mid-cycle is expensive — it
         shifts every party's coverage denominator, ends every saved session, and re-opens the clustering
         check — so the bar is that the bank is silent on something voters are actually being asked to choose
-        between. Two items cleared that bar in August and went in — A15 on Gaza emigration and A16 on who
-        holds security control there. This one has not, and two mid-cycle additions in a month is already
-        more than the bar was meant to admit.
+        between. Two items cleared that bar in August and went in — A15 on Gaza emigration and A16 on who polices
+        Gaza after the war. This one has not, and two mid-cycle additions in a month is already more than
+        the bar was meant to admit — a judgement the August audit sharpened, since A16 then had to be
+        rewritten once its first wording was found to misdescribe the choice.
       </p>
       {PENDING.map((p) => (
         <div className="row" key={p.item.id} style={{ display: "block" }}>

@@ -235,12 +235,12 @@ Under **Diagnostics** in the app, recorded rather than smoothed over:
 2. **Institutions still collapses three ways, twice.** Likud with Otzma Yehudit and Religious Zionism at
    one pole; The Democrats with Ra'am and the Joint List at the other. Both look real rather than
    artefactual, and institutions is a reported bar rather than a grid axis.
-3. **Yashar and Blue & White share a security coordinate** at −13.3, a collision created in August when
-   Eisenkot's "delusional" remark moved Yashar to D on A1. Two former chiefs of staff running
-   anti-Netanyahu lists landing on the same point is a defensible reading rather than an artefact, but
-   unlike the Democrats–Ra'am pair above they are only 36 points apart on the other grid axis, so they
-   plot near each other rather than merely sharing a number. Left as a finding for the September
-   re-verification to resolve or confirm.
+3. **Yashar's security position now rests on ten items, not fifteen.** A5, A6, A9 and A10 became `-`
+   in the August audit pass, and A1 became D on Eisenkot's own words, which moved the party from −13.3
+   to −20.0 with axis confidence of 0.67. It briefly shared a coordinate with Blue & White; it no
+   longer does, and the pair are now 6.7 points apart on security and 36 on religion. The finding to
+   carry forward is not the collision but the confidence: a third of this party's security axis is
+   built from nothing, and the marker is drawn low-confidence for that reason.
 4. **Yashar plots at −60 on religion** rather than near the origin. This is reported as a finding, not
    corrected: the party has published no platform, and its five coded religion-and-state cells all lean
    secular while the other five are genuinely unstated. Whether that silence is strategy or an absence of
