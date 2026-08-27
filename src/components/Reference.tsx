@@ -169,7 +169,7 @@ export function Diagnostics() {
 
       <h3 style={{ margin: "22px 0 6px" }}>Coverage</h3>
       <p className="small muted">
-        Share of the 50 statements on which each party has a coded position. Below 70% a party is suppressed
+        Share of the 50 statements on which each party has a coded position — a fact about this table, not about your result. Next to each match you will also see the number of shared answers it was computed from, which is the size of the comparison actually made. Below 70% coverage a party is suppressed
         from the ranking and shown separately.
       </p>
       {coverage.map((r) => (

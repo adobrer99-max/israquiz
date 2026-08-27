@@ -469,6 +469,43 @@ describe("Gaza security-responsibility item (A16)", () => {
   });
 });
 
+/**
+ * Coverage answers "how completely is this party coded", which is a fact about
+ * the bank. Overlap answers "how much of what this respondent said was actually
+ * compared", which is a fact about the result on screen. The audit that
+ * prompted this pointed out that a party can pass the coverage floor and still
+ * be matched on almost nothing, and the two were indistinguishable.
+ */
+describe("effective overlap (§4.2)", () => {
+  it("reports the size of the comparison, not just the size of the column", () => {
+    const full = score(answerAs("LIK"));
+    expect(full.all.LIK.overlap).toBe(1);
+
+    // answer three items only, all of them ones Likud is coded on
+    const sparse: Answers = { A1: -2, A2: 2, A3: 2 };
+    const r = score(sparse);
+    expect(r.all.LIK.coverage).toBe(1);        // the column is still fully coded
+    expect(r.all.LIK.scoredItems).toBe(3);     // but the comparison is three items
+    expect(r.all.LIK.overlap).toBe(1);
+    expect(Math.round(r.all.LIK.weighted)).toBeGreaterThan(0);
+  });
+
+  it("falls when the respondent answers items the party has no position on", () => {
+    // A16 is "-" for Together; A9 and A10 are "-" for Yashar
+    const answers: Answers = { A16: 2, A9: 2, A10: 2, A1: 2 };
+    const r = score(answers);
+    expect(r.answeredCount).toBe(4);
+    expect(r.all.YSH.scoredItems).toBe(1);     // only A1 is both answered and coded
+    expect(r.all.YSH.overlap).toBeCloseTo(0.25);
+    expect(r.all.LIK.overlap).toBe(1);         // Likud is coded on all four
+  });
+
+  it("is zero rather than NaN when nothing is answered", () => {
+    const r = score({});
+    for (const row of r.ranked) expect(row.overlap, row.code).toBe(0);
+  });
+});
+
 describe("chametz item (B12)", () => {
   const b12 = () => ITEMS.find((i) => i.id === "B12")!;
 

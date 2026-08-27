@@ -280,6 +280,37 @@ things that changed while live.
 
 Both are read-only additions to a static site and need no backend.
 
+## Open after the August audit
+
+An external methodology review in August produced eight findings. Five are acted
+on in the code and history; three are recorded here because they are real and
+not yet done.
+
+**Per-cell evidence provenance is not machine-readable.** A coding is one
+character. Whether it came from a published platform, a direct quotation, a
+leadership record, a component merge or a press reconstruction lives in prose in
+`src/data/editorial.ts`, which makes the transparency auditable by a reader and
+not by the program. `INFERRED` and `JL_MERGE_FLAGS` are partial versions of the
+thing that is wanted, which is a position carrying `evidence`, `confidence`,
+`source` and a date. With that, questions like "which rankings depend on
+low-confidence evidence" and "which codings are older than the last platform"
+become queries instead of readings. This is the v1 task.
+
+**A hard overlap gate is not implemented, only the disclosure.** Every match now
+reports the number of shared answers it was computed from, and a caution appears
+when the top match rests on fewer than 20 items or less than 60% of what the
+respondent answered. Whether a party should be *removed* from the ranking on
+those grounds is a user-visible design decision with real costs, and the
+thresholds to use are exactly the sort of parameter that should be set against
+respondent data rather than guessed.
+
+**Item–axis correlation has never been tested.** Several items were added or
+placed because of what they did to party positions, which makes party placement
+both input and output — see the note on item selection under Diagnostics. A13's
+loading on the security axis is the specific open case. Resolving it needs real
+respondent answers, which is one of the things the collection endpoint is for,
+and no further argument substitutes for it.
+
 ## Before this is published
 
 The spec's §8 checklist still applies in full. In particular: re-verify every coding against the platforms

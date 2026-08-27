@@ -82,6 +82,7 @@ function MatchRow({ r, i, value }: { r: PartyResult; i: number; value: number })
           {r.lead}
           {r.belowThreshold && ` · ${r.thresholdNote ?? `polling below the ${ELECTION.threshold}% threshold`}`}
           {r.coverage < 1 && ` · ${Math.round(r.coverage * 100)}% coded`}
+          {` · from ${r.scoredItems} shared answer${r.scoredItems === 1 ? "" : "s"}`}
         </span>
       </span>
       <span className="pct">{Math.round(value)}%</span>
@@ -140,6 +141,14 @@ export function Results({
 
   const tight = list.length > 2 && Math.abs(list[0][key] - list[2][key]) < NOISE_BAND;
   const disagree = rankingsDisagree(result);
+  /**
+   * A thin comparison, by either measure: too few shared items for the
+   * percentage to be stable, or a top match built from a small slice of what
+   * the respondent actually answered. Both produce a confident-looking number
+   * over almost no evidence, which is the one failure mode the coverage floor
+   * does not catch — it describes the bank, not this respondent's comparison.
+   */
+  const thinOverlap = !!top && (top.scoredItems < 20 || top.overlap < 0.6);
   const reason = top ? reasonLine(top) : null;
 
   const blocOrder = [...BLOC_ROWS].sort((a, b) => result.blocs[b[0]] - result.blocs[a[0]]);
@@ -217,6 +226,15 @@ export function Results({
           Your closest match is at risk of the {ELECTION.threshold}% electoral threshold
           {top.thresholdNote ? ` — ${top.thresholdNote}` : ""}. A party that falls short takes no seats and
           its votes are discarded, which is worth knowing before the percentage above becomes advice.
+        </p>
+      )}
+      {thinOverlap && (
+        <p className="small" style={{ marginTop: 8 }}>
+          This match rests on {top.scoredItems} statement{top.scoredItems === 1 ? "" : "s"} — the ones you
+          answered that {top.name} also has a recorded position on. Coverage above describes how completely
+          each party is coded; this is the size of the comparison actually made with your answers. A
+          percentage computed over a handful of items moves a long way on one more answer, so treat the
+          order as provisional rather than the gap between parties as meaningful.
         </p>
       )}
       {disagree && (

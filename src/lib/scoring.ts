@@ -48,6 +48,14 @@ export interface PartyResult {
   coverage: number;
   /** items actually used: coded AND answered */
   scoredItems: number;
+  /**
+   * scoredItems as a share of everything the respondent answered. `coverage`
+   * describes the bank; this describes the comparison actually made. A party
+   * can be 90% coded and still be matched on a handful of items if the
+   * respondent skipped the ones it holds positions on, and without this the
+   * two cases are indistinguishable on the results page.
+   */
+  overlap: number;
   /** per-block agreement %, used for the one-line reason in §4.8.3 */
   byBlock: Record<BlockId, { pct: number; n: number }>;
 }
@@ -153,6 +161,13 @@ export function partyAxesFor(code: PartyCode): AxisScores {
 export function score(answers: Answers, weights: Weights = DEFAULT_WEIGHTS): ScoreResult {
   const codes = [...BALLOT_PARTIES, ...COMPONENT_PARTIES];
 
+  let answered = 0, skipped = 0;
+  for (const it of ITEMS) {
+    const u = answers[it.id];
+    if (u === null) skipped++;
+    else if (u !== undefined) answered++;
+  }
+
   const all = {} as Record<PartyCode, PartyResult>;
   const partyAxes = {} as Record<PartyCode, AxisScores>;
 
@@ -170,6 +185,7 @@ export function score(answers: Answers, weights: Weights = DEFAULT_WEIGHTS): Sco
       thresholdNote: p.thresholdNote,
       note: p.note,
       ...m,
+      overlap: answered ? m.scoredItems / answered : 0,
     };
     partyAxes[code] = partyAxesFor(code);
   }
@@ -185,13 +201,6 @@ export function score(answers: Answers, weights: Weights = DEFAULT_WEIGHTS): Sco
     const set = ranked.filter((r) => r.bloc === which);
     return set.length ? set.reduce((s, r) => s + r.weighted, 0) / set.length : 0;
   };
-
-  let answered = 0, skipped = 0;
-  for (const it of ITEMS) {
-    const u = answers[it.id];
-    if (u === null) skipped++;
-    else if (u !== undefined) answered++;
-  }
 
   return {
     ranked,
