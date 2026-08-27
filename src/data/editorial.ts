@@ -27,7 +27,7 @@ export const CODING_NOTES: Note[] = [
   {
     items: "All Together rows",
     severe: true,
-    issue: "Together has published no platform. Codings derive from Yesh Atid's prior platform plus Bennett's public statements, and the two diverge on religion-state and settlements. The highest-risk column in the bank.",
+    issue: "Together has published no platform. Codings derive from Yesh Atid's prior platform plus Bennett's public statements, and the two diverge — on religion-state and settlements, and, as of the August reporting on Bennett's security thinking, on the Palestinian state and the Palestinian Authority as well. That is the whole security core of the bank, so the divergence can no longer be described as confined to two blocks. The column is nonetheless coded on every item and therefore ranked in full, which is the exposure: the riskiest column in the bank is not the one the coverage floor suppresses.",
   },
   {
     items: "All Yashar rows",
@@ -49,6 +49,15 @@ export const CODING_NOTES: Note[] = [
   {
     items: "D2 (Together)",
     issue: "Bennett governed with Ra'am in 2021 and has since ruled it out; Lapid has not. Coded N for the merged list.",
+  },
+  {
+    items: "A1, A6, A9 (Together)",
+    severe: true,
+    issue: "August press analysis of Bennett's security thinking is the fullest account of a Together position yet published, and it is still an account of Bennett rather than of the list — written largely in the subjunctive, as what he would say, with few direct quotations. Read as evidence about Bennett it confirms A8 and A10 firmly: he treats settler violence as a strategic cost and locates his diplomacy in Cairo rather than in talks with Hamas. It puts pressure on two other cells without settling either. A6 is coded D, but he is reported as willing to give the Palestinian Authority some role in Gaza while declining a full PA return — which is neither the item's agreement nor a flat refusal. A9 is coded A, and he is reported as responding to an American veto on overt strikes by shifting the Iran file back to the Mossad, which is the tactic of someone working inside the constraint rather than through it. Neither is changed here, for the reason the D2 note already gives: on exactly these questions Bennett and Lapid have opposite public records, Lapid having endorsed both a Palestinian state and a PA return to Gaza, and the merge rule resolves a genuine divergence to the less committal value. Coding A1 and A6 from Bennett alone would silently make the merged column mean its leader. Whether the list has actually adopted his line is the single most valuable thing a Together platform — or a Together tester — could settle.",
+  },
+  {
+    items: "Gaza block (no item)",
+    issue: "The bank asks about a Palestinian state, a PA role, sovereignty, resettlement, emigration, the disarmament plan and indirect talks with Hamas, and about none of the regional-force questions that 2026 actually turns on: an Arab or Muslim stabilisation force, Egyptian troops, who polices Gaza if neither Israel nor Hamas does. That gap is why the August reporting on Bennett moves so few cells — his stated differentiation from Netanyahu is almost entirely about a mechanism the instrument never asks about, so a respondent who agrees with him has no row on which to say so. Drafting it means coding thirteen columns from inference on a question most parties have addressed only glancingly, which is why it is recorded as a gap rather than added as an item.",
   },
   {
     items: "Religion-and-state block (Ra'am, Balad)",
