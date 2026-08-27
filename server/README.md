@@ -30,7 +30,7 @@ repository **variable**, not a repository secret:
 ```
 Settings → Secrets and variables → Actions → Variables → New variable
   Name:  COLLECT_ENDPOINT
-  Value: https://israquiz-collect.<your-subdomain>.workers.dev
+  Value: https://israquiz-collect.israquiz.workers.dev
 ```
 
 The deploy workflow passes it to the build as `VITE_COLLECT_ENDPOINT`. Delete
@@ -117,8 +117,17 @@ npx wrangler d1 execute israquiz --local --file=./schema.sql
 npx wrangler dev --local --port 8799
 ```
 
-Then POST a payload the app actually produces, rather than one written by hand —
-`buildSubmission` in `src/lib/collect.ts` is the source of truth for the shape:
+Then POST a payload the app actually produces, rather than one written by hand.
+`buildSubmission` in `src/lib/collect.ts` is the source of truth for the shape,
+and this runs it over synthetic answers to emit one:
+
+```bash
+npx vite-node scripts/smoke-payload.ts     # writes payload.json, from the repo root
+```
+
+Its response id is the fixed `deadbeef-0000-4000-8000-000000000001`, so the
+withdrawal that deletes the test row can be copied from below without first
+going to look up what was sent.
 
 ```bash
 curl -X POST http://127.0.0.1:8799/ \
@@ -163,11 +172,11 @@ Watch the logs in one shell:
 npx wrangler tail
 ```
 
-In another, send a real submission — one built by `buildSubmission`, not written
-by hand, for the same reason as the local check:
+In another, send a real submission — `scripts/smoke-payload.ts` again, not JSON
+written by hand, for the same reason as the local check:
 
 ```bash
-ENDPOINT=https://israquiz-collect.<your-subdomain>.workers.dev
+ENDPOINT=https://israquiz-collect.israquiz.workers.dev
 curl -i -X POST "$ENDPOINT" \
   -H 'content-type: application/json' \
   -H 'origin: https://adobrer99-max.github.io' \
@@ -195,7 +204,7 @@ re-run the count, expecting zero:
 ```bash
 curl -s -X POST "$ENDPOINT" -H 'content-type: application/json' \
   -H 'origin: https://adobrer99-max.github.io' \
-  -d '{"format":"israquiz.withdrawal.v1","responseId":"<the id you sent>"}'
+  -d '{"format":"israquiz.withdrawal.v1","responseId":"deadbeef-0000-4000-8000-000000000001"}'
 npx wrangler d1 execute israquiz --remote --command "SELECT COUNT(*) FROM responses;"
 ```
 
@@ -216,7 +225,7 @@ allowlist.
 // submission
 {
   "format": "israquiz.submission.v1",
-  "instrument": { "version": "v0.2 — preview", "itemCount": 49, "a5Variant": "live", … },
+  "instrument": { "version": "v0.2 — preview", "itemCount": 50, "a5Variant": "live", … },
   "consent":    { "version": "consent-2026-08-10", "at": "…", "demographics": false },
   "responses":  { "responseId": "…", "answers": {…}, "weights": {…}, … },
   "demographics": null            // or { "responseId": "…", "D0": "Israel", … }

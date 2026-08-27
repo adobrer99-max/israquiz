@@ -22,9 +22,13 @@ import type { Demographics } from "../data/demographics";
  * index addresses a 48-item one. Every saved session is a session that never
  * saw A15, and resuming one would silently produce a result computed over a
  * different questionnaire from the one it started.
+ *
+ * v5 retires v4 on the same grounds for A16. Two bank additions inside a month
+ * is more churn than §8.10 anticipated, and the September revision should be
+ * the last one before the election that does this to a saved session.
  */
-const SESSION_KEY = "israquiz.session.v4";
-const DEMO_KEY = "israquiz.demographics.v4";
+const SESSION_KEY = "israquiz.session.v5";
+const DEMO_KEY = "israquiz.demographics.v5";
 
 /**
  * Superseded keys, deleted on first load. Leaving them would strand answer and
@@ -37,6 +41,8 @@ const LEGACY_KEYS = [
   "israquiz.demographics.v2",
   "israquiz.session.v3",
   "israquiz.demographics.v3",
+  "israquiz.session.v4",
+  "israquiz.demographics.v4",
 ];
 
 export interface Session {

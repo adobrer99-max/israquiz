@@ -27,7 +27,7 @@ export const CODING_NOTES: Note[] = [
   {
     items: "All Together rows",
     severe: true,
-    issue: "Together has published no platform. Codings derive from Yesh Atid's prior platform plus Bennett's public statements, and the two diverge on religion-state and settlements. The highest-risk column in the bank.",
+    issue: "Together has published no platform. Codings derive from Yesh Atid's prior platform plus Bennett's public statements, and the two diverge — on religion-state and settlements, and, as of the August reporting on Bennett's security thinking, on the Palestinian state and the Palestinian Authority as well. That is the whole security core of the bank, so the divergence can no longer be described as confined to two blocks. The column is nonetheless coded on every item and therefore ranked in full, which is the exposure: the riskiest column in the bank is not the one the coverage floor suppresses.",
   },
   {
     items: "All Yashar rows",
@@ -51,6 +51,20 @@ export const CODING_NOTES: Note[] = [
     issue: "Bennett governed with Ra'am in 2021 and has since ruled it out; Lapid has not. Coded N for the merged list.",
   },
   {
+    items: "A1, A6, A9 (Together)",
+    severe: true,
+    issue: "August press analysis of Bennett's security thinking is the fullest account of a Together position yet published, and it is still an account of Bennett rather than of the list — written largely in the subjunctive, as what he would say, with few direct quotations. Read as evidence about Bennett it confirms A8 and A10 firmly: he treats settler violence as a strategic cost and locates his diplomacy in Cairo rather than in talks with Hamas. It puts pressure on two other cells without settling either. A6 is coded D, but he is reported as willing to give the Palestinian Authority some role in Gaza while declining a full PA return — which is neither the item's agreement nor a flat refusal. A9 is coded A, and he is reported as responding to an American veto on overt strikes by shifting the Iran file back to the Mossad, which is the tactic of someone working inside the constraint rather than through it. Neither is changed here, for the reason the D2 note already gives: on exactly these questions Bennett and Lapid have opposite public records, Lapid having endorsed both a Palestinian state and a PA return to Gaza, and the merge rule resolves a genuine divergence to the less committal value. Coding A1 and A6 from Bennett alone would silently make the merged column mean its leader. Whether the list has actually adopted his line is the single most valuable thing a Together platform — or a Together tester — could settle.",
+  },
+  {
+    items: "A16 (all columns)",
+    severe: true,
+    issue: "Added live in August to close a gap the reporting on Bennett exposed: every other Gaza item asked about status, territory or talks, and none asked who actually polices the place, which is the mechanism his whole differentiation from Netanyahu rests on. Until this row a respondent who agreed with him had nowhere to say so. It earns the slot on the numbers as well: it separates 72% of codeable party pairs, the highest discrimination of any security item, just above A9's 71%. It separates no pair that nothing else separates, which is the ordinary case in a bank this size and not a mark against it. Considered and rejected: asking directly whether the respondent supports the Trump plan. Naming a person makes an item measure opinion of that person, which is why F1 keeps Netanyahu out of the scoring; the plan bundles six commitments, which fails §5's one-question test; and it would have coded Bennett N, returning nothing for the party that prompted it. The comparative clause carries the item — nearly every column would accept a stabilisation force stated in the abstract, and the disagreement is only over whether it replaces the IDF. Adding it mid-cycle cost a storage-key bump to v5, the second in a month, which ends every session saved before it. Denominators moved from 49 to 50 and no party crossed the 70% floor; Noam at 76% and Ra'am at 78% are the closest.",
+  },
+  {
+    items: "A16 (Likud, Yisrael Beiteinu)",
+    issue: "The two least secure cells in the row, and both are readings rather than quotations. Likud is coded N because it has accepted an international force in principle through the Board of Peace framework while insisting on Israeli security control and freedom of action — D would assert an outright rejection the acceptance contradicts, and A would ignore everything it says about control. Yisrael Beiteinu is coded D on Liberman's standing argument that international forces do not fight, which he has made about UNIFIL for two decades and has not made about this force specifically. Neither party has been asked the question in these terms. If a validation tester declaring either party breaks with the coding here, that is a hit worth acting on rather than explaining away.",
+  },
+  {
     items: "Religion-and-state block (Ra'am, Balad)",
     issue: "Coded as no position on intra-Jewish religion-and-state questions. Correct, but it thins Ra'am's religion axis to three items — which is why its grid marker is drawn as low-confidence. Balad's silence is absorbed by the Joint List merge, which is that rule's single largest effect.",
   },
@@ -66,7 +80,7 @@ export const CODING_NOTES: Note[] = [
   {
     items: "All Unity (HaAchdut) rows",
     severe: true,
-    issue: "Named Unity — HaAchdut in Hebrew — in August, having been launched on 6 August as an unnamed Erdan–Edelstein list. Naming a party does not give it a platform: 65% of items are still unstated (32 of 49), and most of the sixteen coded cells are inferred rather than stated. To be re-coded entirely once a platform exists. Also verify the list still exists at filing — Likud breakaways have a mixed survival record.",
+    issue: "Named Unity — HaAchdut in Hebrew — in August, having been launched on 6 August as an unnamed Erdan–Edelstein list. Naming a party does not give it a platform: 66% of items are still unstated (33 of 50), and most of the sixteen coded cells are inferred rather than stated. To be re-coded entirely once a platform exists. Also verify the list still exists at filing — Likud breakaways have a mixed survival record.",
   },
   {
     items: "All Haredi Public Party rows",

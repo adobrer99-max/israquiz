@@ -14,3 +14,9 @@ validation/*
 # Local D1 state from `wrangler dev --local`: holds a SQLite database
 # with whatever test payloads were posted through it.
 server/.wrangler/
+
+# Output of scripts/smoke-payload.ts. Synthetic and harmless, but regenerating
+# it is one command and a committed copy would go stale against the item bank
+# the moment an item is added — which is exactly the drift the smoke test exists
+# to catch.
+payload.json
