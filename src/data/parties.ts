@@ -84,7 +84,7 @@ export const PARTIES: Record<PartyCode, Party> = {
   },
   RAM: {
     name: "Ra'am", lead: "Abbas", color: "#2E7D32", bloc: "non", ballot: true,
-    note: "Declined to join the revived Joint List and runs separately, now confirmed by the joint slate going ahead without it. Its own positions remain in flux — see the editorial notes on D1, D7 and C9.",
+    note: "Declined to join the revived Joint List and runs separately, now confirmed by the joint slate going ahead without it. Yoav Segalovitz, the first Jewish member, is on the list and running, and states that neither he nor the party is changing the other — so D1 and D7 stay where they were rather than moving as the reported precondition would have required. C9 remains open; see the editorial notes.",
   },
   JL: {
     name: "The Joint List", lead: "Hadash · Ta'al · Balad", color: "#C0392B", bloc: "non", ballot: true,

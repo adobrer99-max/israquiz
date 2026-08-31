@@ -125,7 +125,7 @@ export const CODING_NOTES: Note[] = [
   },
   {
     items: "Ra'am (D1, D7, C9)",
-    issue: "Yoav Segalovitz's reported move to Ra'am's list comes with a stated precondition that the party recognise Israel as a Jewish state. If adopted, D1 flips and D7 moves with it — the most consequential single recoding in the bank. Still unresolved and not pre-empted here. Keep it apart from Ra'am's separate confirmation that it will not seek recognition of a Palestinian state as a coalition condition: recognising Israel as a Jewish state and declining to demand a Palestinian one are different commitments touching different items, and the two are adjacent enough to be merged by accident. Neither settles the other.",
+    issue: "Resolved, and resolved against the recoding. This note used to say that Yoav Segalovitz's move to Ra'am came with a precondition that the party recognise Israel as a Jewish state, and that if adopted D1 would flip and D7 move with it — the most consequential single recoding the bank was holding open. He has joined and is running, and he describes the terms himself: he has no intention of changing Ra'am and Ra'am will not change him, and the cooperation rests on trust, on recognition of their differences, and on working together despite a history neither pretends away. That is a statement that the positions are intact and the difference acknowledged, which is the opposite of the precondition being met. D1 stays D and D7 stays N, now on the record of the person the story was about rather than pending his arrival. C9 is untouched by any of this and remains open. Keep all of it apart from Ra'am's separate confirmation that it will not seek recognition of a Palestinian state as a coalition condition: recognising Israel as a Jewish state and declining to demand a Palestinian one are different commitments touching different items, and they are adjacent enough to be merged by accident. Neither settles the other, and neither has now moved a cell.",
   },
   {
     items: "D2 (all columns)",
@@ -214,7 +214,7 @@ export const INSTRUMENT_NOTES: Note[] = [
   },
   {
     items: "D7 · Ra'am",
-    issue: "Coded N. Ra'am is a non-Zionist party that has deliberately avoided fighting this question, in contrast to Balad, which campaigns on it. N is what this bank means by deliberately ambiguous, but it is a low-confidence cell and the first one to re-examine against the filed list.",
+    issue: "Coded N, and this is one of the few N codings in the bank that survived the August audit unchanged and came out better sourced. Ra'am is a non-Zionist party that has deliberately avoided fighting this question, in contrast to Balad, which campaigns on it. The audit's rule is that N must mean affirmative evidence of equivocation rather than absence of evidence, and a Jewish candidate joining the list on terms he describes as recognition of their differences — neither side changing the other — is that evidence: the ambiguity is being maintained deliberately and in public, not merely unexamined. Still a cell to re-read against the filed list, but no longer the first one.",
   },
   {
     items: "Religion block · Yashar",
