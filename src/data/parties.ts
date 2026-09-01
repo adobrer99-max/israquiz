@@ -59,10 +59,10 @@ export const PARTIES: Record<PartyCode, Party> = {
   },
   OTZ: { name: "Otzma Yehudit", lead: "Ben Gvir", color: "#6E1F16", bloc: "pro", ballot: true },
   RZ: {
-    name: "Religious Zionism", lead: "Smotrich", color: "#C07C13", bloc: "pro", ballot: true,
+    name: "Religious Zionism", lead: "Smotrich (Feiglin #2)", color: "#C07C13", bloc: "pro", ballot: true,
     belowThreshold: true,
     thresholdNote: "polling below the 3.25% threshold",
-    note: "Reported in August as repeatedly failing to cross the threshold in polling, which is a change in this registry and not in the party: it holds the finance ministry and sweeping West Bank powers, and a governing party polling itself out of the next Knesset is the sort of thing a results page should say plainly rather than leave a user to discover on election night.",
+    note: "Now a merged list: Moshe Feiglin's Zehut joins with Feiglin at number two, an alliance reported as a response to exactly the threshold problem this entry already recorded. The flag stays, because a merger is a reason to expect the polling to move and not evidence that it has. The merge is the same shape as Together's — a joint list whose second name comes from a party defined by commitments the first does not share — so the codings inherit the same problem. Zehut is not given a component column: unlike Hadash–Ta'al and Balad it has no separate coding history here, and inventing one would be worse than recording that the merged column has not been re-read. Feiglin's Temple Mount activism confirms A14 and his territorial maximalism confirms A2 and A3; the economics block is where the two halves pull apart, and it was already the thinnest part of this column.",
   },
   YB: { name: "Yisrael Beiteinu", lead: "Liberman", color: "#3B8FC4", bloc: "anti", ballot: true },
   DEM: {

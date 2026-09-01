@@ -98,7 +98,8 @@ export const CODING_NOTES: Note[] = [
   },
   {
     items: "Economy block (Otzma Yehudit, Religious Zionism)",
-    issue: "Economic positions are thin and subordinate to other commitments. Several N codings are low-confidence.",
+    severe: true,
+    issue: "Economic positions are thin and subordinate to other commitments, and several N codings were already low-confidence. The Religious Zionism half of that got worse in August: the list merged with Moshe Feiglin's Zehut, with Feiglin at number two, and Zehut's defining feature was economic libertarianism — free markets, privatisation, a minimal state — which is not Smotrich's record as finance minister. E1, E3 and E7 are coded N for Religious Zionism, and the N in each case rests on thinness rather than on evidence the party is equivocal, which is precisely what the audit says N must not do. They are not recoded here. The Together case that produced the rule had documented divergence — Lapid on the record against Bennett on a named question — where this is divergence inferred from two parties' traditions, and inferring a disagreement is not better than inferring a position. What is recorded is that these three cells are now the clearest candidates in the bank for the September sweep to '-', and that the merged column has not been re-read since the merger. Nothing about the alliance touches territory or religion-and-state, where Feiglin and Smotrich agree and Feiglin's Temple Mount activism makes A14 better sourced than it was.",
   },
   {
     items: "All Unity (HaAchdut) rows",
