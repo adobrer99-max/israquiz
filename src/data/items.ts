@@ -581,8 +581,10 @@ function diagnosticPos(codings: string, o: Overlays): Record<PartyCode, Position
 export const F1: Diagnostic = {
   id: "F1",
   text: "Benjamin Netanyahu should continue as prime minister.",
-  // Unity explicitly declined to rule out sitting with Netanyahu.
-  pos: diagnosticPos("ADDAAAADDDDDD", { jl: "D", uni: "N", noam: "A", hpp: "-", amy: "N" }),
+  // Unity explicitly declined to rule out sitting with Netanyahu. People of
+  // Israel was N while Winter promised a broad right-wing government without
+  // naming a candidate; he has since endorsed Netanyahu outright, so A.
+  pos: diagnosticPos("ADDAAAADDDDDD", { jl: "D", uni: "N", noam: "A", hpp: "-", amy: "A" }),
 };
 
 export const F2: Diagnostic = {

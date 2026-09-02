@@ -105,11 +105,11 @@ export const PARTIES: Record<PartyCode, Party> = {
   },
   AMY: {
     name: "People of Israel", lead: "Winter", color: "#8C5A2B",
-    bloc: "unaligned", ballot: true,
+    bloc: "pro", ballot: true,
     belowThreshold: true,
     // Not a polling claim: launched days ago, no polling exists to cite.
     thresholdNote: "launched in August; no polling on record",
-    note: "Amcha Yisrael, launched in Jerusalem on 25 August 2026 by Ofer Winter, the former Givati Brigade commander released from the military in 2024. Yoseph Haddad, the Arab-Israeli activist, is announced as its candidate for public diplomacy minister. Coded from launch-speech reporting rather than a platform, and thinly: ten of 50 items, 20% coverage, so it is suppressed from the ranking and the grid. Unaligned rather than pro-Netanyahu — Winter promises the broadest possible right-wing government with as many Zionist partners as possible, which is a bloc shape and not an endorsement, and in the same speech he attacks the incumbent political class. Revisit if he endorses.",
+    note: "Amcha Yisrael, launched in Jerusalem on 25 August 2026 by Ofer Winter, the former Givati Brigade commander released from the military in 2024. Yoseph Haddad, the Arab-Israeli activist, is announced as its candidate for public diplomacy minister. Coded from launch-speech reporting rather than a platform, and thinly: ten of 50 items, 20% coverage, so it is suppressed from the ranking and the grid. Pro-Netanyahu since August, on the trigger this entry named. It was unaligned while Winter promised the broadest possible right-wing government with as many Zionist partners as possible — a bloc shape rather than an endorsement — and the note said to revisit if he endorsed. He has, and F1 moves from N to A with it. He attaches a condition: he will not enter a coalition until a universal conscription law passes. That is a coalition condition and it moves no coded cell, on the same reasoning the Ra'am note sets out from the opposite direction. B1 already recorded him as wanting haredim drafted, and making that a precondition demonstrates the position rather than changing it.",
   },
   HTA: {
     name: "Hadash–Ta'al", lead: "Jabareen", color: "#B03A2E", bloc: "non", ballot: false,
