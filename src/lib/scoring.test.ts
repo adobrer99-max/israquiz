@@ -9,7 +9,7 @@ import {
 } from "../data/items";
 import { axisCollapses, identicalColumns, itemDiagnostics } from "./diagnostics";
 import { orderedBlocks, orderedItems } from "./shuffle";
-import { MATRIX_ORDER, PARTIES, type PartyCode } from "../data/parties";
+import { BALLOT_PARTIES, COMPONENT_PARTIES, MATRIX_ORDER, PARTIES, WITHDRAWN_PARTIES, type PartyCode } from "../data/parties";
 
 /** Answer every item exactly as a party would, at full intensity. */
 function answerAs(code: PartyCode): Answers {
@@ -115,7 +115,7 @@ describe("cross-cutting block G", () => {
     for (const d of [...CROSS_CUTTING, F1, F2]) withG[d.id] = -2;
     const before = score(base);
     const after = score(withG);
-    for (const code of Object.keys(PARTIES) as PartyCode[]) {
+    for (const code of [...BALLOT_PARTIES, ...COMPONENT_PARTIES]) {
       expect(after.all[code].weighted, code).toBe(before.all[code].weighted);
       expect(after.all[code].scoredItems, code).toBe(before.all[code].scoredItems);
     }
@@ -544,7 +544,8 @@ describe("item agreement (§4.1)", () => {
 
 describe("party match (§4.2)", () => {
   it("returns 100% for a user who answers exactly as a party does", () => {
-    for (const code of Object.keys(PARTIES) as PartyCode[]) {
+    // every party the engine scores — withdrawn columns are deliberately absent
+    for (const code of [...BALLOT_PARTIES, ...COMPONENT_PARTIES]) {
       const r = score(answerAs(code)).all[code];
       expect(Math.round(r.weighted), code).toBe(100);
       expect(Math.round(r.unweighted), code).toBe(100);
@@ -584,12 +585,39 @@ describe("party match (§4.2)", () => {
     expect(score(a, small).all.SHS.weighted).toBeCloseTo(score(a, doubled).all.SHS.weighted, 10);
   });
 
-  it("suppresses Unity for low coverage and keeps the Joint List in", () => {
+  it("suppresses the thin columns for low coverage and keeps the Joint List in", () => {
     const r = score(answerAs("LIK"));
-    expect(r.lowCoverage.map((x) => x.code)).toContain("UNI");
+    expect(r.lowCoverage.map((x) => x.code).sort()).toEqual(["AMY", "HPP"]);
     expect(r.ranked.map((x) => x.code)).toContain("JL");
-    expect(r.all.UNI.coverage).toBeLessThan(COVERAGE_FLOOR);
     expect(r.all.JL.coverage).toBeGreaterThanOrEqual(0.95);
+  });
+
+  /**
+   * §8 says drop any party that misses the ballot. Suppression is not enough:
+   * a low-coverage party is still shown, under "insufficient position data",
+   * and a withdrawn one must not appear at all. The distinction matters because
+   * the two states look similar in the registry and are opposite for a voter —
+   * one is a party we know too little about, the other is not a choice.
+   */
+  it("removes a withdrawn party from the result entirely, not merely from the ranking", () => {
+    expect(WITHDRAWN_PARTIES).toContain("UNI");
+    expect(PARTIES.UNI.withdrawn).toBe(true);
+
+    const r = score(answerAs("LIK"));
+    expect(r.ranked.map((x) => x.code)).not.toContain("UNI");
+    expect(r.lowCoverage.map((x) => x.code)).not.toContain("UNI");
+    expect(r.components.map((x) => x.code)).not.toContain("UNI");
+    expect(r.all.UNI, "a withdrawn party must not be scored at all").toBeUndefined();
+
+    // and it is out of the sets every screen and diagnostic iterates
+    expect(BALLOT_PARTIES).not.toContain("UNI");
+    expect(COMPONENT_PARTIES).not.toContain("UNI");
+  });
+
+  it("keeps the withdrawn column in the registry and the coding matrix", () => {
+    // deleting it would erase the record; the matrix is where cut things stay
+    expect(PARTIES.UNI).toBeDefined();
+    expect(ITEMS.filter((i) => i.pos.UNI !== "-").length).toBeGreaterThan(0);
   });
 
   /**

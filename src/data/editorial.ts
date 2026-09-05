@@ -6,7 +6,7 @@
    ============================================================ */
 
 export const VERSION = "v0.2 — preview";
-export const VERSION_DATE = "25 August 2026";
+export const VERSION_DATE = "5 September 2026";
 
 export const ELECTION = {
   knesset: 26,
@@ -24,6 +24,10 @@ export interface Note {
 }
 
 export const CODING_NOTES: Note[] = [
+  {
+    items: "Unity (HaAchdut) · withdrawn",
+    issue: "Not running, confirmed September 2026. The registry entry for this column ended with an instruction to verify the list still existed at filing, because Likud breakaways have a mixed survival record, and it did not survive. Withdrawal is handled differently from suppression and the difference matters to a voter: a suppressed party is one the bank knows too little about and still shows, under insufficient position data, while a withdrawn one is not a choice and must not appear at all. It is out of the ranking, the grid, the intro list and every diagnostic, and it is still in the registry and in the coding matrix, struck through, because deleting it would erase both the work and the judgement. The practical effect is small — it was never more than 34% coded and the coverage rule had suppressed it from the ranking for a month, so the floor was right about this column before the news was. Two lessons for the columns still standing: the Haredi Public Party and People of Israel are new lists at similar coverage and either could go the same way, and the September revision now has one confirmed case of a party that had to be removed rather than re-coded.",
+  },
   {
     items: "All Together rows",
     severe: true,

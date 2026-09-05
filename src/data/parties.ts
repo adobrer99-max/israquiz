@@ -21,6 +21,17 @@ export interface Party {
   bloc: Bloc;
   /** false = a component of a ballot entity, not votable on its own (§3.7) */
   ballot: boolean;
+  /**
+   * Ran, or looked like running, and then did not file. §8 says to drop any
+   * party that misses the ballot, and this is how: withdrawn columns leave
+   * BALLOT_PARTIES, so they vanish from the ranking, the grid, the intro list
+   * and every diagnostic, and a respondent can never be matched to something
+   * they cannot vote for. The column stays in this registry and in the
+   * published coding matrix on purpose. Deleting it would erase the record of
+   * work that was done and of a judgement that was made, and the coding matrix
+   * is the one place in this project where cut things are still shown.
+   */
+  withdrawn?: boolean;
   /** §4.8.1 — threshold context shown next to the match */
   belowThreshold?: boolean;
   /** how to phrase that context; polling and never-run-alone are different claims */
@@ -92,8 +103,8 @@ export const PARTIES: Record<PartyCode, Party> = {
   },
   UNI: {
     name: "Unity (HaAchdut)", lead: "Erdan (Edelstein #2)", color: "#A0522D",
-    bloc: "unaligned", ballot: true,
-    note: "Launched 6 August 2026 and named in August. The English name is carried with the Hebrew because 'Unity' alone collides with National Unity, Gantz's 2022 list, which appears under that name in the recalled-vote question and whose successor sits in this bank as Blue & White. Only 17 of 50 items codeable. Suppressed from the headline ranking and from the grid by the coverage rule.",
+    bloc: "unaligned", ballot: true, withdrawn: true,
+    note: "Withdrawn: not running, confirmed September 2026. This entry ended with a warning to verify the list still existed at filing, because Likud breakaways have a mixed survival record, and it did not. The column is kept here and in the coding matrix as a record and is excluded from the ranking, the grid, the intro list and every diagnostic, so nobody can be matched to a party that is not on the ballot. Launched 6 August 2026 and named later that month. The English name is carried with the Hebrew because 'Unity' alone collides with National Unity, Gantz's 2022 list, which appears under that name in the recalled-vote question and whose successor sits in this bank as Blue & White. It was never more than 34% coded, and the coverage rule had already suppressed it from the ranking — so the practical effect of the withdrawal is small, which is the coverage floor having been right about it for a month.",
   },
   HPP: {
     name: "The Haredi Public Party", lead: "Leitner", color: "#4F6D7A",
@@ -121,8 +132,10 @@ export const PARTIES: Record<PartyCode, Party> = {
   },
 };
 
-export const BALLOT_PARTIES = (Object.keys(PARTIES) as PartyCode[]).filter((c) => PARTIES[c].ballot);
-export const COMPONENT_PARTIES = (Object.keys(PARTIES) as PartyCode[]).filter((c) => !PARTIES[c].ballot);
+export const BALLOT_PARTIES = (Object.keys(PARTIES) as PartyCode[]).filter((c) => PARTIES[c].ballot && !PARTIES[c].withdrawn);
+/** Kept out of every result, retained in the registry and the coding matrix. */
+export const WITHDRAWN_PARTIES = (Object.keys(PARTIES) as PartyCode[]).filter((c) => PARTIES[c].withdrawn);
+export const COMPONENT_PARTIES = (Object.keys(PARTIES) as PartyCode[]).filter((c) => !PARTIES[c].ballot && !PARTIES[c].withdrawn);
 
 export const BLOC_LABEL: Record<Bloc, string> = {
   pro: "Pro-Netanyahu bloc",

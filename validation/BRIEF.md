@@ -5,11 +5,12 @@ answer one question: does the instrument find the party a decided voter has
 already chosen? If it does not, that is worth knowing before anyone else sees it.
 
 **Recruit against the gaps.** Run the report once with whatever you have and read
-the *Columns no tester validated* section. Sixteen parties and fifteen testers
+the *Columns no tester validated* section. Fifteen parties and fifteen testers
 means most columns get nobody, and the columns hardest to recruit for are the
-ones carrying the most risk — Together has no published platform, Unity is 65%
-unstated, the Haredi Public Party rests on press reporting. One tester for a
-high-risk column is worth five for Likud.
+ones carrying the most risk — Together is ranked in full on press statements
+across its whole security core, the Haredi Public Party rests on reporting
+rather than a platform, People of Israel on a launch speech. One tester for a
+high-risk column is worth five for Likud. Unity has withdrawn and needs nobody.
 
 The single most valuable reply in the round would be someone who declares **the
 Haredi Public Party**. It is confirmed on the ballot, it is the newest and
