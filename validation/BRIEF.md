@@ -4,6 +4,12 @@ Fifteen to twenty people who already know who they are voting for. §4.7 exists 
 answer one question: does the instrument find the party a decided voter has
 already chosen? If it does not, that is worth knowing before anyone else sees it.
 
+**Do not send this before 8 September 2026**, the final date for filing party
+lists. A reply joins a tester to a declared party, and until the slate is fixed
+that party can withdraw — Unity did, three days out — which voids the reply and
+spends the scarcest thing this round has, fifteen people's attention, on a column
+that no longer exists. Recruit before the date; send after it.
+
 **Recruit against the gaps.** Run the report once with whatever you have and read
 the *Columns no tester validated* section. Fifteen parties and fifteen testers
 means most columns get nobody, and the columns hardest to recruit for are the

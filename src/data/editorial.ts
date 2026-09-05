@@ -11,6 +11,14 @@ export const VERSION_DATE = "5 September 2026";
 export const ELECTION = {
   knesset: 26,
   date: "27 October 2026",
+  /**
+   * Final date for filing party lists. Everything this project defers to "the
+   * September revision" depends on it: before it, a column can still merge,
+   * withdraw or change its number two, and re-coding against a slate that is
+   * not final is work that has to be redone. Unity withdrawing three days out
+   * is the argument for the date rather than against it.
+   */
+  listsFiled: "8 September 2026",
   threshold: 3.25,
   seats: 120,
   majority: 61,

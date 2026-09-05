@@ -313,10 +313,29 @@ and no further argument substitutes for it.
 
 ## Before this is published
 
+**Lists are final on 8 September 2026.** That date is the gate, and it is in `ELECTION.listsFiled`.
+Before it, a column can still merge, withdraw or change its number two — Unity withdrew three days out,
+and Religious Zionism took on a new number two a week before that — so re-coding against a slate that is
+not yet final is work that has to be done twice.
+
 The spec's §8 checklist still applies in full. In particular: re-verify every coding against the platforms
-of the lists actually filed in September, re-run the clustering check, drop any party that misses the
-ballot, and publish a dated changelog with a corrections form. Until then this build says **preview** on
-every screen, and it should keep saying it.
+of the lists actually filed, re-run the clustering check, drop any party that misses the ballot, and
+publish a dated changelog with a corrections form. Until then this build says **preview** on every screen,
+and it should keep saying it.
+
+Three things gate on the 8th and three do not, and the difference is what the days before it are for.
+
+**Wait for the 8th:** the `N`-versus-`-` sweep across every column, the sixteen flagged Joint List merge
+cells, and the §4.7 validation round. The validation round in particular — a reply joins a tester to a
+declared party, and Unity's withdrawal would have voided any reply declaring it. Recruiting before the
+slate is final risks spending the scarcest resource in this project, fifteen people's attention, on
+columns that may not exist.
+
+**Do before the 8th:** read Together's published platform into the bank, since the document already
+exists and the column is ranked in full on press statements; get the collection endpoint working, because
+the validation round needs somewhere to send replies and three audit findings need respondent data; and
+finish the per-cell provenance question, because the revision is much cheaper if evidence and confidence
+are queryable rather than prose.
 
 ## Where answers go
 
