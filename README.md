@@ -315,12 +315,19 @@ and no further argument substitutes for it.
 
 **Lists closed on 8 September 2026.** That date is the gate, and it is in `ELECTION.listsFiled`.
 
-The first thing the filings turned up is not a coding error. Reporting on the submitted slates names
-**The Reservists, led by Yoaz Hendel** — a party with no column in this bank at all. A miscoded cell gives
-a voter a number that is wrong; a missing column gives them a ranking that silently omits something on
-their ballot, with nothing on the page to say so. Until the field is confirmed against the Central
-Elections Committee list, this instrument should be assumed not to cover the full ballot, and that is a
-larger caveat than any currently shown to respondents.
+The first thing the filings turned up was not a coding error. Seventeen parties filed and this bank had
+fifteen: **The Reservists and the Economic Party** (Yoaz Hendel) and **Israel First** were both on the
+ballot and both absent. A miscoded cell gives a voter a number that is wrong; a missing column gives them
+a ranking that silently omits something they can vote for, with nothing on the page to say so.
+
+Both now exist as columns coded on nothing, which is what the coverage machinery is for: a party at 0% is
+suppressed from the ranking and the grid and listed under *insufficient position data*, so the respondent
+is told it exists and that the instrument cannot place it. Filling them in from news summaries would be
+the sourcing this project spent August removing.
+
+The filed list also confirmed three things already in the registry — Unity is absent, Religious Zionism
+filed as Religious Zionist Party–Zehut, and Ra'am filed as the United Arab List — and the registry now
+carries the ballot names.
 Before it, a column can still merge, withdraw or change its number two — Unity withdrew three days out,
 and Religious Zionism took on a new number two a week before that — so re-coding against a slate that is
 not yet final is work that has to be done twice.

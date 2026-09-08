@@ -8,7 +8,7 @@
 export type PartyCode =
   | "LIK" | "TOG" | "YSH" | "SHS" | "UTJ" | "OTZ" | "RZ"
   | "YB"  | "DEM" | "BW"  | "RAM" | "JL"  | "UNI"
-  | "NOAM" | "HPP" | "AMY"
+  | "NOAM" | "HPP" | "AMY" | "RES" | "ISF"
   | "HTA" | "BAL";
 
 /** §4.5 bloc readout. `unaligned` parties are reported in no bloc average. */
@@ -70,7 +70,7 @@ export const PARTIES: Record<PartyCode, Party> = {
   },
   OTZ: { name: "Otzma Yehudit", lead: "Ben Gvir", color: "#6E1F16", bloc: "pro", ballot: true },
   RZ: {
-    name: "Religious Zionism", lead: "Smotrich (Feiglin #2)", color: "#C07C13", bloc: "pro", ballot: true,
+    name: "Religious Zionist Party–Zehut", lead: "Smotrich (Feiglin #2)", color: "#C07C13", bloc: "pro", ballot: true,
     belowThreshold: true,
     thresholdNote: "polling below the 3.25% threshold",
     note: "Now a merged list: Moshe Feiglin's Zehut joins with Feiglin at number two, an alliance reported as a response to exactly the threshold problem this entry already recorded. The flag stays, because a merger is a reason to expect the polling to move and not evidence that it has. The merge is the same shape as Together's — a joint list whose second name comes from a party defined by commitments the first does not share — so the codings inherit the same problem. Zehut is not given a component column: unlike Hadash–Ta'al and Balad it has no separate coding history here, and inventing one would be worse than recording that the merged column has not been re-read. Feiglin's Temple Mount activism confirms A14 and his territorial maximalism confirms A2 and A3; the economics block is where the two halves pull apart, and it was already the thinnest part of this column.",
@@ -94,7 +94,7 @@ export const PARTIES: Record<PartyCode, Party> = {
     note: "Running separately for the first time in 2026. Its single seat in 2021 and 2022 came inside the Religious Zionism list. Coded from a narrow platform: complete on religion-and-state and national identity, thin on security, and silent on economics, which is an accurate description of the party rather than a gap in the research.",
   },
   RAM: {
-    name: "Ra'am", lead: "Abbas", color: "#2E7D32", bloc: "non", ballot: true,
+    name: "Ra'am (United Arab List)", lead: "Abbas", color: "#2E7D32", bloc: "non", ballot: true,
     note: "Declined to join the revived Joint List and runs separately, now confirmed by the joint slate going ahead without it. Yoav Segalovitz, the first Jewish member, is on the list and running, and states that neither he nor the party is changing the other — so D1 and D7 stay where they were rather than moving as the reported precondition would have required. C9 remains open; see the editorial notes.",
   },
   JL: {
@@ -115,12 +115,22 @@ export const PARTIES: Record<PartyCode, Party> = {
     note: "Confirmed running, which settles whether the column belongs in the bank and nothing else — it is not polling, so the threshold risk stands, and the codings still rest on press reporting rather than a published platform. Moti Leitner, deputy mayor of Beit Shemesh. An ultra-Orthodox faction campaigning for conscription, core-curriculum education and economic reform within haredi society — the first haredi column in the bank on the pro-conscription side. Its distinctive position is enlistment by incentive rather than by sanction: it wants state funding restructured to reward service and workforce participation, and argues that external coercion fails where communal reform can work. Coded on three stated planks plus the religion-and-state positions its own framing makes near-certain; security, institutions and identity are left unstated. 30% coverage, so it is suppressed from the ranking and the grid. Running is settled; coalition posture is not, hence unaligned.",
   },
   AMY: {
-    name: "People of Israel", lead: "Winter", color: "#8C5A2B",
+    name: "People of Israel (Amcha Yisrael)", lead: "Winter", color: "#8C5A2B",
     bloc: "pro", ballot: true,
     belowThreshold: true,
     // Not a polling claim: launched days ago, no polling exists to cite.
     thresholdNote: "launched in August; no polling on record",
     note: "Amcha Yisrael, launched in Jerusalem on 25 August 2026 by Ofer Winter, the former Givati Brigade commander released from the military in 2024. Yoseph Haddad, the Arab-Israeli activist, is announced as its candidate for public diplomacy minister. Coded from launch-speech reporting rather than a platform, and thinly: ten of 50 items, 20% coverage, so it is suppressed from the ranking and the grid. Pro-Netanyahu since August, on the trigger this entry named. It was unaligned while Winter promised the broadest possible right-wing government with as many Zionist partners as possible — a bloc shape rather than an endorsement — and the note said to revisit if he endorsed. He has, and F1 moves from N to A with it. He attaches a condition: he will not enter a coalition until a universal conscription law passes. That is a coalition condition and it moves no coded cell, on the same reasoning the Ra'am note sets out from the opposite direction. B1 already recorded him as wanting haredim drafted, and making that a precondition demonstrates the position rather than changing it. He will merge only with 'new and clean people', meaning nobody who held office on 7 October 2023 — a criterion that excludes the leaderships of Likud, Otzma Yehudit and Religious Zionism, and so makes this column likelier to reach the ballot intact than a new small list usually is.",
+  },
+  RES: {
+    name: "The Reservists and the Economic Party", lead: "Hendel", color: "#146B8C",
+    bloc: "unaligned", ballot: true,
+    note: "On the ballot and coded on nothing. It filed by the 8 September deadline and this bank had no column for it until the list was published, which is the failure the coverage rule now reports rather than hides: a party at 0% appears under insufficient position data, where a missing party appeared nowhere at all. Yoaz Hendel leads, and the name says it is itself a merger, with an economic party whose positions are not known here. Bloc is unaligned because it is unknown, not because the party has declared itself unaligned — Hendel's own record is anti-Netanyahu, but the merged list has said nothing this registry has seen, and coding a bloc from a leader's history is the inference this project stopped making in August.",
+  },
+  ISF: {
+    name: "Israel First", lead: "unknown", color: "#7F1D6F",
+    bloc: "unaligned", ballot: true,
+    note: "On the ballot and coded on nothing, and the thinnest entry in this registry: the name is all that is currently known here, including who leads it. Listed so that a respondent is told it exists and that the instrument cannot place it, which is the whole point of separating suppression from omission. Everything about this column — leader, bloc, platform, whether it is a new list or a rename — is outstanding.",
   },
   HTA: {
     name: "Hadash–Ta'al", lead: "Jabareen", color: "#B03A2E", bloc: "non", ballot: false,

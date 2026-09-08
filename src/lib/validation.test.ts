@@ -174,6 +174,19 @@ describe("miscoding candidates", () => {
   it("does not flag a cell no note mentions", () => {
     expect(flaggedCells().has("LIK:E6")).toBe(false);
   });
+
+  /**
+   * The match is a substring test against the registry name, so renaming a
+   * party silently unflags every note written under the old name. That happened
+   * in September: Ra'am was renamed to carry its ballot name and "D7 · Ra'am"
+   * stopped matching. This pins the short forms so the next rename fails here
+   * rather than in a validation report nobody reruns.
+   */
+  it("still flags parties whose registry name has changed", () => {
+    const flagged = flaggedCells();
+    expect(flagged.has("RAM:D7"), "Ra'am renamed to United Arab List").toBe(true);
+    expect(flagged.has("RAM:D1")).toBe(true);
+  });
 });
 
 describe("integrity warnings", () => {

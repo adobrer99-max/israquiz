@@ -544,8 +544,10 @@ describe("item agreement (§4.1)", () => {
 
 describe("party match (§4.2)", () => {
   it("returns 100% for a user who answers exactly as a party does", () => {
-    // every party the engine scores — withdrawn columns are deliberately absent
+    // every party the engine scores, minus the ones with nothing to answer as:
+    // withdrawn columns are absent, and an uncoded column produces no answers
     for (const code of [...BALLOT_PARTIES, ...COMPONENT_PARTIES]) {
+      if (ITEMS.every((it) => it.pos[code] === "-")) continue;
       const r = score(answerAs(code)).all[code];
       expect(Math.round(r.weighted), code).toBe(100);
       expect(Math.round(r.unweighted), code).toBe(100);
@@ -587,7 +589,7 @@ describe("party match (§4.2)", () => {
 
   it("suppresses the thin columns for low coverage and keeps the Joint List in", () => {
     const r = score(answerAs("LIK"));
-    expect(r.lowCoverage.map((x) => x.code).sort()).toEqual(["AMY", "HPP"]);
+    expect(r.lowCoverage.map((x) => x.code).sort()).toEqual(["AMY", "HPP", "ISF", "RES"]);
     expect(r.ranked.map((x) => x.code)).toContain("JL");
     expect(r.all.JL.coverage).toBeGreaterThanOrEqual(0.95);
   });
@@ -848,10 +850,30 @@ describe("expected clustering smoke test (§4.6)", () => {
     ]);
   });
 
-  it("separates the two grid axes — no party sits at the exact origin", () => {
+  it("separates the two grid axes — no plotted party sits at the exact origin", () => {
+    // Columns with no codings are excluded: they sit at the origin because
+    // there is nothing to place them with, which is why the coverage floor
+    // keeps them off the grid rather than drawing them as dead centre.
     for (const c of Object.keys(PARTIES) as PartyCode[]) {
+      if (ITEMS.every((it) => it.pos[c] === "-")) continue;
       const v = ax(c);
       expect(Math.abs(v.A) + Math.abs(v.B), c).toBeGreaterThan(0);
+    }
+  });
+
+  /**
+   * The reason the exclusion above is safe: an uncoded column never reaches
+   * the grid. If one ever did it would be drawn at dead centre, which reads as
+   * a centrist party rather than an unknown one — the N-versus-"-" failure in
+   * visual form.
+   */
+  it("keeps uncoded columns off the grid entirely", () => {
+    const r = score(answerAs("LIK"));
+    for (const c of BALLOT_PARTIES) {
+      if (!ITEMS.every((it) => it.pos[c] === "-")) continue;
+      expect(r.all[c].coverage, c).toBe(0);
+      expect(r.ranked.map((x) => x.code), c).not.toContain(c);
+      expect(r.lowCoverage.map((x) => x.code), c).toContain(c);
     }
   });
 });

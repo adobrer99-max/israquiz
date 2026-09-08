@@ -11,7 +11,7 @@
    "agree" moves you toward the positive pole named in BLOCKS.
    ============================================================ */
 
-import { MATRIX_ORDER, type PartyCode } from "./parties";
+import { MATRIX_ORDER, PARTIES, type PartyCode } from "./parties";
 
 export type Position = "A" | "N" | "D" | "-";
 export type BlockId = "A" | "B" | "C" | "D" | "E";
@@ -396,8 +396,19 @@ const AMY_POS: Record<string, Position> = {
   D2: "D", D7: "A",
 };
 
-const EMPTY_POS = (): Record<PartyCode, Position> =>
-  ({} as Record<PartyCode, Position>);
+/**
+ * Every registry column starts at "-", not undefined. The overlays below then
+ * fill in the ones that have a position. Building this from PARTIES rather than
+ * from a literal means adding a party to the registry cannot leave holes in the
+ * matrix: a column nobody has coded reads as no position on record, which is
+ * true, instead of reading as undefined, which crashes the coverage arithmetic
+ * and slips past a coding-key check that only knows about A, N, D and "-".
+ */
+const EMPTY_POS = (): Record<PartyCode, Position> => {
+  const pos = {} as Record<PartyCode, Position>;
+  for (const code of Object.keys(PARTIES) as PartyCode[]) pos[code] = "-";
+  return pos;
+};
 
 export const ITEMS: Item[] = RAW.map(([id, block, sign, text, codings]) => {
   if (codings.length !== MATRIX_ORDER.length) {

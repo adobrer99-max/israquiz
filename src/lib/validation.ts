@@ -95,10 +95,22 @@ export function parseReplies(
  * negative costs a highlight, and a false positive is visible on inspection.
  * NOAM needs an alias because the notes call it Noam, not Noam For Israel.
  */
+/**
+ * Short forms used in note headings. This list exists because the match below
+ * is string comparison against the registry name, which makes it fragile in a
+ * way worth stating: renaming a party silently unflags every note about it.
+ * That happened in September, when Ra'am was renamed to carry its ballot name
+ * and "D7 · Ra'am" stopped matching. Any rename needs the old short form added
+ * here, and the durable fix is the per-cell provenance the audit asks for,
+ * where a flag is a field rather than a substring.
+ */
 const ALIASES: Partial<Record<PartyCode, string[]>> = {
   NOAM: ["Noam"],
   OTZ: ["Otzma"],
   UTJ: ["UTJ"],
+  RAM: ["Ra'am"],
+  AMY: ["People of Israel", "Amcha Yisrael"],
+  RZ: ["Religious Zionism", "Religious Zionist"],
 };
 
 function aliasesFor(code: PartyCode): string[] {
