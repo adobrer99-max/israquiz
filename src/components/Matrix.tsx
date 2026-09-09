@@ -9,7 +9,7 @@ import { PARTIES, type PartyCode } from "../data/parties";
  */
 const COLUMNS: PartyCode[] = [
   "LIK", "TOG", "YSH", "SHS", "UTJ", "HPP", "OTZ", "RZ", "NOAM", "AMY", "YB", "DEM", "BW",
-  "UNI", "RAM", "JL", "HTA", "BAL",
+  "UNI", "RES", "IFT", "RAM", "JL", "HTA", "BAL",
 ];
 
 /** Built once: overlay columns whose cells rest on reasoning, not a platform. */
@@ -45,7 +45,15 @@ export function Matrix() {
               <th>#</th>
               <th>±</th>
               {COLUMNS.map((c) => (
-                <th key={c} title={PARTIES[c].name}>
+                <th
+                  key={c}
+                  title={
+                    PARTIES[c].withdrawn
+                      ? `${PARTIES[c].name} — withdrawn, not on the ballot`
+                      : PARTIES[c].name
+                  }
+                  style={PARTIES[c].withdrawn ? { textDecoration: "line-through", opacity: 0.55 } : undefined}
+                >
                   {c}
                 </th>
               ))}

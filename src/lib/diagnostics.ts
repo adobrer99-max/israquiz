@@ -129,9 +129,17 @@ export function axisCollapses(): AxisCollapse[] {
 }
 
 /** Ballot parties whose full coding vector is identical across the bank. */
+/**
+ * Two columns coded identically are one column pretending to be two, and the
+ * check exists to catch that. Uncoded columns are excluded: a party the bank
+ * knows nothing about matches every other party it knows nothing about, which
+ * is arithmetic rather than a finding, and reporting it would bury the real
+ * case under a pair of empty slots.
+ */
 export function identicalColumns(): PartyCode[][] {
   const seen = new Map<string, PartyCode[]>();
   for (const c of BALLOT_PARTIES) {
+    if (ITEMS.every((it) => it.pos[c] === "-")) continue;
     const key = ITEMS.map((it) => it.pos[c]).join("");
     seen.set(key, [...(seen.get(key) ?? []), c]);
   }

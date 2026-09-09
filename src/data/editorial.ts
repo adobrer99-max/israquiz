@@ -6,11 +6,19 @@
    ============================================================ */
 
 export const VERSION = "v0.2 — preview";
-export const VERSION_DATE = "25 August 2026";
+export const VERSION_DATE = "5 September 2026";
 
 export const ELECTION = {
   knesset: 26,
   date: "27 October 2026",
+  /**
+   * Final date for filing party lists. Everything this project defers to "the
+   * September revision" depends on it: before it, a column can still merge,
+   * withdraw or change its number two, and re-coding against a slate that is
+   * not final is work that has to be redone. Unity withdrawing three days out
+   * is the argument for the date rather than against it.
+   */
+  listsFiled: "8 September 2026",
   threshold: 3.25,
   seats: 120,
   majority: 61,
@@ -24,6 +32,28 @@ export interface Note {
 }
 
 export const CODING_NOTES: Note[] = [
+  {
+    items: "Two parties added at filing, coded on nothing",
+    severe: true,
+    issue: "The published list of filed parties runs to seventeen and this bank had fifteen. The Reservists and the Economic Party, led by Yoaz Hendel, and Israel First are both on the ballot and were both absent, which is a worse failure than any miscoded cell: a wrong coding gives a voter a number that is off, a missing column gives them a ranking that silently omits something they can actually vote for, with no marker anywhere to say so. Both now exist as columns with no codings at all. That is deliberate and it is what the coverage machinery is for — a party at 0% is suppressed from the ranking and the grid and appears under insufficient position data, so the respondent is told the party exists and that the instrument cannot place it. Coding them from the news summaries available here would be the sourcing this project spent August removing. Both are unaligned because their bloc is unknown, not because they have declared themselves unaligned; Hendel's own record is anti-Netanyahu, and coding a bloc from a leader's history is the inference that stopped in August. Israel First is thinner still — the name is all that is currently known, including who leads it. The list also confirms three things already recorded: Unity is absent, so its withdrawal is right; Religious Zionism filed as Religious Zionist Party–Zehut, confirming the Feiglin merger; and Ra'am filed as the United Arab List. The registry now carries the ballot names.",
+  },
+  {
+    items: "The Reservists · C3, and an N that earns the name",
+    issue: "Coded N on whether a Knesset majority should override the Supreme Court, and worth naming because it is one of the few N codings in this bank that meets the standard the August audit set. N is supposed to mean affirmative evidence that a party is equivocal, not absence of evidence. Here the equivocation is the stated position: the party opposed the original Levin plan, says some judicial reform is necessary but cannot be imposed on the country, wants only reform carrying broad consensus, and has not said whether it accepts the scaled-back 2025 version. That is a party deliberately holding the middle of a question, which is exactly what N is for, and it stands in contrast to the 134 other N cells most of which are silence wearing a coding. Its C6 is a different matter and is coded A outright: it calls for a state commission of inquiry into 7 October, and in Israel that phrase names the mechanism C6 asks about rather than a general wish for accountability — the distinction the People of Israel note turns on.",
+  },
+  {
+    items: "B15 · the case for promoting it just got stronger",
+    issue: "The drafted enforcement item has been held for a bank revision on the grounds that it separated only one column, the Haredi Public Party, from B1. The filed lists changed that. The Reservists and the Economic Party is built on the enforcement dimension specifically — evasion equated in law with desertion, sanctions running to the vote, welfare, a driving licence and the right to leave the country — and sits at the opposite pole from the Haredi Public Party, which wants haredim serving and opposes compelling them. B1 collects both of those as agreement, and People of Israel, which demands a conscription law as a coalition condition but has said nothing about penalties, sits between them and is coded '-' on B15 for that reason. Three ballot parties now differ on a dimension the live bank cannot express. Against that: promoting it moves every coverage denominator, ends every saved session and reopens the clustering check, and this bank has already taken three storage bumps in a month. The judgement is no longer that the item is thin; it is whether another mid-cycle addition is worth it, and that is a decision to take deliberately rather than by accumulation.",
+  },
+  {
+    items: "The N sweep · 134 cells, and where they are",
+    severe: true,
+    issue: "Scoped now that the audit's first task can begin. There are 134 N codings across the fifteen ballot columns, a little over a quarter of every party-item cell, and each has to answer whether there is affirmative evidence the party is genuinely equivocal or whether N is standing in for silence. The concentration says where to start. United Torah Judaism carries 20, almost all of them across security and economics, which is the shape of a party that has no stated position on those questions rather than a considered middle one. Yashar has 17 even after four moved to '-' in August. Yisrael Beiteinu has 15, Likud and Blue & White 13 each. By block, security holds 40 and economics 38, and those are precisely the blocks where a small or single-issue party says nothing. Two things follow. The sweep is a research task and not a code change: every one of those cells needs a source consulted, and reclassifying them from the armchair would replace a false centrism with a false silence. And the parties most affected are large ones — UTJ, Likud, Yisrael Beiteinu — so unlike the August pass, which moved thin columns, this one will move coverage and axis positions for parties that rank near the top of real results.",
+  },
+  {
+    items: "Unity (HaAchdut) · withdrawn",
+    issue: "Not running, confirmed September 2026. The registry entry for this column ended with an instruction to verify the list still existed at filing, because Likud breakaways have a mixed survival record, and it did not survive. Withdrawal is handled differently from suppression and the difference matters to a voter: a suppressed party is one the bank knows too little about and still shows, under insufficient position data, while a withdrawn one is not a choice and must not appear at all. It is out of the ranking, the grid, the intro list and every diagnostic, and it is still in the registry and in the coding matrix, struck through, because deleting it would erase both the work and the judgement. The practical effect is small — it was never more than 34% coded and the coverage rule had suppressed it from the ranking for a month, so the floor was right about this column before the news was. Two lessons for the columns still standing: the Haredi Public Party and People of Israel are new lists at similar coverage and either could go the same way, and the September revision now has one confirmed case of a party that had to be removed rather than re-coded.",
+  },
   {
     items: "All Together rows",
     severe: true,
@@ -98,7 +128,8 @@ export const CODING_NOTES: Note[] = [
   },
   {
     items: "Economy block (Otzma Yehudit, Religious Zionism)",
-    issue: "Economic positions are thin and subordinate to other commitments. Several N codings are low-confidence.",
+    severe: true,
+    issue: "Economic positions are thin and subordinate to other commitments, and several N codings were already low-confidence. The Religious Zionism half of that got worse in August: the list merged with Moshe Feiglin's Zehut, with Feiglin at number two, and Zehut's defining feature was economic libertarianism — free markets, privatisation, a minimal state — which is not Smotrich's record as finance minister. E1, E3 and E7 are coded N for Religious Zionism, and the N in each case rests on thinness rather than on evidence the party is equivocal, which is precisely what the audit says N must not do. They are not recoded here. The Together case that produced the rule had documented divergence — Lapid on the record against Bennett on a named question — where this is divergence inferred from two parties' traditions, and inferring a disagreement is not better than inferring a position. What is recorded is that these three cells are now the clearest candidates in the bank for the September sweep to '-', and that the merged column has not been re-read since the merger. Nothing about the alliance touches territory or religion-and-state, where Feiglin and Smotrich agree and Feiglin's Temple Mount activism makes A14 better sourced than it was.",
   },
   {
     items: "All Unity (HaAchdut) rows",
@@ -125,7 +156,7 @@ export const CODING_NOTES: Note[] = [
   },
   {
     items: "Ra'am (D1, D7, C9)",
-    issue: "Yoav Segalovitz's reported move to Ra'am's list comes with a stated precondition that the party recognise Israel as a Jewish state. If adopted, D1 flips and D7 moves with it — the most consequential single recoding in the bank. Still unresolved and not pre-empted here. Keep it apart from Ra'am's separate confirmation that it will not seek recognition of a Palestinian state as a coalition condition: recognising Israel as a Jewish state and declining to demand a Palestinian one are different commitments touching different items, and the two are adjacent enough to be merged by accident. Neither settles the other.",
+    issue: "Resolved, and resolved against the recoding. This note used to say that Yoav Segalovitz's move to Ra'am came with a precondition that the party recognise Israel as a Jewish state, and that if adopted D1 would flip and D7 move with it — the most consequential single recoding the bank was holding open. He has joined and is running, and he describes the terms himself: he has no intention of changing Ra'am and Ra'am will not change him, and the cooperation rests on trust, on recognition of their differences, and on working together despite a history neither pretends away. That is a statement that the positions are intact and the difference acknowledged, which is the opposite of the precondition being met. D1 stays D and D7 stays N, now on the record of the person the story was about rather than pending his arrival. C9 is untouched by any of this and remains open. Keep all of it apart from Ra'am's separate confirmation that it will not seek recognition of a Palestinian state as a coalition condition: recognising Israel as a Jewish state and declining to demand a Palestinian one are different commitments touching different items, and they are adjacent enough to be merged by accident. Neither settles the other, and neither has now moved a cell.",
   },
   {
     items: "D2 (all columns)",
@@ -188,6 +219,10 @@ export const INSTRUMENT_NOTES: Note[] = [
     issue: "With a haredi party arguing for enlistment by incentive and against enforcement by sanction, the live argument in Israeli politics has moved to a question the bank does not ask. Nothing here separates a respondent who wants haredim drafted and penalised for refusing from one who wants them drafted through funding incentives and communal persuasion — B1 collects both as agreement. An item on the enforcement mechanism would make a cut that currently exists nowhere: it would put the Haredi Public Party on one side, Yisrael Beiteinu and The Democrats on the other, and Shas and United Torah Judaism opposed to the premise of both. It is not added here, because adding an item shifts every party's coverage denominator, forces a storage-key bump that invalidates in-flight sessions, and re-opens the §4.6 clustering check — a decision that belongs to a bank revision rather than to a party edit.",
   },
   {
+    items: "People of Israel · a coalition condition from the other side",
+    issue: "Winter has endorsed Netanyahu continuing as prime minister, which moves this column from unaligned to the pro-Netanyahu bloc and F1 from N to A. The registry entry named that trigger in advance and it has fired cleanly. He attaches a condition — he will not enter a coalition until a universal conscription law passes — and that moves no coded cell. The Ra'am note below sets out the reasoning from the opposite direction: Ra'am declining to demand recognition of a Palestinian state did not change what it thinks Israel should do, and Winter demanding a conscription law does not change what he thinks about conscription. B1 already recorded him wanting haredim drafted, from the launch speech, and elevating that to a precondition demonstrates the position rather than altering it. The pair of cases is worth keeping together because they are the same distinction from either end, and because the bank cannot express either of them: a party's coalition conduct and its platform are different things, and only one of them is coded. B15, the drafted enforcement item, stays '-' for this column. A universal conscription law says who is obliged to serve, not what happens to those who refuse, and that gap is the whole reason B15 exists. The same applies to his merger criterion, which is that partnerships will only be made with new and clean people — meaning nobody who was a sitting politician on 7 October 2023. It is an accountability posture and it is not a position on C6, which asks for a state commission of inquiry with a judicially appointed chair. The test that pins this column's empty institutions block says a direction is not a mechanism, and this is the case it was written for: wanting the people responsible out of politics and wanting a judicially chaired commission to establish what they did are different commitments, and the right has generally supported the first while resisting the second. Block C stays empty. The criterion does sit oddly against the endorsement, and the oddity is the party rather than the coding: the man he endorses for prime minister was himself a sitting politician on 7 October and so fails his own partnership test. Read together they say he wants Netanyahu at the top of a government built from people who were not there, which is a coherent position and a narrow one. It also bears on whether this column survives to the ballot at all. Small new lists are usually absorbed, and Winter has publicly disqualified the obvious absorbers — Likud, Otzma Yehudit and Religious Zionism are all led by ministers who were in office that day. That makes the column more likely to persist than the base rate suggests, which is a reason to keep coding it rather than wait.",
+  },
+  {
     items: "A1 · Ra'am, and what a coalition condition is not",
     severe: true,
     issue: "Ra'am has confirmed it will not seek recognition of a Palestinian state as a condition of entering a coalition. A1 asks whether Israel should accept the establishment of a Palestinian state as part of a wider regional normalisation, and Ra'am is coded A on it. The cell does not move. A1 asks what Israel should do; the confirmation is about what Ra'am will not demand, and the gap between those two is Ra'am's entire strategy since 2021 — park the national question, join on civic terms, extract material gains for the constituency. A party can hold a position and decline to make it a precondition. Coding A1 as D would assert the party opposes a Palestinian state, which nothing supports. N was the defensible alternative and was rejected: it would record a change in coalition conduct as a change in stated policy, where §7's rule is to code the stated position and document the choice. The D8 note already settled the neighbouring case — the matrix records positions, not reasons — and this is the same shape: positions, not preconditions. What the bank cannot show is that a party's coalition behaviour and its platform can point different ways, which for Ra'am is the most important thing about it.",
@@ -214,7 +249,7 @@ export const INSTRUMENT_NOTES: Note[] = [
   },
   {
     items: "D7 · Ra'am",
-    issue: "Coded N. Ra'am is a non-Zionist party that has deliberately avoided fighting this question, in contrast to Balad, which campaigns on it. N is what this bank means by deliberately ambiguous, but it is a low-confidence cell and the first one to re-examine against the filed list.",
+    issue: "Coded N, and this is one of the few N codings in the bank that survived the August audit unchanged and came out better sourced. Ra'am is a non-Zionist party that has deliberately avoided fighting this question, in contrast to Balad, which campaigns on it. The audit's rule is that N must mean affirmative evidence of equivocation rather than absence of evidence, and a Jewish candidate joining the list on terms he describes as recognition of their differences — neither side changing the other — is that evidence: the ambiguity is being maintained deliberately and in public, not merely unexamined. Still a cell to re-read against the filed list, but no longer the first one.",
   },
   {
     items: "Religion block · Yashar",

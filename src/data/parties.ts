@@ -8,7 +8,7 @@
 export type PartyCode =
   | "LIK" | "TOG" | "YSH" | "SHS" | "UTJ" | "OTZ" | "RZ"
   | "YB"  | "DEM" | "BW"  | "RAM" | "JL"  | "UNI"
-  | "NOAM" | "HPP" | "AMY"
+  | "NOAM" | "HPP" | "AMY" | "RES" | "IFT"
   | "HTA" | "BAL";
 
 /** §4.5 bloc readout. `unaligned` parties are reported in no bloc average. */
@@ -21,6 +21,17 @@ export interface Party {
   bloc: Bloc;
   /** false = a component of a ballot entity, not votable on its own (§3.7) */
   ballot: boolean;
+  /**
+   * Ran, or looked like running, and then did not file. §8 says to drop any
+   * party that misses the ballot, and this is how: withdrawn columns leave
+   * BALLOT_PARTIES, so they vanish from the ranking, the grid, the intro list
+   * and every diagnostic, and a respondent can never be matched to something
+   * they cannot vote for. The column stays in this registry and in the
+   * published coding matrix on purpose. Deleting it would erase the record of
+   * work that was done and of a judgement that was made, and the coding matrix
+   * is the one place in this project where cut things are still shown.
+   */
+  withdrawn?: boolean;
   /** §4.8.1 — threshold context shown next to the match */
   belowThreshold?: boolean;
   /** how to phrase that context; polling and never-run-alone are different claims */
@@ -59,10 +70,10 @@ export const PARTIES: Record<PartyCode, Party> = {
   },
   OTZ: { name: "Otzma Yehudit", lead: "Ben Gvir", color: "#6E1F16", bloc: "pro", ballot: true },
   RZ: {
-    name: "Religious Zionism", lead: "Smotrich", color: "#C07C13", bloc: "pro", ballot: true,
+    name: "Religious Zionist Party–Zehut", lead: "Smotrich (Feiglin #2)", color: "#C07C13", bloc: "pro", ballot: true,
     belowThreshold: true,
     thresholdNote: "polling below the 3.25% threshold",
-    note: "Reported in August as repeatedly failing to cross the threshold in polling, which is a change in this registry and not in the party: it holds the finance ministry and sweeping West Bank powers, and a governing party polling itself out of the next Knesset is the sort of thing a results page should say plainly rather than leave a user to discover on election night.",
+    note: "Now a merged list: Moshe Feiglin's Zehut joins with Feiglin at number two, an alliance reported as a response to exactly the threshold problem this entry already recorded. The flag stays, because a merger is a reason to expect the polling to move and not evidence that it has. The merge is the same shape as Together's — a joint list whose second name comes from a party defined by commitments the first does not share — so the codings inherit the same problem. Zehut is not given a component column: unlike Hadash–Ta'al and Balad it has no separate coding history here, and inventing one would be worse than recording that the merged column has not been re-read. Feiglin's Temple Mount activism confirms A14 and his territorial maximalism confirms A2 and A3; the economics block is where the two halves pull apart, and it was already the thinnest part of this column.",
   },
   YB: { name: "Yisrael Beiteinu", lead: "Liberman", color: "#3B8FC4", bloc: "anti", ballot: true },
   DEM: {
@@ -83,8 +94,8 @@ export const PARTIES: Record<PartyCode, Party> = {
     note: "Running separately for the first time in 2026. Its single seat in 2021 and 2022 came inside the Religious Zionism list. Coded from a narrow platform: complete on religion-and-state and national identity, thin on security, and silent on economics, which is an accurate description of the party rather than a gap in the research.",
   },
   RAM: {
-    name: "Ra'am", lead: "Abbas", color: "#2E7D32", bloc: "non", ballot: true,
-    note: "Declined to join the revived Joint List and runs separately, now confirmed by the joint slate going ahead without it. Its own positions remain in flux — see the editorial notes on D1, D7 and C9.",
+    name: "Ra'am (United Arab List)", lead: "Abbas", color: "#2E7D32", bloc: "non", ballot: true,
+    note: "Declined to join the revived Joint List and runs separately, now confirmed by the joint slate going ahead without it. Yoav Segalovitz, the first Jewish member, is on the list and running, and states that neither he nor the party is changing the other — so D1 and D7 stay where they were rather than moving as the reported precondition would have required. C9 remains open; see the editorial notes.",
   },
   JL: {
     name: "The Joint List", lead: "Hadash · Ta'al · Balad", color: "#C0392B", bloc: "non", ballot: true,
@@ -92,8 +103,8 @@ export const PARTIES: Record<PartyCode, Party> = {
   },
   UNI: {
     name: "Unity (HaAchdut)", lead: "Erdan (Edelstein #2)", color: "#A0522D",
-    bloc: "unaligned", ballot: true,
-    note: "Launched 6 August 2026 and named in August. The English name is carried with the Hebrew because 'Unity' alone collides with National Unity, Gantz's 2022 list, which appears under that name in the recalled-vote question and whose successor sits in this bank as Blue & White. Only 17 of 50 items codeable. Suppressed from the headline ranking and from the grid by the coverage rule.",
+    bloc: "unaligned", ballot: true, withdrawn: true,
+    note: "Withdrawn: not running, confirmed September 2026. This entry ended with a warning to verify the list still existed at filing, because Likud breakaways have a mixed survival record, and it did not. The column is kept here and in the coding matrix as a record and is excluded from the ranking, the grid, the intro list and every diagnostic, so nobody can be matched to a party that is not on the ballot. Launched 6 August 2026 and named later that month. The English name is carried with the Hebrew because 'Unity' alone collides with National Unity, Gantz's 2022 list, which appears under that name in the recalled-vote question and whose successor sits in this bank as Blue & White. It was never more than 34% coded, and the coverage rule had already suppressed it from the ranking — so the practical effect of the withdrawal is small, which is the coverage floor having been right about it for a month.",
   },
   HPP: {
     name: "The Haredi Public Party", lead: "Leitner", color: "#4F6D7A",
@@ -104,12 +115,22 @@ export const PARTIES: Record<PartyCode, Party> = {
     note: "Confirmed running, which settles whether the column belongs in the bank and nothing else — it is not polling, so the threshold risk stands, and the codings still rest on press reporting rather than a published platform. Moti Leitner, deputy mayor of Beit Shemesh. An ultra-Orthodox faction campaigning for conscription, core-curriculum education and economic reform within haredi society — the first haredi column in the bank on the pro-conscription side. Its distinctive position is enlistment by incentive rather than by sanction: it wants state funding restructured to reward service and workforce participation, and argues that external coercion fails where communal reform can work. Coded on three stated planks plus the religion-and-state positions its own framing makes near-certain; security, institutions and identity are left unstated. 30% coverage, so it is suppressed from the ranking and the grid. Running is settled; coalition posture is not, hence unaligned.",
   },
   AMY: {
-    name: "People of Israel", lead: "Winter", color: "#8C5A2B",
-    bloc: "unaligned", ballot: true,
+    name: "People of Israel (Amcha Yisrael)", lead: "Winter", color: "#8C5A2B",
+    bloc: "pro", ballot: true,
     belowThreshold: true,
     // Not a polling claim: launched days ago, no polling exists to cite.
     thresholdNote: "launched in August; no polling on record",
-    note: "Amcha Yisrael, launched in Jerusalem on 25 August 2026 by Ofer Winter, the former Givati Brigade commander released from the military in 2024. Yoseph Haddad, the Arab-Israeli activist, is announced as its candidate for public diplomacy minister. Coded from launch-speech reporting rather than a platform, and thinly: ten of 50 items, 20% coverage, so it is suppressed from the ranking and the grid. Unaligned rather than pro-Netanyahu — Winter promises the broadest possible right-wing government with as many Zionist partners as possible, which is a bloc shape and not an endorsement, and in the same speech he attacks the incumbent political class. Revisit if he endorses.",
+    note: "Amcha Yisrael, launched in Jerusalem on 25 August 2026 by Ofer Winter, the former Givati Brigade commander released from the military in 2024. Yoseph Haddad, the Arab-Israeli activist, is announced as its candidate for public diplomacy minister. Coded from launch-speech reporting rather than a platform, and thinly: ten of 50 items, 20% coverage, so it is suppressed from the ranking and the grid. Pro-Netanyahu since August, on the trigger this entry named. It was unaligned while Winter promised the broadest possible right-wing government with as many Zionist partners as possible — a bloc shape rather than an endorsement — and the note said to revisit if he endorsed. He has, and F1 moves from N to A with it. He attaches a condition: he will not enter a coalition until a universal conscription law passes. That is a coalition condition and it moves no coded cell, on the same reasoning the Ra'am note sets out from the opposite direction. B1 already recorded him as wanting haredim drafted, and making that a precondition demonstrates the position rather than changing it. He will merge only with 'new and clean people', meaning nobody who held office on 7 October 2023 — a criterion that excludes the leaderships of Likud, Otzma Yehudit and Religious Zionism, and so makes this column likelier to reach the ballot intact than a new small list usually is.",
+  },
+  RES: {
+    name: "The Reservists and the Economic Party", lead: "Hendel", color: "#146B8C",
+    bloc: "unaligned", ballot: true,
+    note: "Unaligned by its own declaration rather than for want of evidence: it affiliates with no bloc, rules out working with nobody including Netanyahu and Ben Gvir, and calls for a Zionist unity government of every Knesset party except the Arab and ultra-Orthodox ones. A single-issue party coded as one. Universal conscription is the platform — full national service for every citizen, secular and religious, Jewish or Arab, exemptions ended, evasion equated in law with desertion, and sanctions running to loss of the vote, of welfare, of a driving licence and of the right to leave the country. That gives B1 the strongest stated position in the bank on the draft, and makes this the party the drafted B15 was written for, since it sits at the opposite pole from the Haredi Public Party on enforcement rather than on enlistment. Five of fifty items coded, so it is suppressed and correctly so. Not coded on A1: calling the conflict a clash of civilizations and saying peace needs generations is a view about how likely peace is, not a position on accepting a Palestinian state inside a normalisation agreement. The economic half of the name is unexplained by anything available here, and every economics cell is blank.",
+  },
+  IFT: {
+    name: "Israel First", lead: "Haskel (reported)", color: "#7F1D6F",
+    bloc: "unaligned", ballot: true,
+    note: "On the ballot and coded on nothing, and the thinnest entry in this registry. Reported to be led by Sharren Haskel, with Jonathan Pollard announced on the slate; both of those come from a news summary rather than a source read here, so they are recorded as reported and nothing is coded from them. Pollard's presence says a good deal about where the list is likely to sit, and that is exactly why it is not coded: a candidate's biography is not a party position, and this is the same inference declined for People of Israel on A4 and for The Reservists on A1. Listed at 0% so a respondent is told the party exists and that the instrument cannot place it, which is the whole point of separating suppression from omission. Bloc, platform and every cell are outstanding. The code is IFT rather than ISF, because ISF already means the international stabilisation force in the A16 notes and a three-letter collision in the matrix header is a real one.",
   },
   HTA: {
     name: "Hadash–Ta'al", lead: "Jabareen", color: "#B03A2E", bloc: "non", ballot: false,
@@ -121,8 +142,10 @@ export const PARTIES: Record<PartyCode, Party> = {
   },
 };
 
-export const BALLOT_PARTIES = (Object.keys(PARTIES) as PartyCode[]).filter((c) => PARTIES[c].ballot);
-export const COMPONENT_PARTIES = (Object.keys(PARTIES) as PartyCode[]).filter((c) => !PARTIES[c].ballot);
+export const BALLOT_PARTIES = (Object.keys(PARTIES) as PartyCode[]).filter((c) => PARTIES[c].ballot && !PARTIES[c].withdrawn);
+/** Kept out of every result, retained in the registry and the coding matrix. */
+export const WITHDRAWN_PARTIES = (Object.keys(PARTIES) as PartyCode[]).filter((c) => PARTIES[c].withdrawn);
+export const COMPONENT_PARTIES = (Object.keys(PARTIES) as PartyCode[]).filter((c) => !PARTIES[c].ballot && !PARTIES[c].withdrawn);
 
 export const BLOC_LABEL: Record<Bloc, string> = {
   pro: "Pro-Netanyahu bloc",

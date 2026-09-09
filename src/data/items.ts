@@ -11,7 +11,7 @@
    "agree" moves you toward the positive pole named in BLOCKS.
    ============================================================ */
 
-import { MATRIX_ORDER, type PartyCode } from "./parties";
+import { MATRIX_ORDER, PARTIES, type PartyCode } from "./parties";
 
 export type Position = "A" | "N" | "D" | "-";
 export type BlockId = "A" | "B" | "C" | "D" | "E";
@@ -396,8 +396,42 @@ const AMY_POS: Record<string, Position> = {
   D2: "D", D7: "A",
 };
 
-const EMPTY_POS = (): Record<PartyCode, Position> =>
-  ({} as Record<PartyCode, Position>);
+/* --- The Reservists and the Economic Party (Hendel) ------------------------
+ *
+ * Five cells from six paragraphs, which is what a single-issue party looks
+ * like when it is coded honestly rather than filled in. Conscription is the
+ * party, and B1 is the strongest-stated cell in the bank on that axis: full
+ * national service for every citizen, secular and religious, Jewish or Arab,
+ * with draft exemptions ended.
+ *
+ * Deliberately not coded on A1. Hendel calls the conflict a clash of
+ * civilizations and says peace needs generational change, which is a view
+ * about how likely peace is, not a position on whether Israel should accept a
+ * Palestinian state inside a normalisation agreement. Those come apart, and A1
+ * is the most consequential item in the bank — the wrong place to make the
+ * thinnest column's first inference.
+ * ------------------------------------------------------------------------ */
+const RES_POS: Record<string, Position> = {
+  B1: "A",
+  C3: "N",
+  C6: "A",
+  D2: "D",
+  D7: "A",
+};
+
+/**
+ * Every registry column starts at "-", not undefined. The overlays below then
+ * fill in the ones that have a position. Building this from PARTIES rather than
+ * from a literal means adding a party to the registry cannot leave holes in the
+ * matrix: a column nobody has coded reads as no position on record, which is
+ * true, instead of reading as undefined, which crashes the coverage arithmetic
+ * and slips past a coding-key check that only knows about A, N, D and "-".
+ */
+const EMPTY_POS = (): Record<PartyCode, Position> => {
+  const pos = {} as Record<PartyCode, Position>;
+  for (const code of Object.keys(PARTIES) as PartyCode[]) pos[code] = "-";
+  return pos;
+};
 
 export const ITEMS: Item[] = RAW.map(([id, block, sign, text, codings]) => {
   if (codings.length !== MATRIX_ORDER.length) {
@@ -412,6 +446,7 @@ export const ITEMS: Item[] = RAW.map(([id, block, sign, text, codings]) => {
   pos.NOAM = NOAM_POS[id] ?? "-";
   pos.HPP = HPP_POS[id] ?? "-";
   pos.AMY = AMY_POS[id] ?? "-";
+  pos.RES = RES_POS[id] ?? "-";
   return { id, block, sign, text, pos };
 });
 
@@ -477,6 +512,7 @@ export const RETIRED: RetiredItem[] = RETIRED_ROWS.map(([row, duplicateOf, reaso
   pos.NOAM = NOAM_POS[id] ?? "-";
   pos.HPP = HPP_POS[id] ?? "-";
   pos.AMY = AMY_POS[id] ?? "-";
+  pos.RES = RES_POS[id] ?? "-";
   return { id, block, sign, text, pos, duplicateOf, reason };
 });
 
@@ -519,6 +555,7 @@ const draft = (row: Row, overlays: Overlays): Item => {
   pos.NOAM = overlays.noam;
   pos.HPP = overlays.hpp;
   pos.AMY = overlays.amy;
+  pos.RES = overlays.res;
   return { id, block, sign, text, pos };
 };
 
@@ -535,7 +572,7 @@ export const PENDING: { item: Item; rationale: string }[] = [
       // haredi conscription is not its fight. People of Israel wants them
       // drafted and has said nothing about enforcement, so it differs from B1
       // by silence rather than by disagreeing.
-      { jl: "-", uni: "A", noam: "N", hpp: "D", amy: "-" },
+      { jl: "-", uni: "A", noam: "N", hpp: "D", amy: "-", res: "A" },
     ),
     rationale:
       "Separates enforcement from enlistment. B1 collects \"draft them and penalise refusal\" and \"draft them by restructuring funding\" as the same answer, which was harmless until a haredi party took the second position. Held for the September bank revision rather than added now, because a new item shifts every coverage denominator, invalidates saved sessions and re-opens the clustering check — all of which that revision does anyway.",
@@ -563,7 +600,7 @@ export interface Diagnostic {
  * `diagnosticPos("ADDAAAADDDDDD", "D", "N", "A", "-")` is unreadable and one
  * transposition would be invisible.
  */
-type Overlays = { jl: Position; uni: Position; noam: Position; hpp: Position; amy: Position };
+type Overlays = { jl: Position; uni: Position; noam: Position; hpp: Position; amy: Position; res: Position };
 
 function diagnosticPos(codings: string, o: Overlays): Record<PartyCode, Position> {
   const pos = EMPTY_POS();
@@ -575,14 +612,17 @@ function diagnosticPos(codings: string, o: Overlays): Record<PartyCode, Position
   pos.NOAM = o.noam;
   pos.HPP = o.hpp;
   pos.AMY = o.amy;
+  pos.RES = o.res;
   return pos;
 }
 
 export const F1: Diagnostic = {
   id: "F1",
   text: "Benjamin Netanyahu should continue as prime minister.",
-  // Unity explicitly declined to rule out sitting with Netanyahu.
-  pos: diagnosticPos("ADDAAAADDDDDD", { jl: "D", uni: "N", noam: "A", hpp: "-", amy: "N" }),
+  // Unity explicitly declined to rule out sitting with Netanyahu. People of
+  // Israel was N while Winter promised a broad right-wing government without
+  // naming a candidate; he has since endorsed Netanyahu outright, so A.
+  pos: diagnosticPos("ADDAAAADDDDDD", { jl: "D", uni: "N", noam: "A", hpp: "-", amy: "A", res: "N" }),
 };
 
 export const F2: Diagnostic = {
@@ -603,13 +643,13 @@ export const F2: Diagnostic = {
 export const G1: Diagnostic = {
   id: "G1",
   text: "An Arab party should be willing to join a coalition led by a Zionist party.",
-  pos: diagnosticPos("NNNNNDDNANADD", { jl: "D", uni: "-", noam: "D", hpp: "-", amy: "-" }),
+  pos: diagnosticPos("NNNNNDDNANADD", { jl: "D", uni: "-", noam: "D", hpp: "-", amy: "-", res: "-" }),
 };
 
 export const G2: Diagnostic = {
   id: "G2",
   text: "The electoral threshold should be raised above its current 3.25%.",
-  pos: diagnosticPos("AANDDDDADDDDD", { jl: "D", uni: "-", noam: "D", hpp: "-", amy: "-" }),
+  pos: diagnosticPos("AANDDDDADDDDD", { jl: "D", uni: "-", noam: "D", hpp: "-", amy: "-", res: "-" }),
 };
 
 /**
@@ -622,7 +662,7 @@ export const G2: Diagnostic = {
 export const G3: Diagnostic = {
   id: "G3",
   text: "The state should acknowledge and compensate for discrimination against Mizrahi immigrants in its early decades.",
-  pos: diagnosticPos("ANNANANNANNA-", { jl: "A", uni: "-", noam: "N", hpp: "-", amy: "-" }),
+  pos: diagnosticPos("ANNANANNANNA-", { jl: "A", uni: "-", noam: "N", hpp: "-", amy: "-", res: "-" }),
 };
 
 /** Cross-cutting items, asked after the topic weighting. */
