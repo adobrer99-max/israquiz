@@ -9,7 +9,7 @@ import { PARTIES, type PartyCode } from "../data/parties";
  */
 const COLUMNS: PartyCode[] = [
   "LIK", "TOG", "YSH", "SHS", "UTJ", "HPP", "OTZ", "RZ", "NOAM", "AMY", "YB", "DEM", "BW",
-  "UNI", "RES", "ISF", "RAM", "JL", "HTA", "BAL",
+  "UNI", "RES", "IFT", "RAM", "JL", "HTA", "BAL",
 ];
 
 /** Built once: overlay columns whose cells rest on reasoning, not a platform. */

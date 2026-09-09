@@ -589,7 +589,7 @@ describe("party match (§4.2)", () => {
 
   it("suppresses the thin columns for low coverage and keeps the Joint List in", () => {
     const r = score(answerAs("LIK"));
-    expect(r.lowCoverage.map((x) => x.code).sort()).toEqual(["AMY", "HPP", "ISF", "RES"]);
+    expect(r.lowCoverage.map((x) => x.code).sort()).toEqual(["AMY", "HPP", "IFT", "RES"]);
     expect(r.ranked.map((x) => x.code)).toContain("JL");
     expect(r.all.JL.coverage).toBeGreaterThanOrEqual(0.95);
   });

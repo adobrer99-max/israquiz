@@ -8,7 +8,7 @@
 export type PartyCode =
   | "LIK" | "TOG" | "YSH" | "SHS" | "UTJ" | "OTZ" | "RZ"
   | "YB"  | "DEM" | "BW"  | "RAM" | "JL"  | "UNI"
-  | "NOAM" | "HPP" | "AMY" | "RES" | "ISF"
+  | "NOAM" | "HPP" | "AMY" | "RES" | "IFT"
   | "HTA" | "BAL";
 
 /** §4.5 bloc readout. `unaligned` parties are reported in no bloc average. */
@@ -127,10 +127,10 @@ export const PARTIES: Record<PartyCode, Party> = {
     bloc: "unaligned", ballot: true,
     note: "Unaligned by its own declaration rather than for want of evidence: it affiliates with no bloc, rules out working with nobody including Netanyahu and Ben Gvir, and calls for a Zionist unity government of every Knesset party except the Arab and ultra-Orthodox ones. A single-issue party coded as one. Universal conscription is the platform — full national service for every citizen, secular and religious, Jewish or Arab, exemptions ended, evasion equated in law with desertion, and sanctions running to loss of the vote, of welfare, of a driving licence and of the right to leave the country. That gives B1 the strongest stated position in the bank on the draft, and makes this the party the drafted B15 was written for, since it sits at the opposite pole from the Haredi Public Party on enforcement rather than on enlistment. Five of fifty items coded, so it is suppressed and correctly so. Not coded on A1: calling the conflict a clash of civilizations and saying peace needs generations is a view about how likely peace is, not a position on accepting a Palestinian state inside a normalisation agreement. The economic half of the name is unexplained by anything available here, and every economics cell is blank.",
   },
-  ISF: {
-    name: "Israel First", lead: "unknown", color: "#7F1D6F",
+  IFT: {
+    name: "Israel First", lead: "Haskel (reported)", color: "#7F1D6F",
     bloc: "unaligned", ballot: true,
-    note: "On the ballot and coded on nothing, and the thinnest entry in this registry: the name is all that is currently known here, including who leads it. Listed so that a respondent is told it exists and that the instrument cannot place it, which is the whole point of separating suppression from omission. Everything about this column — leader, bloc, platform, whether it is a new list or a rename — is outstanding.",
+    note: "On the ballot and coded on nothing, and the thinnest entry in this registry. Reported to be led by Sharren Haskel, with Jonathan Pollard announced on the slate; both of those come from a news summary rather than a source read here, so they are recorded as reported and nothing is coded from them. Pollard's presence says a good deal about where the list is likely to sit, and that is exactly why it is not coded: a candidate's biography is not a party position, and this is the same inference declined for People of Israel on A4 and for The Reservists on A1. Listed at 0% so a respondent is told the party exists and that the instrument cannot place it, which is the whole point of separating suppression from omission. Bloc, platform and every cell are outstanding. The code is IFT rather than ISF, because ISF already means the international stabilisation force in the A16 notes and a three-letter collision in the matrix header is a real one.",
   },
   HTA: {
     name: "Hadash–Ta'al", lead: "Jabareen", color: "#B03A2E", bloc: "non", ballot: false,
