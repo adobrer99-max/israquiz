@@ -252,6 +252,48 @@ Under **Diagnostics** in the app, recorded rather than smoothed over:
    specifically sees the Joint List instead, and the component readout below the ranking is the only
    place that difference appears — which is why those columns stay published.
 
+## Optional sharper questions
+
+Proposed, not built. Three items have now been found to be coarser than the
+politics they measure — B3 asks about yeshivot where the policy covers every
+non-state-supervised stream, E1 bundles a spending preference with a tax
+preference, A8 asks about prosecution where the live proposal is administrative
+detention. Rewording them is the obvious fix and the wrong one: it breaks
+comparability with every answer already given, forces another storage bump, and
+trades one compression for another, since the sharper wording excludes the
+respondent who only holds the coarse view.
+
+The alternative is a follow-up item offered after the base one, to respondents
+who want it. B1 asks whether haredi students should be drafted; the follow-up
+asks what should happen to those who refuse. A8 asks about prosecution; the
+follow-up asks about detention without charge.
+
+**They must not be scored, and this is the whole design.** If some respondents
+answer them and others do not, two people get a match computed over different
+item sets, which breaks comparison between respondents and makes the §4.7
+recovery rate meaningless. Worse, every optional item joins each party's
+coverage denominator, so a party silent on a question most people skip loses
+coverage for it — the coverage floor would start suppressing columns on the
+strength of questions almost nobody answered. Block G already establishes the
+pattern: coded for every party, shown in the matrix, never touching an axis or a
+match. Optional items extend it.
+
+What they are for, then, is not the ranking. They tell the respondent something
+the ranking cannot, and they generate the evidence the wording pass needs —
+which items the coarse and sharp answers diverge on is an empirical question
+this project currently answers by argument.
+
+This also resolves B15 without promoting it. The drafted enforcement item exists
+because three parties now differ on a dimension B1 collapses, and the objection
+to adding it has been cost: a fourth storage bump, every coverage denominator
+moved, the clustering check reopened. As an optional follow-up to B1 it costs
+none of that, and the distinction becomes visible without becoming load-bearing.
+
+Selection effect, stated before anyone reports a number from these: people who
+opt into more questions are not a random subset of people who took the quiz, who
+are already not a sample of the electorate. Whatever these produce is weaker
+evidence than the main bank, not stronger, despite being sharper.
+
 ## Two things to build when the lists file
 
 Neither is started, and both are cheap only if the September re-verification is
