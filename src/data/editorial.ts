@@ -5,7 +5,7 @@
    auditable rather than merely visible.
    ============================================================ */
 
-export const VERSION = "v0.3 — results";
+export const VERSION = "v0.3.1 — results";
 export const VERSION_DATE = "5 November 2026";
 
 export const ELECTION = {
@@ -32,6 +32,11 @@ export interface Note {
 }
 
 export const CODING_NOTES: Note[] = [
+  {
+    items: "November scan · 21 cells recoded from pre-election evidence",
+    severe: true,
+    issue: "A scan of the six thinnest seat-winning columns, using only votes, platforms and statements from before 27 October, so the promise that codings stand as they did on election day still holds; nothing said in coalition talks was used. Votes are the strongest evidence. On the death penalty for terrorists (final passage 30 March 2026, 62–47), Shas moves N to A: Deri voted in person and Shas also voted for the 2023 preliminary reading. UTJ moves to '-' because its halves split, Degel HaTorah for and Agudat Yisrael against. On the October 2025 sovereignty bill (A3) UTJ split again, Agudah for and Degel against, and goes to '-'. Yisrael Beiteinu, which voted for that bill and whose 4 October plan says to apply sovereignty in Area C, moves N to A. Together moves A3 from D to '-': Bennett, speaking as list chairman in June, said Area C will be part of the State of Israel, and Lapid has opposed annexation, so the merge rule applies. The audit rule does the most work in UTJ's column: the Jerusalem Post's guide says UTJ has developed no independent position on Gaza, Lebanon or Iran, so A4, A5, A6, A9, A10 and A15 move from N to '-'. N there was silence, not equivocation. UTJ and Shas also move to '-' on E5 because neither campaigned on defence spending. Yashar moves D2 from N to D, because its coalition terms exclude Ra'am and the Joint List, and A6 from '-' to N, because Eisenkot would prefer the PA to Hamas but has proposed no PA role. Likud moves C3 from A to N: Netanyahu dropped the override in 2023 and Likud declined Ynet's 2026 judiciary questionnaire, so the A rested on 2022. Yisrael Beiteinu's platform rules out an override clause and moves C3 from N to D, though Ynet's guide lists it as unstated. Shas moves A2 from A to N, because it opposes indefinite Israeli control of Gaza. Together's column gains four cells from the Hediot summary of its platform: a binding, funded climate law with sector targets (E8 to A), about 100,000 long-term rental flats, 40% of them discounted (E4 to A, the weakest of the four, since these are subsidised rentals rather than public housing), Bennett on there being no security without eliminating Hamas and fully demilitarising Gaza (A5 to A), and a Zionist-only alliance (D2 to D, which Lapid's 2021 government with Ra'am makes the most contestable cell here). The party's own site could not be read for this scan, so A1, A6 and A16 remain '-'. Sources: Times of Israel on the death penalty law; IDI on the haredi parties and the death penalty; Ynet on the sovereignty vote and on every party's judiciary position; the Jerusalem Post party guides for Yashar, Shas and UTJ; Arutz Sheva on Bennett and Areas A, B and C; the Jewish Chronicle on Beyachad; Hediot and The Petek party pages.",
+  },
   {
     items: "Two parties added at filing, coded on nothing",
     severe: true,

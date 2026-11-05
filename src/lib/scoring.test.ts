@@ -204,11 +204,17 @@ describe("retired items (§4.7 — publish what you cut and why)", () => {
   });
 
   it("names a surviving item for each one cut, carrying the same information", () => {
+    // Cells recoded on the surviving item after the cut. The retired row keeps
+    // the codings it had when it was cut, so these are the only cells allowed to
+    // differ. Keyed by the surviving item: the November scan recoded these cells
+    // from evidence about the surviving question, which does not speak to the cut one.
+    const recodedSince: Record<string, PartyCode[]> = { A2: ["SHS"], A3: ["TOG", "UTJ", "YB"], A5: ["TOG", "UTJ"], C3: ["LIK", "YB"] };
     for (const r of RETIRED) {
       const kept = ITEMS.find((i) => i.id === r.duplicateOf);
       expect(kept, `${r.id} -> ${r.duplicateOf}`).toBeDefined();
-      const same = MATRIX_ORDER.every((c) => r.pos[c] === kept!.pos[c]);
-      const inverted = MATRIX_ORDER.every(
+      const cols = MATRIX_ORDER.filter((c) => !(recodedSince[r.duplicateOf] ?? []).includes(c));
+      const same = cols.every((c) => r.pos[c] === kept!.pos[c]);
+      const inverted = cols.every(
         (c) => r.pos[c] === (kept!.pos[c] === "A" ? "D" : kept!.pos[c] === "D" ? "A" : kept!.pos[c]),
       );
       expect(same || inverted, `${r.id} does not duplicate ${r.duplicateOf}`).toBe(true);
@@ -846,7 +852,8 @@ describe("expected clustering smoke test (§4.6)", () => {
     const piles = axisCollapses().filter((c) => c.parties.length > 2);
     expect(piles.map((c) => `${c.block}:${[...c.parties].sort().join(",")}`).sort()).toEqual([
       "C:DEM,JL,RAM",
-      "C:LIK,NOAM,OTZ,RZ",
+      // Likud left this pile in November, when C3 moved from A to N.
+      "C:NOAM,OTZ,RZ",
     ]);
   });
 
