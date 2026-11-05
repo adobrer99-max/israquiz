@@ -5,8 +5,8 @@
    auditable rather than merely visible.
    ============================================================ */
 
-export const VERSION = "v0.2 — preview";
-export const VERSION_DATE = "5 September 2026";
+export const VERSION = "v0.3 — results";
+export const VERSION_DATE = "5 November 2026";
 
 export const ELECTION = {
   knesset: 26,

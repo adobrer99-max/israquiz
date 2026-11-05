@@ -4,7 +4,7 @@
   --slip: #fbfbf7;
   --envelope: #1e4b8f;
   --rule: #c9cbc4;
-  --muted: #6b7180;
+  --muted: #5a6070;
   --well: #dfe1db;
   --good: #1f7a4c;
   --warn: #8a6d14;
@@ -361,3 +361,11 @@ th { font-family: var(--mono); font-size: 10px; letter-spacing: 0.06em; text-tra
   .no-print { display: none !important; }
   body { background: #fff; }
 }
+
+/* The 26th Knesset results card */
+.knesset-bar { position: relative; display: flex; height: 26px; border-radius: 4px; overflow: hidden; margin: 14px 0 10px; border: 1px solid var(--rule); }
+.knesset-bar span { display: block; height: 100%; }
+.knesset-bar span + span { box-shadow: inset 1px 0 0 rgba(255,255,255,.55); }
+.knesset-majority { position: absolute; top: -4px; bottom: -4px; width: 2px; background: var(--ink); }
+.knesset-blocs { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 6px 18px; }
+.knesset-bloc-head { display: flex; justify-content: space-between; border-bottom: 1px solid var(--rule); padding: 6px 0 4px; font-size: 14px; }
