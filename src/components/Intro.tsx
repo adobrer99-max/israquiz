@@ -2,6 +2,7 @@ import { ELECTION, VERSION, VERSION_DATE } from "../data/editorial";
 import { ITEMS } from "../data/items";
 import { BALLOT_PARTIES, PARTIES } from "../data/parties";
 import { collectionEnabled } from "../lib/collect";
+import { Knesset } from "./Knesset";
 
 export function Intro({
   onStart,
@@ -33,9 +34,12 @@ export function Intro({
         <h1 style={{ margin: "12px 0 10px" }}>Israel 2026 Election Compass</h1>
         <p className="muted" style={{ fontSize: 15 }}>
           {ITEMS.length} statements, then five sliders. Roughly eight minutes. Built for the{" "}
-          {ELECTION.knesset}th Knesset, {ELECTION.date}.
+          {ELECTION.knesset}th Knesset, {ELECTION.date}. The vote is over: take it to see where you land, and which of
+          your matches made it in.
         </p>
       </div>
+
+      <Knesset />
 
       {hasSaved && (
         <div className="card">
@@ -91,8 +95,9 @@ export function Intro({
           not electoral viability, and not advice about how to vote.
         </p>
         <p className="small">
-          Party codings are a working draft and will be re-verified against the lists actually filed in
-          September. The full matrix is published — you can check every cell the scoring uses.
+          Party codings were checked against the lists filed in September and are left as they stood on
+          election day; the results describe what happened and do not change them. The full matrix is
+          published — you can check every cell the scoring uses.
         </p>
         <p className="small">
           {collectionEnabled()

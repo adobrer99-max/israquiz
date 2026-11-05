@@ -11,6 +11,8 @@ import { Bar } from "./Bar";
 import { Contribute, type ContributeProps } from "./Contribute";
 import { Grid, GridTextEquivalent } from "./Grid";
 import { Statement } from "./Statement";
+import { Knesset } from "./Knesset";
+import { OUTCOMES, outcomeLine, wonSeats } from "../data/results";
 
 const BLOC_ROWS: [keyof ScoreResult["blocs"], string][] = [
   ["pro", "Pro-Netanyahu bloc"],
@@ -80,7 +82,8 @@ function MatchRow({ r, i, value }: { r: PartyResult; i: number; value: number })
         <span style={{ fontSize: 15, fontWeight: 600, display: "block" }}>{r.name}</span>
         <span className="small muted">
           {r.lead}
-          {r.belowThreshold && ` · ${r.thresholdNote ?? `polling below the ${ELECTION.threshold}% threshold`}`}
+          {OUTCOMES[r.code] ? <strong style={{ color: wonSeats(r.code) ? "var(--ink)" : "var(--bad)", fontWeight: 600 }}>{` · ${outcomeLine(r.code, ELECTION.threshold)}`}</strong>
+            : r.belowThreshold && ` · ${r.thresholdNote ?? `polling below the ${ELECTION.threshold}% threshold`}`}
           {r.coverage < 1 && ` · ${Math.round(r.coverage * 100)}% coded`}
           {` · from ${r.scoredItems} shared answer${r.scoredItems === 1 ? "" : "s"}`}
         </span>
@@ -221,13 +224,27 @@ export function Results({
           {reason}
         </p>
       )}
-      {top.belowThreshold && (
-        <p className="small" style={{ marginTop: 8 }}>
-          Your closest match is at risk of the {ELECTION.threshold}% electoral threshold
-          {top.thresholdNote ? ` — ${top.thresholdNote}` : ""}. A party that falls short takes no seats and
-          its votes are discarded, which is worth knowing before the percentage above becomes advice.
-        </p>
-      )}
+      {(() => {
+        const inK = list.filter((r) => wonSeats(r.code));
+        const best = inK[0];
+        return (
+          <div className="card" style={{ marginTop: 14 }}>
+            <span className="eyebrow">In the new Knesset</span>
+            {!wonSeats(top.code) && OUTCOMES[top.code] && (
+              <p className="small" style={{ margin: "10px 0 0" }}>
+                Your closest match, {top.name}, {outcomeLine(top.code, ELECTION.threshold)}, so it took no seats.
+              </p>
+            )}
+            {best && (
+              <p style={{ fontSize: 15, margin: "10px 0 0" }}>
+                Of the parties that won seats, you are closest to <strong>{best.name}</strong> ({Math.round(best[key])}%),
+                which {outcomeLine(best.code, ELECTION.threshold)}.
+                {inK[1] && <> Next: {inK.slice(1, 3).map((r) => `${r.name} (${Math.round(r[key])}%)`).join(" and ")}.</>}
+              </p>
+            )}
+          </div>
+        );
+      })()}
       {thinOverlap && (
         <p className="small" style={{ marginTop: 8 }}>
           This match rests on {top.scoredItems} statement{top.scoredItems === 1 ? "" : "s"} — the ones you
@@ -252,7 +269,8 @@ export function Results({
             <div className="row" key={r.code}>
               <span>
                 {r.name}
-                {r.belowThreshold && <span className="muted"> · below threshold</span>}
+                {OUTCOMES[r.code] ? <span className="muted"> · {outcomeLine(r.code, ELECTION.threshold)}</span>
+                  : r.belowThreshold && <span className="muted"> · below threshold</span>}
               </span>
               <span className="mono">{Math.round(r[key])}%</span>
             </div>
@@ -292,6 +310,8 @@ export function Results({
             )}
         </div>
       </details>
+
+      <Knesset compact />
 
       <h3 style={{ margin: "28px 0 12px" }}>Where you sit</h3>
       <Grid result={result} />
