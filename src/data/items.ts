@@ -73,12 +73,12 @@ export const A5_ROWS: Record<A5Variant, Row> = {
   live: [
     "A5", "A", -1,
     "Israel should accept the Board of Peace's phased disarmament plan, withdrawing its forces in stages as Hamas decommissions its weapons.",
-    "DN-NNDDNANAAA",
+    "DD-N-DDNANAAA",
   ],
   durable: [
     "A5", "A", 1,
     "Israeli forces should withdraw from Gaza only once Hamas has completely disarmed.",
-    "AN-NNAANDNDDD",
+    "AA-N-AANDNDDD",
   ],
 };
 
@@ -92,11 +92,11 @@ const RAW: Row[] = [
   // "delusional" — the first flatly stated position from a column whose N
   // codings otherwise mean genuinely unstated rather than centrist.
   ["A1", "A", -1, "Israel should accept the establishment of a Palestinian state as part of a wider regional normalization agreement.", "D-DDDDDDADAAA"],
-  ["A2", "A", 1, "Israel should retain indefinite overriding security control over the entire area west of the Jordan River.", "AAAANAAADADDD"],
-  ["A3", "A", 1, "Israel should apply Israeli sovereignty to parts of the West Bank.", "ADDNNAANDDDDD"],
-  ["A4", "A", 1, "Jewish civilian settlement in the Gaza Strip should be permitted to resume.", "NDDNNAADDDDDD"],
+  ["A2", "A", 1, "Israel should retain indefinite overriding security control over the entire area west of the Jordan River.", "AAANNAAADADDD"],
+  ["A3", "A", 1, "Israel should apply Israeli sovereignty to parts of the West Bank.", "A-DN-AAADDDDD"],
+  ["A4", "A", 1, "Jewish civilian settlement in the Gaza Strip should be permitted to resume.", "NDDN-AADDDDDD"],
   A5_ROWS[A5_VARIANT],
-  ["A6", "A", -1, "The Palestinian Authority should be given a governing role in post-war Gaza.", "D--DNDDDADAAA"],
+  ["A6", "A", -1, "The Palestinian Authority should be given a governing role in post-war Gaza.", "D-ND-DDDADAAA"],
   ["A7", "A", 1, "Settlement construction in the West Bank should continue to expand.", "ANDNNAANDNDDD"],
   // Was "the state should vigorously enforce the law against...". The
   // intensifier made the disagreeing side sound like it was endorsing
@@ -107,9 +107,9 @@ const RAW: Row[] = [
   // prosecutions. Codings unchanged; the row was never about enforcement in
   // the abstract.
   ["A8", "A", -1, "Illegal outposts should be removed and settler violence prosecuted.", "DAANNDDAAAAAA"],
-  ["A9", "A", 1, "Israel should be prepared to take major military action against Iran without American approval.", "AA-NNAAADNDDD"],
-  ["A10", "A", -1, "Israel should be willing to negotiate indirectly with Hamas to reach long-term arrangements.", "DD-NNDDDADAAA"],
-  ["A12", "A", 1, "The death penalty should be available for convicted terrorists.", "ADDNNAAADDDDD"],
+  ["A9", "A", 1, "Israel should be prepared to take major military action against Iran without American approval.", "AA-N-AAADNDDD"],
+  ["A10", "A", -1, "Israel should be willing to negotiate indirectly with Hamas to reach long-term arrangements.", "DD-N-DDDADAAA"],
+  ["A12", "A", 1, "The death penalty should be available for convicted terrorists.", "ADDA-AAADDDDD"],
   // A13 added after §4.7 validation: nothing else in the bank separated The
   // Democrats, Ra'am and the Joint List, all three of which were coded
   // identically on the other twelve security items.
@@ -133,7 +133,7 @@ const RAW: Row[] = [
   // opinion of Gazans. As with D8 it should be said plainly that this item asks
   // Arab and Palestinian respondents about a policy aimed at people like them,
   // and that no wording makes that comfortable.
-  ["A15", "A", 1, "Israel should actively encourage the emigration of Gaza's population.", "NDNNNAANDDDDD"],
+  ["A15", "A", 1, "Israel should actively encourage the emigration of Gaza's population.", "NDNN-AANDDDDD"],
   // A16, rewritten in August after an external audit showed the first wording
   // misdescribed the choice. It said security control should pass to "a force
   // of Arab and Muslim states", which is wrong twice over. The stabilisation
@@ -196,14 +196,14 @@ const RAW: Row[] = [
   ["B14", "B", -1, "Women should be eligible to serve in every military combat role.", "NAADDNDAAA-N-"],
 
   ["C1", "C", 1, "The Supreme Court should have the power to strike down Basic Laws.", "DNNDDDDNANAAA"],
-  ["C3", "C", -1, "A Knesset majority should be able to override Supreme Court rulings.", "ADDAAAANDDDDD"],
+  ["C3", "C", -1, "A Knesset majority should be able to override Supreme Court rulings.", "NDDAAAADDDDDD"],
   ["C5", "C", 1, "The Attorney General's legal opinions should be binding on the government.", "DNADDDDNAAAAA"],
   ["C6", "C", 1, "A state commission of inquiry into the failures of 7 October, with a judicially appointed chair, should be established.", "DAADDDDAAAAAA"],
   ["C8", "C", -1, "Ministers should be able to appoint and dismiss their own ministry legal advisers.", "ADDANAANDDDDD"],
   ["C9", "C", 1, "Operational policing decisions should be insulated from ministerial direction.", "DAANNDDAAAAAA"],
 
   ["D1", "D", -1, "Israel should be defined first and foremost as a Jewish state, even where this limits full equality for non-Jewish citizens.", "ANDANAANDNDDD"],
-  ["D2", "D", 1, "Arab parties should be legitimate partners in a governing coalition.", "D-NDDDDDADAAA"],
+  ["D2", "D", 1, "Arab parties should be legitimate partners in a governing coalition.", "DDDDDDDDADAAA"],
   ["D3", "D", 1, "The Nation-State Basic Law should be amended to add a clause guaranteeing equality.", "DNNDDDDDANAAA"],
   ["D4", "D", 1, "Government investment in Arab towns should be substantially increased and insulated from coalition politics.", "NAANNDDNAAAAA"],
   ["D6", "D", -1, "The Law of Return's “grandchild clause” should be narrowed.", "NDDAAAADDD---"],
@@ -226,11 +226,11 @@ const RAW: Row[] = [
   ["E1", "E", 1, "The state should substantially increase spending on health and welfare, even if this requires higher taxes.", "DNNAAANDANAAA"],
   ["E2", "E", 1, "Child allowances and stipends for full-time yeshiva students should be increased.", "NDDAAAADNDAAA"],
   ["E3", "E", -1, "Israel should cut regulation and open the market to more imports to reduce the cost of living.", "AAADNNNANANDN"],
-  ["E4", "E", 1, "Public housing construction should be significantly expanded.", "DNNAAANNANAAA"],
-  ["E5", "E", -1, "The defence budget should grow even at the expense of civilian spending.", "AAANNAAADADDD"],
+  ["E4", "E", 1, "Public housing construction should be significantly expanded.", "DANAAANNANAAA"],
+  ["E5", "E", -1, "The defence budget should grow even at the expense of civilian spending.", "AAA--AAADADDD"],
   ["E6", "E", 1, "Labour protections and the minimum wage should be strengthened.", "DNNANNNNANAAA"],
   ["E7", "E", -1, "Remaining state monopolies (ports, electricity, land) should be further privatized.", "AANDNNNADNNDD"],
-  ["E8", "E", 1, "Israel should adopt binding emissions-reduction targets even at economic cost.", "DNNDDDDNANNAN"],
+  ["E8", "E", 1, "Israel should adopt binding emissions-reduction targets even at economic cost.", "DANDDDDNANNAN"],
 ];
 
 /* --- §3.7 The Joint List: merged ballot column (Hadash + Ta'al + Balad) --- */
