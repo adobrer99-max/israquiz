@@ -97,7 +97,7 @@ const RAW: Row[] = [
   ["A4", "A", 1, "Jewish civilian settlement in the Gaza Strip should be permitted to resume.", "NDDN-AADDDDDD"],
   A5_ROWS[A5_VARIANT],
   ["A6", "A", -1, "The Palestinian Authority should be given a governing role in post-war Gaza.", "D-ND-DDDADAAA"],
-  ["A7", "A", 1, "Settlement construction in the West Bank should continue to expand.", "ANDNNAANDNDDD"],
+  ["A7", "A", 1, "Settlement construction in the West Bank should continue to expand.", "ANDNAAANDNDDD"],
   // Was "the state should vigorously enforce the law against...". The
   // intensifier made the disagreeing side sound like it was endorsing
   // lawlessness, which fails §5's both-sides test; but simply deleting it left
@@ -163,7 +163,7 @@ const RAW: Row[] = [
   // Zionism onto Shas and UTJ at religion 100, and a party whose own base is
   // reported as furious about that backing is not a party that has adopted the
   // haredi position on service. See the note.
-  ["B1", "B", -1, "Haredi yeshiva students should be subject to the military draft on the same terms as other citizens.", "DAADDNNAAA---"],
+  ["B1", "B", -1, "Haredi yeshiva students should be subject to the military draft on the same terms as other citizens.", "DAADD-NAAA---"],
   ["B2", "B", -1, "Public transport should operate on Shabbat in municipalities that want it.", "DANDDDDAAN-A-"],
   ["B3", "B", -1, "State funding for yeshivot should be conditional on teaching the core curriculum (mathematics, English, science).", "NAADDDDAAA-A-"],
   ["B4", "B", -1, "Civil marriage should be available in Israel.", "DAADDDDAAADAN"],
@@ -225,11 +225,11 @@ const RAW: Row[] = [
 
   ["E1", "E", 1, "The state should substantially increase spending on health and welfare, even if this requires higher taxes.", "DNNAAA-NANAAA"],
   ["E2", "E", 1, "Child allowances and stipends for full-time yeshiva students should be increased.", "NDDAAAADNDAAA"],
-  ["E3", "E", -1, "Israel should cut regulation and open the market to more imports to reduce the cost of living.", "AAADNNAAAANDN"],
+  ["E3", "E", -1, "Israel should cut regulation and open the market to more imports to reduce the cost of living.", "AAAAN-AAAANDN"],
   ["E4", "E", 1, "Public housing construction should be significantly expanded.", "DANAAANNANAAA"],
   ["E5", "E", -1, "The defence budget should grow even at the expense of civilian spending.", "AAA--AAADADDD"],
-  ["E6", "E", 1, "Labour protections and the minimum wage should be strengthened.", "DNNANNNNANAAA"],
-  ["E7", "E", -1, "Remaining state monopolies (ports, electricity, land) should be further privatized.", "AANDNN-ADNNDD"],
+  ["E6", "E", 1, "Labour protections and the minimum wage should be strengthened.", "DNNAN-NNANAAA"],
+  ["E7", "E", -1, "Remaining state monopolies (ports, electricity, land) should be further privatized.", "AANNN--ADNNDD"],
   ["E8", "E", 1, "Israel should adopt binding emissions-reduction targets even at economic cost.", "DANDDDDNANNAN"],
 ];
 
@@ -565,8 +565,10 @@ export const PENDING: { item: Item; rationale: string }[] = [
       [
         "B15", "B", -1,
         "Haredi men who do not report for military service should face the same legal consequences as any other citizen who does not.",
-        "DAADDNNAAA---",
+        "DAADD-NAAA---",
       ],
+      // Otzma Yehudit moved to '-' with B1 in November: Hediot found no
+      // position on the haredi draft at all, which covers enforcement too.
       // HPP is the only column taking a different position from B1: it wants
       // haredim serving and opposes compelling them. Noam is N on both —
       // haredi conscription is not its fight. People of Israel wants them
