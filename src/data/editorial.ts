@@ -5,7 +5,7 @@
    auditable rather than merely visible.
    ============================================================ */
 
-export const VERSION = "v0.3.1 — results";
+export const VERSION = "v0.3.2 — results";
 export const VERSION_DATE = "5 November 2026";
 
 export const ELECTION = {
@@ -32,6 +32,10 @@ export interface Note {
 }
 
 export const CODING_NOTES: Note[] = [
+  {
+    items: "November scan, second pass · six more cells",
+    issue: "Read from Hediot's party pages, which collect platforms, questionnaire answers and Knesset bills, again limited to evidence from before the vote. The Democrats move E3 from N to A: they would open the market to imports and end exclusive import deals (Israel Hayom questionnaire, 17 September). Religious Zionism–Zehut has no joint platform, so its economics cells follow the merge rule. E3 goes to A because both halves point the same way: Zehut would phase out customs and import quotas, and Religious Zionism would break up monopolies and cap market share. E7 and E1 go to '-' because the halves disagree. On land, Zehut would dismantle the Israel Land Authority and hand state land to the public while Smotrich wants to run it. On welfare, Zehut's flat tax and private National Insurance are a clear D, while Smotrich points to state money for hospitals. Yisrael Beiteinu moves A16 from '-' to N: responsibility for Gaza would pass to an agreed international body and Israel would keep freedom of action, which is a stated position between the item's two poles rather than silence. It also moves E1 from D to N, because its platform adds hospitals, medical posts and long-term care while saying nothing about taxes. One proposed change was not made. Likud's E4 D rests on nothing beyond keeping the Mehir Lamishtaken scheme, but it is the only D on E4, so recoding it would leave the item with no party disagreeing. Either the D stands until something better is found, or E4 needs rewording. That is a bank decision and is left open here.",
+  },
   {
     items: "November scan · 21 cells recoded from pre-election evidence",
     severe: true,

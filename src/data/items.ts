@@ -156,7 +156,7 @@ const RAW: Row[] = [
   // stated mechanism is Egyptian troops rather than Palestinian police and the
   // list has resolved nothing. What survives is the substantive case: nothing
   // else in the bank asks who polices Gaza.
-  ["A16", "A", -1, "Day-to-day security inside Gaza should pass to Palestinian police backed by an international force, rather than remain under permanent IDF control.", "D----DD-AAAAA"],
+  ["A16", "A", -1, "Day-to-day security inside Gaza should pass to Palestinian police backed by an international force, rather than remain under permanent IDF control.", "D----DDNAAAAA"],
 
   // Religious Zionism stays N here. Smotrich's August backing of the haredi
   // exemption bill was tried as a D and reverted: it collapsed Religious
@@ -223,13 +223,13 @@ const RAW: Row[] = [
   // scored those together as hawkishness would wreck the horizontal axis.
   ["D7", "D", -1, "Zionism is a legitimate expression of Jewish national self-determination.", "AAAANAAAAANDD"],
 
-  ["E1", "E", 1, "The state should substantially increase spending on health and welfare, even if this requires higher taxes.", "DNNAAANDANAAA"],
+  ["E1", "E", 1, "The state should substantially increase spending on health and welfare, even if this requires higher taxes.", "DNNAAA-NANAAA"],
   ["E2", "E", 1, "Child allowances and stipends for full-time yeshiva students should be increased.", "NDDAAAADNDAAA"],
-  ["E3", "E", -1, "Israel should cut regulation and open the market to more imports to reduce the cost of living.", "AAADNNNANANDN"],
+  ["E3", "E", -1, "Israel should cut regulation and open the market to more imports to reduce the cost of living.", "AAADNNAAAANDN"],
   ["E4", "E", 1, "Public housing construction should be significantly expanded.", "DANAAANNANAAA"],
   ["E5", "E", -1, "The defence budget should grow even at the expense of civilian spending.", "AAA--AAADADDD"],
   ["E6", "E", 1, "Labour protections and the minimum wage should be strengthened.", "DNNANNNNANAAA"],
-  ["E7", "E", -1, "Remaining state monopolies (ports, electricity, land) should be further privatized.", "AANDNNNADNNDD"],
+  ["E7", "E", -1, "Remaining state monopolies (ports, electricity, land) should be further privatized.", "AANDNN-ADNNDD"],
   ["E8", "E", 1, "Israel should adopt binding emissions-reduction targets even at economic cost.", "DANDDDDNANNAN"],
 ];
 
