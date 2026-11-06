@@ -3,7 +3,7 @@ import { PARTIES } from "../data/parties";
 import { OUTCOMES, RESULT, SOURCES, STATUS } from "../data/results";
 
 /** The 26th Knesset: seats by bloc and party, with the majority line, and where coalition talks stand. */
-export function Knesset({ compact = false }: { compact?: boolean }) {
+export function Knesset({ compact = false, onCoalition }: { compact?: boolean; onCoalition?: () => void }) {
   const seatsOf = (c: keyof typeof OUTCOMES) => { const o = OUTCOMES[c]; return o && o.kind === "seats" ? o.seats : 0; };
   const pct = (n: number) => `${(n / ELECTION.seats) * 100}%`;
   return (
@@ -48,6 +48,11 @@ export function Knesset({ compact = false }: { compact?: boolean }) {
 
       <h3 style={{ margin: "16px 0 6px", fontSize: 16 }}>Forming a government</h3>
       <p className="small" style={{ margin: 0 }}>{STATUS.text} <span className="muted">As of {STATUS.asOf}.</span></p>
+      {onCoalition && (
+        <button className="btn-ghost" style={{ marginTop: 12 }} onClick={onCoalition}>
+          Build your own coalition
+        </button>
+      )}
 
       {!compact && (
         <p className="small muted" style={{ marginTop: 10 }}>

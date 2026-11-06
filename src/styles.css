@@ -369,3 +369,31 @@ th { font-family: var(--mono); font-size: 10px; letter-spacing: 0.06em; text-tra
 .knesset-majority { position: absolute; top: -4px; bottom: -4px; width: 2px; background: var(--ink); }
 .knesset-blocs { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 6px 18px; }
 .knesset-bloc-head { display: flex; justify-content: space-between; border-bottom: 1px solid var(--rule); padding: 6px 0 4px; font-size: 14px; }
+
+/* Coalition builder */
+.coalition-presets { flex-wrap: wrap; margin: 10px 0 12px; }
+.coalition-presets > * { flex: 0 1 auto; }
+.coalition-parties { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 6px; margin-bottom: 14px; }
+.coalition-party { display: flex; align-items: center; gap: 8px; text-align: left; padding: 9px 11px; border: 1px solid var(--rule); border-radius: 6px; background: transparent; color: inherit; font: inherit; font-size: 15px; cursor: pointer; }
+.coalition-party .swatch { width: 12px; height: 12px; border-radius: 2px; flex: none; }
+.coalition-party-name { flex: 1; }
+.coalition-party[aria-pressed="true"] { border-color: var(--ink); background: rgba(0,0,0,.05); box-shadow: inset 3px 0 0 var(--ink); font-weight: 600; }
+.coalition-summary .knesset-bar { margin-top: 0; }
+.coalition-ok { color: #1e6b3a; font-size: 15px; }
+.coalition-short { color: #8a3b12; font-size: 15px; }
+.coalition-share { margin: 0 0 14px; }
+.coalition-warn { border-left: 3px solid #b5651d; }
+.coalition-blocks { display: grid; gap: 2px; }
+.coalition-block { display: flex; justify-content: space-between; gap: 12px; border-bottom: 1px solid var(--rule); padding: 6px 0; font-size: 15px; }
+.coalition-list { padding-left: 1.2em; margin: 6px 0; }
+.coalition-list li { margin-bottom: 12px; font-size: 15px; }
+.coalition-sides { display: flex; flex-wrap: wrap; gap: 4px 16px; margin-top: 4px; }
+.coalition-united { margin-top: 18px; }
+.coalition-united summary { cursor: pointer; font-size: 18px; font-weight: 600; }
+.coalition-summary { position: sticky; top: -20px; z-index: 2; margin-bottom: 12px; box-shadow: 0 -20px 0 var(--paper); }
+@media (max-width: 560px) {
+  .coalition-parties { grid-template-columns: 1fr 1fr; gap: 5px; }
+  .coalition-party { padding: 8px 9px; font-size: 14px; gap: 6px; }
+  .coalition-summary { padding: 10px 12px; }
+  .coalition-summary .knesset-bar { height: 18px; margin-bottom: 6px; }
+}

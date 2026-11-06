@@ -105,6 +105,7 @@ export function Results({
   onTerm,
   onDemographics,
   onRestart,
+  onCoalition,
   payload,
   contribute,
 }: {
@@ -119,6 +120,7 @@ export function Results({
   onTerm: (key: string) => void;
   onDemographics: () => void;
   onRestart: () => void;
+  onCoalition: () => void;
   payload: string;
   /** absent when the build has no collection endpoint — then nothing can be sent at all */
   contribute?: ContributeProps;
@@ -311,7 +313,7 @@ export function Results({
         </div>
       </details>
 
-      <Knesset compact />
+      <Knesset compact onCoalition={onCoalition} />
 
       <h3 style={{ margin: "28px 0 12px" }}>Where you sit</h3>
       <Grid result={result} />
