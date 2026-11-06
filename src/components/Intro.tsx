@@ -7,6 +7,7 @@ import { Knesset } from "./Knesset";
 export function Intro({
   onStart,
   onResume,
+  onCoalition,
   hasSaved,
   savedCount,
   validation,
@@ -17,6 +18,7 @@ export function Intro({
 }: {
   onStart: () => void;
   onResume: () => void;
+  onCoalition: () => void;
   hasSaved: boolean;
   savedCount: number;
   validation: boolean;
@@ -39,7 +41,7 @@ export function Intro({
         </p>
       </div>
 
-      <Knesset />
+      <Knesset onCoalition={onCoalition} />
 
       {hasSaved && (
         <div className="card">
