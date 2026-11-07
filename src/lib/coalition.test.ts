@@ -48,3 +48,59 @@ describe("coalition builder", () => {
     expect(parseCoalitionParam("?coalition=")).toEqual([]);
   });
 });
+
+import { closestCoalitions, closestWithoutRedLines } from "./coalition";
+import type { PartyCode } from "../data/parties";
+
+describe("closest coalition", () => {
+  const like = (fav: Partial<Record<PartyCode, number>>, base = 20) => (c: PartyCode) => fav[c] ?? base;
+
+  it("only returns majorities, best first", () => {
+    const r = closestCoalitions(like({ LIK: 90, SHS: 80, UTJ: 75, OTZ: 70, RZ: 70, YB: 60 }));
+    expect(r.length).toBe(3);
+    for (const c of r) expect(c.seats).toBeGreaterThanOrEqual(ELECTION.majority);
+    expect(r.map((c) => c.match)).toEqual([...r.map((c) => c.match)].sort((a, b) => b - a));
+  });
+
+  it("finds the obvious right-wing majority for someone who likes only the right", () => {
+    const [best] = closestCoalitions(like({ LIK: 90, SHS: 80, UTJ: 80, OTZ: 85, RZ: 85, YB: 60 }, 5));
+    expect(best.parties).toEqual(expect.arrayContaining(["LIK", "OTZ", "RZ", "SHS", "UTJ"]));
+    // 53 seats is short, and YB's 7 still only make 60, so the best majority adds whichever
+    // single party gets past 61 for the least loss of match.
+    expect(best.seats).toBeGreaterThanOrEqual(61);
+  });
+
+  it("agrees with a brute-force search over every majority", () => {
+    const m = like({ LIK: 64, TOG: 58, YSH: 71, SHS: 40, UTJ: 35, OTZ: 30, RZ: 33, YB: 66, DEM: 52, RAM: 44, JL: 38 });
+    const [best] = closestCoalitions(m);
+    let top = -1;
+    for (let mask = 1; mask < 1 << SEAT_PARTIES.length; mask++) {
+      const ps = SEAT_PARTIES.filter((_, i) => mask & (1 << i));
+      const w = ps.reduce((n, c) => n + seatsOf(c), 0);
+      if (w < ELECTION.majority) continue;
+      top = Math.max(top, ps.reduce((n, c) => n + m(c) * seatsOf(c), 0) / w);
+    }
+    expect(best.match).toBeCloseTo(top, 9);
+  });
+
+  it("never pads a coalition with a member that drags the match down", () => {
+    const r = closestCoalitions(like({ YSH: 90, TOG: 85, DEM: 80, YB: 70, LIK: 60 }, 10), 50);
+    for (const c of r)
+      for (const p of c.parties) {
+        const rest = c.parties.filter((x) => x !== p);
+        if (rest.reduce((n, x) => n + seatsOf(x), 0) < ELECTION.majority) continue;
+        // p could leave and keep a majority, so it must be pulling the match up, not down
+        expect(like({ YSH: 90, TOG: 85, DEM: 80, YB: 70, LIK: 60 }, 10)(p)).toBeGreaterThanOrEqual(c.match - 1e-9);
+      }
+  });
+
+  it("offers a red-line-free alternative when the closest crosses one", () => {
+    const m = like({ YSH: 90, TOG: 85, DEM: 85, YB: 80, JL: 75, RAM: 75 }, 10);
+    const [best] = closestCoalitions(m);
+    expect(best.redLines.length).toBeGreaterThan(0);
+    const alt = closestWithoutRedLines(m)!;
+    expect(alt.redLines).toEqual([]);
+    expect(alt.parties).not.toContain("JL");
+    expect(alt.parties).not.toContain("RAM");
+  });
+});

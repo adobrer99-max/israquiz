@@ -68,7 +68,7 @@ export default function App() {
     else clearLinkParams();
     setReferenceState(r);
   }, []);
-  const openCoalition = () => setReference({ kind: "coalition", parties: [] });
+  const openCoalition = (parties: PartyCode[] = []) => setReference({ kind: "coalition", parties });
   const closeReference = useCallback(() => setReference(null), [setReference]);
   const openParty = (code: PartyCode) => setReference({ kind: "party", code });
   const openItem = (id: string) => setReference({ kind: "item", id });
@@ -202,7 +202,7 @@ export default function App() {
           <Intro
             onStart={start}
             onResume={resume}
-            onCoalition={openCoalition}
+            onCoalition={(ps?: PartyCode[]) => openCoalition(ps ?? [])}
             hasSaved={!!saved && savedCount > 0}
             savedCount={savedCount}
             validation={validation}
@@ -252,7 +252,7 @@ export default function App() {
             onTerm={openTerm}
             onDemographics={() => setStage("demographics")}
             onRestart={start}
-            onCoalition={openCoalition}
+            onCoalition={(ps?: PartyCode[]) => openCoalition(ps ?? [])}
             payload={payload}
             contribute={contribute}
           />
@@ -275,7 +275,7 @@ export default function App() {
         )}
 
         <nav className="nav no-print" aria-label="Reference">
-          <button onClick={openCoalition}>Build a coalition</button>
+          <button onClick={() => openCoalition()}>Build a coalition</button>
           <button onClick={() => setReference({ kind: "glossary" })}>Glossary</button>
           <button onClick={() => setReference({ kind: "matrix" })}>Coding matrix</button>
           <button onClick={() => setReference({ kind: "notes" })}>Editorial notes</button>

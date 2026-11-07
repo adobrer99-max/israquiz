@@ -12,6 +12,7 @@ import { Contribute, type ContributeProps } from "./Contribute";
 import { Grid, GridTextEquivalent } from "./Grid";
 import { Statement } from "./Statement";
 import { Knesset } from "./Knesset";
+import { ClosestCoalition } from "./ClosestCoalition";
 import { OUTCOMES, outcomeLine, wonSeats } from "../data/results";
 
 const BLOC_ROWS: [keyof ScoreResult["blocs"], string][] = [
@@ -120,7 +121,7 @@ export function Results({
   onTerm: (key: string) => void;
   onDemographics: () => void;
   onRestart: () => void;
-  onCoalition: () => void;
+  onCoalition: (parties?: PartyCode[]) => void;
   payload: string;
   /** absent when the build has no collection endpoint — then nothing can be sent at all */
   contribute?: ContributeProps;
@@ -129,6 +130,8 @@ export function Results({
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   const key = weighted ? "weighted" : "unweighted";
+  // Stable per result and toggle, so the coalition search only reruns when the answers change.
+  const matchOf = useMemo(() => (c: PartyCode) => result.all[c]?.[key] ?? 0, [result, key]);
   const list = useMemo(
     () => [...result.ranked].sort((a, b) => b[key] - a[key]),
     [result.ranked, key],
@@ -247,6 +250,7 @@ export function Results({
           </div>
         );
       })()}
+      <ClosestCoalition matchOf={matchOf} onOpen={(ps) => onCoalition(ps)} />
       {thinOverlap && (
         <p className="small" style={{ marginTop: 8 }}>
           This match rests on {top.scoredItems} statement{top.scoredItems === 1 ? "" : "s"} — the ones you

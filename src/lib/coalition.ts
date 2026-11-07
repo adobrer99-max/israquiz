@@ -131,3 +131,58 @@ export function parseCoalitionParam(search: string): PartyCode[] | null {
 export function coalitionParam(parties: PartyCode[]): string {
   return SEAT_PARTIES.filter((c) => parties.includes(c)).join(",");
 }
+
+/* --- closest coalition to a respondent --- */
+
+export interface Closest {
+  parties: PartyCode[];
+  seats: number;
+  /** seat-weighted mean of each member's match with the respondent, 0–100 */
+  match: number;
+  redLines: RedLine[];
+  splits: number;
+}
+
+/**
+ * Every majority of the seated parties, scored by how closely it matches the respondent:
+ * each member's match weighted by its seats, the same figure the builder shows.
+ *
+ * Under a seat-weighted mean, adding a party that matches you less than the coalition
+ * already does always lowers the score, and dropping one always raises it, so most
+ * majorities are beaten by a smaller one inside them. Those are left out: a majority is
+ * listed only if no member could leave, keeping 61, and raise the match. That leaves the
+ * coalitions worth talking about, not 67-seat versions of a better 61-seat one.
+ */
+export function closestCoalitions(matchOf: (c: PartyCode) => number, limit = 3): Closest[] {
+  const n = SEAT_PARTIES.length;
+  const seats = SEAT_PARTIES.map(seatsOf);
+  const m = SEAT_PARTIES.map(matchOf);
+  const score = (mask: number) => {
+    let s = 0, w = 0;
+    for (let i = 0; i < n; i++) if (mask & (1 << i)) { s += m[i] * seats[i]; w += seats[i]; }
+    return { s: w ? s / w : 0, w };
+  };
+  const out: { mask: number; s: number; w: number }[] = [];
+  for (let mask = 1; mask < 1 << n; mask++) {
+    const { s, w } = score(mask);
+    if (w < ELECTION.majority) continue;
+    let dominated = false;
+    for (let i = 0; i < n && !dominated; i++) {
+      if (!(mask & (1 << i))) continue;
+      const sub = score(mask & ~(1 << i));
+      if (sub.w >= ELECTION.majority && sub.s > s + 1e-9) dominated = true;
+    }
+    if (!dominated) out.push({ mask, s, w });
+  }
+  out.sort((a, b) => b.s - a.s || a.w - b.w);
+  return out.slice(0, limit).map(({ mask, s, w }) => {
+    const parties = SEAT_PARTIES.filter((_, i) => mask & (1 << i));
+    const c = buildCoalition(parties);
+    return { parties, seats: w, match: s, redLines: c.redLines, splits: c.splits.length };
+  });
+}
+
+/** The closest majority that crosses no stated red line, if the very closest does. */
+export function closestWithoutRedLines(matchOf: (c: PartyCode) => number): Closest | null {
+  return closestCoalitions(matchOf, 2048).find((c) => c.redLines.length === 0) ?? null;
+}
