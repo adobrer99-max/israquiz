@@ -848,12 +848,15 @@ describe("expected clustering smoke test (§4.6)", () => {
    * review, the Attorney General, the 7 October commission and police
    * independence. Both are reported bars, not grid axes, so the cost is lower.
    */
-  it("pins the remaining three-way pile-ups to the institutions bar", () => {
+  it("pins the remaining three-way pile-ups to the institutions and economics bars", () => {
     const piles = axisCollapses().filter((c) => c.parties.length > 2);
     expect(piles.map((c) => `${c.block}:${[...c.parties].sort().join(",")}`).sort()).toEqual([
       "C:DEM,JL,RAM",
       // Likud left this pile in November, when C3 moved from A to N.
       "C:NOAM,OTZ,RZ",
+      // UTJ joined Noam and Otzma Yehudit on economics in November, when E4 was
+      // reworded and UTJ coded D on it. Otzma's economics column is mostly '-'.
+      "E:NOAM,OTZ,UTJ",
     ]);
   });
 
@@ -983,7 +986,7 @@ describe("Joint List merge rule (§3.7)", () => {
     });
     expect(compromised.map((i) => i.id).sort()).toEqual(
       ["A13", "B2", "B3", "B4", "B5", "B6", "B7", "B8", "B9", "B10", "B11", "B12", "B13", "B14",
-       "E3", "E8"].sort(),
+       "E3", "E4", "E8"].sort(),
     );
     expect([...new Set(compromised.map((i) => i.block))].sort()).toEqual(["A", "B", "E"]);
   });

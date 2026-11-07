@@ -57,7 +57,7 @@ export const PARTIES: Record<PartyCode, Party> = {
   },
   TOG: {
     name: "Together", lead: "Bennett (Lapid #2)", color: "#0E8A7D", bloc: "anti", ballot: true,
-    note: "Yesh Atid + Bennett merger, April 2026; on the ballot as B'Yachad. Its platform's education section confirms B3, and the November scan coded E4, E8, A5 and D2 from Hediot's summary of the platform; the party's own site could not be read for it. The rest rests on Yesh Atid's prior platform and Bennett's public statements. A1, A3, A6 and A16 are '-' where Bennett and Lapid differ or neither has said, so this is still the column most likely to move.",
+    note: "Yesh Atid + Bennett merger, April 2026; on the ballot as B'Yachad. Its platform's education section confirms B3, and the November scan coded E8, A5 and D2 from Hediot's summary of the platform; the party's own site could not be read for it. The rest rests on Yesh Atid's prior platform and Bennett's public statements. A1, A3, A6 and A16 are '-' where Bennett and Lapid differ or neither has said, so this is still the column most likely to move.",
   },
   YSH: {
     name: "Yashar", lead: "Eisenkot", color: "#6E7B8B", bloc: "anti", ballot: true,
