@@ -57,11 +57,11 @@ export const PARTIES: Record<PartyCode, Party> = {
   },
   TOG: {
     name: "Together", lead: "Bennett (Lapid #2)", color: "#0E8A7D", bloc: "anti", ballot: true,
-    note: "Yesh Atid + Bennett merger, April 2026. A platform has since been published at be-yahad.org.il/en/plans. Its education and ageing sections have been read in and confirm B3; every other cell still rests on Yesh Atid's prior platform and Bennett's public statements. The highest-risk column in the bank, and now the most fixable.",
+    note: "Yesh Atid + Bennett merger, April 2026; on the ballot as B'Yachad. Its platform's education section confirms B3, and the November scan coded E4, E8, A5 and D2 from Hediot's summary of the platform; the party's own site could not be read for it. The rest rests on Yesh Atid's prior platform and Bennett's public statements. A1, A3, A6 and A16 are '-' where Bennett and Lapid differ or neither has said, so this is still the column most likely to move.",
   },
   YSH: {
     name: "Yashar", lead: "Eisenkot", color: "#6E7B8B", bloc: "anti", ballot: true,
-    note: "Deliberately undefined platform. The four cells where N was standing in for an unknown — A5, A6, A9 and A10 — are now '-', so its coverage reads 92% rather than a false 100%. Where N remains it is meant to say the party is genuinely equivocal.",
+    note: "Deliberately undefined platform. Where N was standing in for an unknown, the cell is '-' (A5, A9, A10), so its coverage is not a false 100%. In November A6 moved to N, on Eisenkot's stated preference for the PA over Hamas without proposing a PA role, and D2 to D, on coalition terms that exclude the Arab parties. Where N remains it is meant to say the party is genuinely equivocal.",
   },
   SHS: { name: "Shas", lead: "Deri", color: "#5B3E96", bloc: "pro", ballot: true },
   UTJ: {
@@ -73,7 +73,7 @@ export const PARTIES: Record<PartyCode, Party> = {
     name: "Religious Zionist Party–Zehut", lead: "Smotrich (Feiglin #2)", color: "#C07C13", bloc: "pro", ballot: true,
     belowThreshold: true,
     thresholdNote: "polling below the 3.25% threshold",
-    note: "Now a merged list: Moshe Feiglin's Zehut joins with Feiglin at number two, an alliance reported as a response to exactly the threshold problem this entry already recorded. The flag stays, because a merger is a reason to expect the polling to move and not evidence that it has. The merge is the same shape as Together's — a joint list whose second name comes from a party defined by commitments the first does not share — so the codings inherit the same problem. Zehut is not given a component column: unlike Hadash–Ta'al and Balad it has no separate coding history here, and inventing one would be worse than recording that the merged column has not been re-read. Feiglin's Temple Mount activism confirms A14 and his territorial maximalism confirms A2 and A3; the economics block is where the two halves pull apart, and it was already the thinnest part of this column.",
+    note: "A merged list: Moshe Feiglin's Zehut joined with Feiglin at number two, an alliance reported as a response to the threshold, and the list cleared it with 6 seats. The merge is the same shape as Together's — a joint list whose second name comes from a party defined by commitments the first does not share — so the codings inherit the same problem. Zehut is not given a component column: unlike Hadash–Ta'al and Balad it has no separate coding history here, and inventing one would be worse than recording that the merged column has not been re-read. Feiglin's Temple Mount activism confirms A14 and his territorial maximalism confirms A2 and A3; the economics block is where the two halves pull apart. In November it was read against both halves' positions: E3 moved to A because they agree, and E1 and E7 to '-' because they do not.",
   },
   YB: { name: "Yisrael Beiteinu", lead: "Liberman", color: "#3B8FC4", bloc: "anti", ballot: true },
   DEM: {
@@ -84,7 +84,7 @@ export const PARTIES: Record<PartyCode, Party> = {
     name: "Blue & White", lead: "Gantz", color: "#7E8B99", bloc: "anti", ballot: true,
     belowThreshold: true,
     thresholdNote: "polling below the 3.25% threshold",
-    note: "Currently polling below the 3.25% electoral threshold.",
+    note: "Gantz withdrew the list on 19 October 2026, eight days before the vote, after polling below the 3.25% threshold. Its codings stay as a record of where it stood.",
   },
   NOAM: {
     name: "Noam For Israel", lead: "Maoz", color: "#4A1D6B", bloc: "pro", ballot: true,

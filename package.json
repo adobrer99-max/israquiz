@@ -3,14 +3,15 @@
   "private": true,
   "version": "0.2.0",
   "type": "module",
-  "description": "Israel 2026 Election Compass — an English-language voting advice application for the 26th Knesset",
+  "description": "Israel 2026 Election Compass \u2014 an English-language voting advice application for the 26th Knesset",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
     "preview": "vite preview",
     "test": "vitest run",
     "test:watch": "vitest",
-    "typecheck": "tsc -b --noEmit"
+    "typecheck": "tsc -b --noEmit",
+    "postbuild": "node scripts/export-search.mjs"
   },
   "dependencies": {
     "react": "^18.3.1",

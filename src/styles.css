@@ -397,3 +397,20 @@ th { font-family: var(--mono); font-size: 10px; letter-spacing: 0.06em; text-tra
   .coalition-summary { padding: 10px 12px; }
   .coalition-summary .knesset-bar { height: 18px; margin-bottom: 6px; }
 }
+
+/* Party and statement profiles (linkable: ?party=, ?item=) */
+.profile-head { display: flex; align-items: center; gap: 10px; font-size: 16px; margin-top: 4px; }
+.profile-head .swatch { width: 14px; height: 14px; border-radius: 3px; flex: none; }
+.profile-block { font-size: 16px; margin: 20px 0 6px; display: flex; align-items: baseline; gap: 8px; }
+.profile-list, .profile-parties { list-style: none; padding: 0; margin: 0; }
+.profile-list li { display: grid; grid-template-columns: 96px 1fr; gap: 10px; align-items: baseline; padding: 6px 0; border-bottom: 1px solid var(--rule); }
+.profile-code { font-size: 13px; }
+.cell-X { color: var(--muted); font-style: italic; }
+.profile-link { background: none; border: 0; padding: 0; margin: 0; font: inherit; font-size: 15px; color: inherit; text-align: left; cursor: pointer; line-height: 1.45; }
+.profile-link:hover { text-decoration: underline; }
+.profile-parties { display: flex; flex-wrap: wrap; gap: 6px 18px; }
+.profile-parties .swatch { display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-right: 4px; }
+.profile-statement { font-size: 19px; line-height: 1.45; margin: 6px 0 4px; }
+.profile-note { margin: 6px 0; }
+.profile-note summary { cursor: pointer; font-size: 14px; font-weight: 600; }
+@media (max-width: 560px) { .profile-list li { grid-template-columns: 1fr; gap: 2px; } }
