@@ -225,7 +225,7 @@ const RAW: Row[] = [
 
   ["E1", "E", 1, "The state should substantially increase spending on health and welfare, even if this requires higher taxes.", "DNNAAA-NANAAA"],
   ["E2", "E", 1, "Child allowances and stipends for full-time yeshiva students should be increased.", "NDDAAAADNDAAA"],
-  ["E3", "E", -1, "Israel should cut regulation and open the market to more imports to reduce the cost of living.", "AAAAN-AAAANDN"],
+  ["E3", "E", -1, "Israel should cut regulation and open the market to more imports to reduce the cost of living.", "AAAANAAAAANDN"],
   ["E4", "E", 1, "The state should build and own housing for long-term rent, rather than mainly subsidising home purchases.", "DNNND--NA--N-"],
   ["E5", "E", -1, "The defence budget should grow even at the expense of civilian spending.", "AAA--AAADADDD"],
   ["E6", "E", 1, "Labour protections and the minimum wage should be strengthened.", "DNNAN-NNANAAA"],

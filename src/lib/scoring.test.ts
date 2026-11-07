@@ -848,15 +848,12 @@ describe("expected clustering smoke test (§4.6)", () => {
    * review, the Attorney General, the 7 October commission and police
    * independence. Both are reported bars, not grid axes, so the cost is lower.
    */
-  it("pins the remaining three-way pile-ups to the institutions and economics bars", () => {
+  it("pins the remaining three-way pile-ups to the institutions bar", () => {
     const piles = axisCollapses().filter((c) => c.parties.length > 2);
     expect(piles.map((c) => `${c.block}:${[...c.parties].sort().join(",")}`).sort()).toEqual([
       "C:DEM,JL,RAM",
       // Likud left this pile in November, when C3 moved from A to N.
       "C:NOAM,OTZ,RZ",
-      // UTJ joined Noam and Otzma Yehudit on economics in November, when E4 was
-      // reworded and UTJ coded D on it. Otzma's economics column is mostly '-'.
-      "E:NOAM,OTZ,UTJ",
     ]);
   });
 
