@@ -24,9 +24,9 @@ jobs:
       name: github-pages
       url: ${{ steps.deploy.outputs.page_url }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v5
         with:
           node-version: 22
           cache: npm
@@ -55,12 +55,19 @@ jobs:
 
       # The collection endpoint is the only host the app may ever contact. The
       # allowlist below is hosts that appear in the bundle as text and are
-      # never fetched: an XML namespace and React's error-message links.
+      # never fetched: an XML namespace, React's error-message links, and the
+      # citations in src/data/results.ts SOURCES, which are only ever rendered
+      # as links a reader can click (Knesset.tsx). Those are read from the file,
+      # so adding a source never needs this list edited; any other new host
+      # still fails the build.
       - name: Check no unexpected origin reached the bundle
         env:
           ENDPOINT: ${{ vars.COLLECT_ENDPOINT }}
         run: |
           allow='w3\.org|schema\.org|reactjs\.org|react\.dev|localhost|127\.0\.0\.1'
+          cites=$(sed -n '/^export const SOURCES/,/^\];/p' src/data/results.ts \
+            | grep -oE 'https://[a-zA-Z0-9._-]+' | sed -E 's#^https://(www\.)?##; s#\.#\\.#g' | sort -u | paste -sd'|' -)
+          [ -n "$cites" ] && allow="$allow|$cites"
           host=$(printf '%s' "$ENDPOINT" | sed -E 's#^https?://##; s#/.*##; s#\.#\\.#g')
           [ -n "$host" ] && allow="$allow|$host"
           unexpected=$(grep -rhoIE 'https?://[a-zA-Z0-9._-]+' dist \
