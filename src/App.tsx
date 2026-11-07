@@ -8,7 +8,9 @@ import { Matrix } from "./components/Matrix";
 import { Diagnostics, EditorialNotes, GlossaryPage } from "./components/Reference";
 import { Sheet } from "./components/Sheet";
 import { Coalition } from "./components/Coalition";
-import { parseCoalitionParam } from "./lib/coalition";
+import { parseLink, clearLinkParams, setLinkParam } from "./lib/links";
+import { PartyProfile, ItemProfile } from "./components/Profiles";
+import { PARTIES as PARTY_INFO } from "./data/parties";
 import type { PartyCode } from "./data/parties";
 import { VERSION, VERSION_DATE } from "./data/editorial";
 import type { Demographics as Demo } from "./data/demographics";
@@ -21,7 +23,7 @@ import {
 } from "./lib/storage";
 
 type Stage = "intro" | "quiz" | "weights" | "results" | "demographics";
-type Reference = null | { kind: "glossary"; focus?: string } | { kind: "matrix" } | { kind: "notes" } | { kind: "diagnostics" } | { kind: "coalition"; parties: PartyCode[] };
+type Reference = null | { kind: "glossary"; focus?: string } | { kind: "matrix" } | { kind: "notes" } | { kind: "diagnostics" } | { kind: "coalition"; parties: PartyCode[] } | { kind: "party"; code: PartyCode } | { kind: "item"; id: string };
 
 const REF_TITLE: Record<string, string> = {
   glossary: "Glossary",
@@ -56,20 +58,20 @@ export default function App() {
   const [session, setSession] = useState<Session>(() => saved ?? freshSession());
   const [stage, setStage] = useState<Stage>("intro");
   const [demo, setDemo] = useState<Demo>(() => loadDemographics() ?? {});
-  const [reference, setReference] = useState<Reference>(() => {
-    const parties = parseCoalitionParam(window.location.search);
-    return parties ? { kind: "coalition", parties } : null;
-  });
-  const openCoalition = () => setReference({ kind: "coalition", parties: [] });
-  const closeReference = useCallback(() => {
-    // A shared coalition link should not reopen the builder on every reload.
-    const url = new URL(window.location.href);
-    if (url.searchParams.has("coalition")) {
-      url.searchParams.delete("coalition");
-      window.history.replaceState(null, "", url.toString());
-    }
-    setReference(null);
+  const [reference, setReferenceState] = useState<Reference>(() => parseLink(window.location.search));
+  // Parties, statements and glossary terms have addresses of their own (lib/links.ts), so the
+  // address follows whichever is open and can be copied from the browser bar.
+  const setReference = useCallback((r: Reference) => {
+    if (r?.kind === "party") setLinkParam("party", r.code);
+    else if (r?.kind === "item") setLinkParam("item", r.id);
+    else if (r?.kind === "glossary" && r.focus) setLinkParam("term", r.focus);
+    else clearLinkParams();
+    setReferenceState(r);
   }, []);
+  const openCoalition = () => setReference({ kind: "coalition", parties: [] });
+  const closeReference = useCallback(() => setReference(null), [setReference]);
+  const openParty = (code: PartyCode) => setReference({ kind: "party", code });
+  const openItem = (id: string) => setReference({ kind: "item", id });
 
   const items = useMemo(() => orderedItems(session.seed), [session.seed]);
   const result = useMemo(() => score(session.answers, session.weights), [session.answers, session.weights]);
@@ -285,12 +287,20 @@ export default function App() {
       </div>
 
       {reference && (
-        <Sheet title={REF_TITLE[reference.kind]} onClose={closeReference}>
+        <Sheet
+          key={reference.kind === "party" ? `party-${reference.code}` : reference.kind === "item" ? `item-${reference.id}` : reference.kind}
+          title={reference.kind === "party" ? PARTY_INFO[reference.code].name : reference.kind === "item" ? `Statement ${reference.id}` : REF_TITLE[reference.kind]}
+          onClose={closeReference}
+        >
           {reference.kind === "glossary" && <GlossaryPage focus={reference.focus} />}
           {reference.kind === "matrix" && <Matrix />}
           {reference.kind === "notes" && <EditorialNotes />}
           {reference.kind === "diagnostics" && <Diagnostics />}
           {reference.kind === "coalition" && <Coalition initial={reference.parties} result={result} answered={answeredCount} />}
+          {reference.kind === "party" && (
+            <PartyProfile key={reference.code} code={reference.code} onItem={openItem} onCoalition={(c) => setReference({ kind: "coalition", parties: [c] })} />
+          )}
+          {reference.kind === "item" && <ItemProfile key={reference.id} id={reference.id} onParty={openParty} />}
         </Sheet>
       )}
     </>
