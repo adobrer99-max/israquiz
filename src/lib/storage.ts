@@ -33,9 +33,12 @@ import type { Demographics } from "../data/demographics";
  * bumps in a month is well past what §8.10 anticipated, and it is an argument
  * for freezing the bank at the September revision rather than a reason to have
  * left either wording standing.
+ *
+ * v7 retires v6 for the same reason as v6: E4 was rewritten in November, from
+ * expanding public housing to state-built rental versus purchase subsidies.
  */
-const SESSION_KEY = "israquiz.session.v6";
-const DEMO_KEY = "israquiz.demographics.v6";
+const SESSION_KEY = "israquiz.session.v7";
+const DEMO_KEY = "israquiz.demographics.v7";
 
 /**
  * Superseded keys, deleted on first load. Leaving them would strand answer and
@@ -52,6 +55,8 @@ const LEGACY_KEYS = [
   "israquiz.demographics.v4",
   "israquiz.session.v5",
   "israquiz.demographics.v5",
+  "israquiz.session.v6",
+  "israquiz.demographics.v6",
 ];
 
 export interface Session {

@@ -226,7 +226,7 @@ const RAW: Row[] = [
   ["E1", "E", 1, "The state should substantially increase spending on health and welfare, even if this requires higher taxes.", "DNNAAA-NANAAA"],
   ["E2", "E", 1, "Child allowances and stipends for full-time yeshiva students should be increased.", "NDDAAAADNDAAA"],
   ["E3", "E", -1, "Israel should cut regulation and open the market to more imports to reduce the cost of living.", "AAAAN-AAAANDN"],
-  ["E4", "E", 1, "Public housing construction should be significantly expanded.", "DANAAANNANAAA"],
+  ["E4", "E", 1, "The state should build and own housing for long-term rent, rather than mainly subsidising home purchases.", "DNNND--NA--N-"],
   ["E5", "E", -1, "The defence budget should grow even at the expense of civilian spending.", "AAA--AAADADDD"],
   ["E6", "E", 1, "Labour protections and the minimum wage should be strengthened.", "DNNAN-NNANAAA"],
   ["E7", "E", -1, "Remaining state monopolies (ports, electricity, land) should be further privatized.", "AANNN--ADNNDD"],
@@ -239,7 +239,7 @@ const JL_POS: Record<string, Position> = {
   B1: "-", B2: "A", B3: "A", B4: "N", B5: "D", B6: "N", B7: "D", B8: "A", B9: "D", B10: "N", B11: "N", B12: "A", B13: "N", B14: "N",
   C1: "A", C2: "D", C3: "D", C4: "A", C5: "A", C6: "A", C7: "D", C8: "D", C9: "A", C10: "D",
   D1: "D", D2: "A", D3: "A", D4: "A", D5: "D", D6: "-", D7: "D", D8: "D",
-  E1: "A", E2: "A", E3: "N", E4: "A", E5: "D", E6: "A", E7: "D", E8: "N",
+  E1: "A", E2: "A", E3: "N", E4: "N", E5: "D", E6: "A", E7: "D", E8: "N",
 };
 
 /**
@@ -250,7 +250,7 @@ const JL_POS: Record<string, Position> = {
 export const JL_MERGE_FLAGS: Record<string, "component" | "divergent"> = {
   B2: "component", B3: "component", B5: "component", B6: "component",
   B7: "component", B8: "component", B9: "component", B11: "component", B12: "component",
-  B14: "component",
+  B14: "component", E4: "component",
   // A13 is the first divergence outside religion-and-state and economics.
   // The spec's claim that the three components are identical on security held
   // only because the bank had not asked the question that divides them.
