@@ -1,4 +1,5 @@
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
+import { drawCoalitionCard, downloadCanvas } from "../lib/shareCard";
 import { ELECTION } from "../data/editorial";
 import { PARTIES, type PartyCode } from "../data/parties";
 import { closestCoalitions, closestWithoutRedLines, seatsOf, type Closest } from "../lib/coalition";
@@ -12,10 +13,13 @@ const names = (cs: PartyCode[]) => {
 export function ClosestCoalition({
   matchOf,
   onOpen,
+  weighted,
 }: {
   matchOf: (c: PartyCode) => number;
   onOpen: (parties: PartyCode[]) => void;
+  weighted: boolean;
 }) {
+  const [saved, setSaved] = useState(false);
   const { top, clean } = useMemo(() => {
     const top = closestCoalitions(matchOf, 3);
     const clean = top[0] && top[0].redLines.length ? closestWithoutRedLines(matchOf) : null;
@@ -23,6 +27,23 @@ export function ClosestCoalition({
   }, [matchOf]);
   if (!top.length) return null;
   const [best, ...rest] = top;
+
+  // Share where the browser can share files (phones), otherwise download the PNG.
+  const save = async () => {
+    const canvas = document.createElement("canvas");
+    await document.fonts.ready;
+    drawCoalitionCard(canvas, best, matchOf, weighted);
+    const name = "my-closest-coalition.png";
+    const blob: Blob | null = await new Promise((r) => canvas.toBlob(r, "image/png"));
+    const file = blob && typeof File === "function" ? new File([blob], name, { type: "image/png" }) : null;
+    if (file && navigator.canShare?.({ files: [file] })) {
+      try { await navigator.share({ files: [file], title: "My closest coalition" }); } catch { /* cancelled */ }
+    } else {
+      downloadCanvas(canvas, name);
+    }
+    setSaved(true);
+    setTimeout(() => setSaved(false), 2500);
+  };
 
   return (
     <section className="card closest" aria-labelledby="closest-title" style={{ marginTop: 14 }}>
@@ -38,9 +59,14 @@ export function ClosestCoalition({
           parties as coalition partners, so this one crosses a stated red line.
         </p>
       )}
-      <button className="btn-ghost" style={{ marginTop: 10 }} onClick={() => onOpen(best.parties)}>
-        Open in the coalition builder
-      </button>
+      <div className="btn-row" style={{ marginTop: 10 }}>
+        <button className="btn-ghost" onClick={() => onOpen(best.parties)}>
+          Open in the coalition builder
+        </button>
+        <button className="btn-ghost" onClick={save}>
+          {saved ? "Saved" : "Save image"}
+        </button>
+      </div>
 
       {clean && (
         <div className="closest-alt">
