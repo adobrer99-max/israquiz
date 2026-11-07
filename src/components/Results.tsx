@@ -250,7 +250,7 @@ export function Results({
           </div>
         );
       })()}
-      <ClosestCoalition matchOf={matchOf} onOpen={(ps) => onCoalition(ps)} />
+      <ClosestCoalition matchOf={matchOf} onOpen={(ps) => onCoalition(ps)} weighted={weighted} />
       {thinOverlap && (
         <p className="small" style={{ marginTop: 8 }}>
           This match rests on {top.scoredItems} statement{top.scoredItems === 1 ? "" : "s"} — the ones you
