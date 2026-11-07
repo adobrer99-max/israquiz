@@ -5,7 +5,7 @@
    auditable rather than merely visible.
    ============================================================ */
 
-export const VERSION = "v0.4.1 — results";
+export const VERSION = "v0.5 — results";
 export const VERSION_DATE = "5 November 2026";
 
 export const ELECTION = {

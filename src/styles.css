@@ -414,3 +414,12 @@ th { font-family: var(--mono); font-size: 10px; letter-spacing: 0.06em; text-tra
 .profile-note { margin: 6px 0; }
 .profile-note summary { cursor: pointer; font-size: 14px; font-weight: 600; }
 @media (max-width: 560px) { .profile-list li { grid-template-columns: 1fr; gap: 2px; } }
+
+/* Closest coalition card (results) */
+.closest-members { list-style: none; padding: 0; margin: 4px 0 0; display: flex; flex-wrap: wrap; gap: 4px 16px; font-size: 15px; }
+.closest-members .swatch { display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-right: 5px; }
+.closest-alt { margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--rule); }
+.closest-more { margin-top: 12px; }
+.closest-more summary { cursor: pointer; font-size: 14px; font-weight: 600; }
+.closest-more ol { padding-left: 1.2em; margin: 6px 0 0; }
+.closest-more li { margin-bottom: 8px; font-size: 15px; }
