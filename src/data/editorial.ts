@@ -5,7 +5,7 @@
    auditable rather than merely visible.
    ============================================================ */
 
-export const VERSION = "v0.5.2 — results";
+export const VERSION = "v0.5.3 — results";
 export const VERSION_DATE = "7 November 2026";
 
 export const ELECTION = {
@@ -32,6 +32,10 @@ export interface Note {
 }
 
 export const CODING_NOTES: Note[] = [
+  {
+    items: "Otzma Yehudit's economics · E3",
+    issue: "Rewording E4 left UTJ with the same economics score as Noam and Otzma Yehudit, mostly because Otzma's economics column was almost all '-'. A pre-election search found little to fill it. Hediot found no list position on taxes, the cost of living, wages or economic policy, and the Jerusalem Post's guide (24 September) calls the platform overwhelmingly about security. The one usable line is the party's own quiz answer to The Petek, received 13 October: 'A free economy with less bureaucracy, alongside targeted spending and tax breaks.' On that, E3 moves from '-' to A. It is a weak A: the answer supports cutting regulation but says nothing about imports. E4, E6 and E7 stay '-'. On housing, the record is a supply bill by MK Kroizer to convert unused commercial space, plus Yishai Fleisher's call (Times of Israel blogs, 26 October) to make it easier for new immigrants to buy. Neither speaks to rental against purchase. Nothing was found on wages, labour protections or privatisation. The economics tie is gone.",
+  },
   {
     items: "E4 reworded · housing",
     issue: "E4 used to read 'Public housing construction should be significantly expanded.' Nobody campaigned against that: two pre-election roundups (Nadlan Center, 26 and 27 October; Buy It in Israel, 27 October) found no party opposing public housing, rental schemes or purchase subsidies, and noted that housing barely featured in the campaign. Likud's D, the item's only one, rested on nothing more than keeping Mehir Lamishtaken. That left the item with no honest disagreement. It now asks where the state's housing effort should go: 'The state should build and own housing for long-term rent, rather than mainly subsidising home purchases.' Likud stays D, now on what it did in office: discounted target-price lotteries, half of them for reservists, and no rental programme. UTJ moves to D, because under Goldknopf the maximum purchase discount in priority areas doubled to NIS 900,000 and a grant was added for buying second-hand homes. The Democrats are A: they would require public housing in every new neighbourhood and build price-controlled rental complexes. Together is N, because its 100,000 long-term rentals would be built by private developers on incentives, and it also offers reservists a NIS 1 million purchase benefit. Yashar is N, with rental incentives and some purchase priority for reservists. Shas is N: MK Azoulay backed giving 7% of new construction to public housing, but Shas MKs also co-sponsored the bill letting public-housing tenants buy their homes at a discount. The Joint List is N, and Hadash with it: it wants more public building and rent caps, but also interest-free loans for first-time buyers. Yisrael Beiteinu stays N: as finance minister, Liberman renewed Dira Behanacha and taxed investors. Religious Zionism, Otzma Yehudit, Ra'am, Blue and White and Balad are '-': nothing on record addresses rental versus buying. With one A and two Ds the item now separates weakly, but every code rests on something said or done before the vote. Both Ds come from records in government, not platforms. Sessions saved under the old wording are cleared rather than resumed, so no answer to the old E4 is carried onto the new one.",
