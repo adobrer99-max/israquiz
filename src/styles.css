@@ -371,7 +371,8 @@ th { font-family: var(--mono); font-size: 10px; letter-spacing: 0.06em; text-tra
 .knesset-bloc-head { display: flex; justify-content: space-between; border-bottom: 1px solid var(--rule); padding: 6px 0 4px; font-size: 14px; }
 
 /* Coalition builder */
-.coalition-presets { flex-wrap: wrap; margin: 10px 0 12px; }
+.coalition-presets { flex-wrap: wrap; margin: 10px 0 24px; }
+/* 24px clears the 20px band the sticky summary paints above itself (box-shadow below). */
 .coalition-presets > * { flex: 0 1 auto; }
 .coalition-parties { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 6px; margin-bottom: 14px; }
 .coalition-party { display: flex; align-items: center; gap: 8px; text-align: left; padding: 9px 11px; border: 1px solid var(--rule); border-radius: 6px; background: transparent; color: inherit; font: inherit; font-size: 15px; cursor: pointer; }
