@@ -1,4 +1,4 @@
-import { ELECTION, VERSION, VERSION_DATE } from "../data/editorial";
+import { ELECTION, UPDATES, VERSION, VERSION_DATE } from "../data/editorial";
 import { ITEMS } from "../data/items";
 import { BALLOT_PARTIES, PARTIES } from "../data/parties";
 import { collectionEnabled } from "../lib/collect";
@@ -8,6 +8,7 @@ export function Intro({
   onStart,
   onResume,
   onCoalition,
+  onNotes,
   hasSaved,
   savedCount,
   validation,
@@ -19,6 +20,7 @@ export function Intro({
   onStart: () => void;
   onResume: () => void;
   onCoalition: () => void;
+  onNotes: () => void;
   hasSaved: boolean;
   savedCount: number;
   validation: boolean;
@@ -39,6 +41,14 @@ export function Intro({
           {ELECTION.knesset}th Knesset, {ELECTION.date}. The vote is over: take it to see where you land, and which of
           your matches made it in.
         </p>
+        {UPDATES[0] && (
+          <p className="small update-line">
+            <strong className="mono">Updated {UPDATES[0].date}:</strong> {UPDATES[0].text}{" "}
+            <button className="profile-link" onClick={onNotes}>
+              Why, in the editorial notes
+            </button>
+          </p>
+        )}
       </div>
 
       <Knesset onCoalition={onCoalition} />

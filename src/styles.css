@@ -424,3 +424,7 @@ th { font-family: var(--mono); font-size: 10px; letter-spacing: 0.06em; text-tra
 .closest-more summary { cursor: pointer; font-size: 14px; font-weight: 600; }
 .closest-more ol { padding-left: 1.2em; margin: 6px 0 0; }
 .closest-more li { margin-bottom: 8px; font-size: 15px; }
+
+/* The newest entry from UPDATES on the start screen: one line for returning visitors. */
+.update-line { margin: 12px 0 0; padding: 8px 12px; border-left: 3px solid var(--envelope); background: var(--slip); line-height: 1.5; }
+.update-line .profile-link { font-size: inherit; color: var(--envelope); text-decoration: underline; text-underline-offset: 2px; }
