@@ -7,14 +7,21 @@ import { mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 
+// It also writes dist/pages.json (scripts/pages-entry.ts): the data the site uses to build
+// plain pages for each party and for how the coding works.
 const dir = mkdtempSync(join(tmpdir(), "compass-search-"));
-const out = join(dir, "entry.mjs");
+const run = async (entry, name) => {
+  const out = join(dir, name + ".mjs");
+  await build({ entryPoints: [entry], bundle: true, platform: "node", format: "esm", outfile: out, logLevel: "error" });
+  return JSON.parse(execFileSync(process.execPath, [out], { encoding: "utf8", maxBuffer: 64 * 1024 * 1024 }));
+};
 try {
-  await build({ entryPoints: ["scripts/search-entry.ts"], bundle: true, platform: "node", format: "esm", outfile: out, logLevel: "error" });
-  const json = execFileSync(process.execPath, [out], { encoding: "utf8" });
-  const list = JSON.parse(json);
+  const list = await run("scripts/search-entry.ts", "search");
   writeFileSync("dist/search.json", JSON.stringify(list));
   console.log(`search.json: ${list.length} entries`);
+  const pages = await run("scripts/pages-entry.ts", "pages");
+  writeFileSync("dist/pages.json", JSON.stringify(pages));
+  console.log(`pages.json: ${pages.parties.length} parties, ${pages.items.length} statements, ${pages.codingNotes.length} notes`);
 } finally {
   rmSync(dir, { recursive: true, force: true });
 }
