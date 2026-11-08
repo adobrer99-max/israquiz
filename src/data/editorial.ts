@@ -5,7 +5,7 @@
    auditable rather than merely visible.
    ============================================================ */
 
-export const VERSION = "v0.5.4 — results";
+export const VERSION = "v0.5.5 — results";
 export const VERSION_DATE = "8 November 2026";
 
 /** What changed for someone coming back, newest first. The start screen shows the first one.
@@ -395,7 +395,7 @@ export const INSTRUMENT_NOTES: Note[] = [
 
 export const LIMITS: string[] = [
   "A match percentage measures issue agreement only. It is not coalition arithmetic, not leadership, not electoral viability under a 3.25% threshold, and not advice about how to vote.",
-  "Party codings are a working draft. They will be re-verified against the platforms of the lists actually filed in September, and this build should be treated as a preview until then.",
+  "Party codings are judgements, and some could be wrong. They were checked against the platforms and statements of the lists that actually filed, up to election day, and every change since and every remaining doubt is recorded in the editorial notes.",
   "Parties are coded at full intensity because a party either takes a position or it does not. Most people hedge. That is why the parties spread wider on the grid than you will.",
   "Differences of under about three points are noise given the coding uncertainty. The top result is a closest match, not your party.",
 ];
