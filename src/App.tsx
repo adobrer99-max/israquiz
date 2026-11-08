@@ -203,6 +203,7 @@ export default function App() {
             onStart={start}
             onResume={resume}
             onCoalition={(ps?: PartyCode[]) => openCoalition(ps ?? [])}
+            onNotes={() => setReference({ kind: "notes" })}
             hasSaved={!!saved && savedCount > 0}
             savedCount={savedCount}
             validation={validation}
