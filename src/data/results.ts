@@ -54,14 +54,16 @@ export const RESULT = {
 
 /** Where coalition talks stand. Dated, because it changes. */
 export const STATUS = {
-  asOf: "5 November 2026",
+  asOf: "9 November 2026",
   text:
-    "No bloc has 61 seats. In consultations with President Herzog, parties holding 67 seats recommended Gadi " +
-    "Eisenkot (Yashar, B'Yachad, Yisrael Beytenu, the Democrats, the Joint List and Ra'am) and parties holding 46 " +
-    "recommended Benjamin Netanyahu (Likud, Otzma Yehudit, Religious Zionism and Shas). United Torah Judaism, with 7, " +
-    "recommended no one. Herzog was expected to give Eisenkot the first chance to form a government, which comes with " +
-    "28 days to do it and a possible 14-day extension. Eisenkot's 67 depends on the Arab parties, whom Yisrael " +
-    "Beytenu has said it will not sit with.",
+    "President Herzog gave Gadi Eisenkot the first mandate to form a government on 8 November, after parties holding " +
+    "67 seats recommended him and parties holding 46 recommended Benjamin Netanyahu. Eisenkot has 28 days, with a " +
+    "possible 14-day extension. If he fails, Herzog can give another member, most likely Netanyahu, 28 days; if both " +
+    "fail, a majority of 61 can agree on a third candidate within 21 days before a new election is called. Eisenkot " +
+    "is seeking a \"national emergency government\" and has invited Likud and Religious Zionism members to join. His 67 " +
+    "includes 19 seats from the Arab-led parties, which have said they would back him or not vote against him, but his " +
+    "Jewish-led partners have said they will not join a government that relies on them. Netanyahu has called for a " +
+    "unity government built around his outgoing coalition. No coalition agreements had been signed by 9 November.",
 };
 
 export const SOURCES: [string, string][] = [
@@ -69,6 +71,7 @@ export const SOURCES: [string, string][] = [
   ["Votes below the threshold (Ynet)", "https://www.ynetnews.com/article/sjjh87gtmg"],
   ["Gantz withdraws (Times of Israel)", "https://www.timesofisrael.com/liveblog_entry/gantz-pulls-out-of-election-race-eight-days-ahead-of-vote/"],
   ["Coalition consultations (ABC News)", "https://www.abc.net.au/news/2026-11-06/israel-president-coalition-talks/107353572"],
+  ["Eisenkot tasked with forming government (Times of Israel)", "https://www.timesofisrael.com/eisenkot-gets-nod-to-form-government-vows-unconventional-acts-in-time-of-emergency/"],
 ];
 
 export function outcomeLine(code: PartyCode, threshold: number): string {

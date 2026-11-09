@@ -5,13 +5,17 @@
    auditable rather than merely visible.
    ============================================================ */
 
-export const VERSION = "v0.5.5 — results";
-export const VERSION_DATE = "8 November 2026";
+export const VERSION = "v0.5.6 — results";
+export const VERSION_DATE = "9 November 2026";
 
 /** What changed for someone coming back, newest first. The start screen shows the first one.
  *  Add an entry whenever a statement, a coding or the results change, in a sentence a
  *  returning respondent can act on; the full reasoning goes in CODING_NOTES. */
 export const UPDATES: { date: string; text: string }[] = [
+  {
+    date: "9 Nov",
+    text: "Eisenkot given the first mandate to form a government; status updated.",
+  },
   {
     date: "7 Nov",
     text: "The housing statement now asks about state-built rental against purchase subsidies, and Otzma Yehudit's economics were recoded from its own answers. Your match with some parties may shift a little.",
